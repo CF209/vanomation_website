@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Setting up the Raspberry Pi</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: Squadfree - v4.6.0
+  * Template URL: https://bootstrapmade.com/squadfree-free-bootstrap-template-creative/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top ">
+    <div class="container d-flex align-items-center justify-content-between">
+
+      <div class="logo">
+        <h1 class="text-light"><a href="index.html"><span>Vanomation</span></a></h1>
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+      </div>
+
+      <nav id="navbar" class="navbar">
+          <ul>
+            <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+            <li><a class="nav-link scrollto" href="#about">About</a></li>
+            <li><a class="nav-link scrollto" href="#pictures">Pictures</a></li>
+            <li class="dropdown"><a href="#tutorials"><span>Tutorials</span> <i class="bi bi-chevron-down"></i></a>
+              <ul>
+                <li><a href="setting_up_raspberry_pi.html">Setting up the Raspberry Pi</a></li>
+                <li><a href="installing_home_assistant.html">Installing Home Assistant</a></li>
+                <li><a href="#">Controlling the Lights</a></li>
+                <li><a href="#">Adding Wireless Switches</a></li>
+              </ul>
+            </li>
+           <!-- <li><a class="nav-link scrollto" href="#contact">Contact</a></li> -->
+          </ul>
+          <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav><!-- .navbar -->
+
+    </div>
+  </header><!-- End Header -->
+
+  <main id="main">
+
+    <!-- ======= Breadcrumbs Section ======= -->
+    <section class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>Setting up the Raspberry Pi</h2>
+          <ol>
+            <li><a href="index.html">Home</a></li>
+            <li>Setting up the Raspberry Pi</li>
+          </ol>
+        </div>
+
+      </div>
+    </section><!-- End Breadcrumbs Section -->
+
+    <section class="inner-page">
+      <div class="container">
+        &nbsp;Before we can do anything else, we need to get the Raspberry Pi set up and running the van. This includes finding a suitable power supply, installing the Raspberry Pi OS, setting the Pi up for remote access, and mounting the Pi in the van.<div><br /></div><div><div>We need a few items for this:</div><div style="background-color: #eeeeee; border: 2px solid rgb(221, 221, 221); margin: 10px; padding: 2px 6px 4px; text-align: left;"><ul style="color: #555555;"><li><b><a href="https://www.amazon.com/gp/product/B07TC2BK1X/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B07TC2BK1X&amp;linkCode=as2&amp;tag=vanomation-20&amp;linkId=ef706c3a0ab026e286ae847cf0ea5a03" target="_blank">Raspberry Pi</a>:&nbsp;</b>I'm using the Raspberry 4 with 4GB RAM but any recent model should also work</li><li><b><a href="https://www.amazon.com/gp/product/B08K8Q74XL/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B08K8Q74XL&amp;linkCode=as2&amp;tag=vanomation-20&amp;linkId=c40b4a71ac38ce6cff6757c356fd6abd" target="_blank">USB Outlet</a>:&nbsp;</b>Must be capable of delivering 3A at 5V. The USB-C output from this one works</li><li><b><a href="https://www.amazon.com/gp/product/B01GGKZ1VA/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B01GGKZ1VA&amp;linkCode=as2&amp;tag=vanomation-20&amp;linkId=bf5eb770732a3da93115bb110e70fc83" target="_blank">USB Cable</a>:&nbsp;</b>Any USB-C to USB-C cable should work</li><li><b><a href="https://www.amazon.com/gp/product/B08GYBBBBH/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B08GYBBBBH&amp;linkCode=as2&amp;tag=vanomation-20&amp;linkId=27b40ce504c550f7fcd4e212b11d95c5" target="_blank">Micro SD Card</a>:&nbsp;</b>I'm using this 64GB card in my Raspberry Pi</li><li><b><a href="https://www.amazon.com/gp/product/B01N5RCZQH/ref=as_li_tl?ie=UTF8&amp;tag=vanomation-20&amp;camp=1789&amp;creative=9325&amp;linkCode=as2&amp;creativeASIN=B01N5RCZQH&amp;linkId=690a5474c4e3699958d3d08fdebb46e6" target="_blank">Router</a>:&nbsp;</b>I chose the&nbsp;TP-Link AC750 because it's cheap and has the WiFi-as-WAN function which allow me to use my phone's hotspot or connect to nearby WiFi for internet</li><li><b>Laptop:&nbsp;</b>Any Windows/MAC/Linux machine with an SD card reader works. If you don't have an SD card reader,&nbsp;<a href="https://www.amazon.com/Vanja-Adapter-Portable-Memory-Reader/dp/B07P7FRYG3/ref=sr_1_4?dchild=1&amp;keywords=sd%2Bcard%2Breader&amp;qid=1624212146&amp;s=electronics&amp;sr=1-4&amp;th=1" target="_blank">a cheap one like this should work</a></li></ul></div><div><br /></div><div>&nbsp;Now that we have everything we need, the first step is to install Raspberry Pi OS on the SD card. For this, I used the Raspberry Pi Imager software available here:&nbsp;<a href="https://www.raspberrypi.org/software/">https://www.raspberrypi.org/software/</a></div><div><br /></div><div>&nbsp;Once you have the imager installed on your laptop, you simply install the SD card, start the imager, choose the operating system, choose your SD card, and click write. For the operating system, I'm using the 32-bit Raspberry Pi OS Lite. I chose this option because I'm going to be using a headless setup (no monitor, keyboard, or mouse connected to the Pi) and will be accessing the Pi remotely through SSH.<div class="separator" style="clear: both; text-align: center;"><a href="https://1.bp.blogspot.com/-vKQZEGEQ3pM/YDqtl_nURAI/AAAAAAAA3JM/_S5mBB9QLfglHosAss_kXuRBvktRDTKbwCLcBGAsYHQ/s1343/Screen%2BShot%2B2021-02-27%2Bat%2B1.36.16%2BPM.png" style="margin-left: 1em; margin-right: 1em;"><img border="0" data-original-height="895" data-original-width="1343" src="https://1.bp.blogspot.com/-vKQZEGEQ3pM/YDqtl_nURAI/AAAAAAAA3JM/_S5mBB9QLfglHosAss_kXuRBvktRDTKbwCLcBGAsYHQ/s320/Screen%2BShot%2B2021-02-27%2Bat%2B1.36.16%2BPM.png" width="320" /></a></div></div><div><br /></div><div>&nbsp;Once writing the SD card is complete, it is safe to remove the card from the system, but we're not done yet. Since we're using a headless setup, we need to enable SSH and configure the wifi network before we can install the SD card in the Pi.</div><div><br /></div><div>&nbsp;Remove the SD card, then re-insert it into the computer. You should now see a new volume named 'boot' in the Finder (this is for Mac, but should be similar on Windows/Linux). Navigate to the volume in the terminal:</div><div style="background-color: #eeeeee; border: 2px solid rgb(221, 221, 221); color: #555555; margin: 10px; padding: 2px 6px 4px;"><span style="font-family: courier;">cd /Volumes/boot</span></div><div>&nbsp;Create an empty file named 'ssh' to enable SSH on the raspberry pi:</div><div style="background-color: #eeeeee; border: 2px solid rgb(221, 221, 221); color: #555555; margin: 10px; padding: 2px 6px 4px;"><span style="font-family: courier;">touch ssh</span></div><div>To set up the wifi, add a wpa_supplicant.conf file:</div><div style="background-color: #eeeeee; border: 2px solid rgb(221, 221, 221); color: #555555; margin: 10px; padding: 2px 6px 4px;"><span style="font-family: courier;">nano wpa_supplicant.conf</span></div><div>Add the following to this file:</div><div style="background-color: #eeeeee; border: 2px solid rgb(221, 221, 221); color: #555555; margin: 10px; padding: 2px 6px 4px;"><div class="separator" style="clear: both;"><span style="font-family: Menlo; font-size: 11px; font-variant-ligatures: no-common-ligatures;">ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev</span></div><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;">update_config=1</span></p><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;">country=US</span></p><p class="p2" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px; min-height: 13px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;"></span><br /></p><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;">network={</span></p><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;"><span class="Apple-tab-span" style="white-space: pre;">	</span>ssid="<b>NETWORK_SSID</b>"</span></p><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;"><span class="Apple-tab-span" style="white-space: pre;">	</span>psk="<b>PASSWORD</b>"</span></p><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;">}</span></p></div><div>Replace NETWORK_SSID and PASSWORD with your wifi info, then save the file with "ctrl-x", "y", and "enter".</div><div><br /></div><div>&nbsp;The SD card is now fully set up and ready to be installed in your Raspberry Pi! Safely eject the SD card from your computer and install it in the SD card slot of the Pi. Connect the Pi to power and give it a bit of time to boot up for the first time. The Pi should automatically connect to the wifi network.</div><div><br /></div><div>&nbsp;Once it's connected to the wifi network, we need to find the Pi's IP address so we can remotely connect to it. I was able to find this by logging into my router and finding the DHCP Clients List where the client name "raspberrypi" was shown as seen below. Since we don't want this IP address to change when restarting the Raspberry Pi, I used the router's address reservation feature to permanently set the IP address.</div><div><br /></div><div class="separator" style="clear: both; text-align: center;"><a href="https://1.bp.blogspot.com/-bN0qtVHzyqM/YM-EjUGLpGI/AAAAAAAA57I/vWFizxpyqn4CvBdoVyZQq2dCM_JixublQCLcBGAsYHQ/s1686/Screen%2BShot%2B2021-06-20%2Bat%2B12.09.03%2BPM.png" style="margin-left: 1em; margin-right: 1em;"><img border="0" data-original-height="590" data-original-width="1686" height="175" src="https://1.bp.blogspot.com/-bN0qtVHzyqM/YM-EjUGLpGI/AAAAAAAA57I/vWFizxpyqn4CvBdoVyZQq2dCM_JixublQCLcBGAsYHQ/w504-h175/Screen%2BShot%2B2021-06-20%2Bat%2B12.09.03%2BPM.png" width="504" /></a></div><br /><div><br /></div><div><br /></div><div>&nbsp;Once you figure out the IP address, we can now login to the Pi remotely! From your terminal, SSH into the IP address of the Pi. The default password is 'raspberry':</div><div style="background-color: #eeeeee; border: 2px solid rgb(221, 221, 221); color: #555555; margin: 10px; padding: 2px 6px 4px;"><span style="font-family: Menlo; font-size: 11px; font-variant-ligatures: no-common-ligatures;">ssh pi@192.168.0.101</span></div><div>If this works, you've successfully set up your Raspberry Pi for remote access!</div><div><br /></div><div>You can change the default password with the command 'passwd'. You should also update the Raspberry Pi software with these commands:</div><div style="background-color: #eeeeee; border: 2px solid rgb(221, 221, 221); margin: 10px; padding: 2px 6px 4px;"><span style="color: #666666; font-family: Menlo; font-size: 11px;">sudo apt-get update<br />sudo apt-get upgrade</span></div><div>&nbsp;Since the Raspberry Pi can now be fully accessed remotely, you can now install it away somewhere out of site. Don't make it too inaccessible though since we'll eventually be connecting to the GPIO pins and USB ports for future projects. I screwed mine into the wall of my electronics cabinet where my Van's power system is since it's a good central location and I'll eventually be interfacing with some of the other components in there.</div></div><div><br /></div><div class="separator" style="clear: both; text-align: center;"><a href="https://1.bp.blogspot.com/-JkvS9aERl64/YD5wj5UpdRI/AAAAAAAA3LQ/bgz8KfVJMLEqdkIUdAEDScWtXGwx8YwWgCPcBGAsYHg/s4032/PXL_20210302_170225771.jpg" style="margin-left: 1em; margin-right: 1em;"><img border="0" data-original-height="3024" data-original-width="4032" src="https://1.bp.blogspot.com/-JkvS9aERl64/YD5wj5UpdRI/AAAAAAAA3LQ/bgz8KfVJMLEqdkIUdAEDScWtXGwx8YwWgCPcBGAsYHg/s320/PXL_20210302_170225771.jpg" width="320" /></a></div><br /><div style="text-align: center;"><b><span style="font-size: medium;"><a href="https://vanomation.blogspot.com/p/installing-home-assistant-with-docker.html">Next:&nbsp;Installing Home Assistant with Docker</a></span></b></div>
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="credits">
+        <!-- All the links in the footer should remain intact. -->
+        <!-- You can delete the links only if you purchased the pro version. -->
+        <!-- Licensing information: https://bootstrapmade.com/license/ -->
+        <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/squadfree-free-bootstrap-template-creative/ -->
+        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+      </div>
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/purecounter/purecounter.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+</body>
+
+</html>

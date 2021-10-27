@@ -31,7 +31,14 @@ h1, h2, h3, h4, h5, h6 {
   margin-top: 90px;
 }
 
-
+.amazon {
+  background-color: #eeeeee;
+  border: 2px solid rgb(221, 221, 221);
+  color: #555555;
+  margin: 10px;
+  padding: 2px 6px 4px;
+  text-align: left;
+}
 
 .terminal {
   background-color: #eeeeee;

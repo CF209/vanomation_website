@@ -91,15 +91,114 @@
       </div>
     </section><!-- End Breadcrumbs Section -->
 
+    <section class="tutorial_imgs">
+      <div class="row">
+      <!--  <div class="col-xs-0 col-md-2 col-lg-3"></div>
+        <div class="col-xs-12 col-md-8 col-lg-6 portfolio-details-slider swiper"> -->
+        <div class="portfolio-details-slider swiper">
+          <div class="swiper-wrapper align-items-center">
+
+            <div class="swiper-slide">
+              <img src="assets/img/install/install1.png" class="tut_swiper_img" alt="">
+            </div>
+
+            <div class="swiper-slide">
+              <img src="assets/img/install/install2.png" class="tut_swiper_img" alt="">
+            </div>
+
+            <div class="swiper-slide">
+              <img src="assets/img/install/install3.png" class="tut_swiper_img" alt="">
+            </div>
+
+            <div class="swiper-slide">
+                <img src="assets/img/install/install4.jpg" class="tut_swiper_img" alt="">
+              </div>
+
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+      <!--  <div class="col-xs-0 col-md-2 col-lg-3"></div> -->
+      </div>
+    </section>
+
     <section class="inner-page">
       <div class="container">
-        <div style="text-align: left;">&nbsp;After doing the initial setup of the Raspberry Pi, the next step is to install Home Assistant on the Pi. Home Assistant is an open source home automation interface designed to work with lots of existing IoT devices and is very customizable for any application. It's also commonly run on a Raspberry Pi with lots of community support online. That is why I chose it for this project.</div><div style="text-align: left;"><br /></div><div style="text-align: left;">&nbsp;The two recommended ways of installing Home Assistant are installing the full Home Assistant operating system, or installing the Home Assistant container. While it seems like the home assistant operating system has more features, it also limits the Raspberry Pi to only running Home Assistant. Since I want to run other things on the Raspberry Pi as well and have better control of the Pi's interfaces, I will be going with the container installation.</div><div style="text-align: left;"><br /></div><div style="text-align: left;">&nbsp;In order to install the container, we first need to install Docker. This can be done by first downloading the install script with:</div><div style="background-color: #eeeeee; border: 2px solid rgb(221, 221, 221); color: #555555; margin: 10px; padding: 2px 6px 4px; text-align: left;">curl -fsSL https://get.docker.com -o get-docker.sh</div><div style="text-align: left;">You can then run the script with:</div><div style="background-color: #eeeeee; border: 2px solid rgb(221, 221, 221); color: #555555; margin: 10px; padding: 2px 6px 4px; text-align: left;">sudo sh get-docker.sh&nbsp;</div><div style="text-align: left;">&nbsp;Once Docker is installed we can now install Home Assistant. The Home Assistant website has good instructions here, although we need to make one small modification:</div><div style="text-align: left;"><a href="https://www.home-assistant.io/installation/raspberrypi#install-home-assistant-container">https://www.home-assistant.io/installation/raspberrypi#install-home-assistant-container</a></div><div style="text-align: left;"><br /></div><div style="text-align: left;">&nbsp;Since we want Home Assistant to have access to the GPIO as well as USB devices, we need to add the&nbsp; &nbsp; "--privileged" flag to the docker run command. We also want to run it as administrator so we add "sudo" to the start of the command. This is what I ran to install Home Assistant on my Pi:</div><div style="background-color: #eeeeee; border: 2px solid rgb(221, 221, 221); color: #555555; margin: 10px; padding: 2px 6px 4px;"><div style="color: black;"><span style="font-family: Consolas, Monaco, &quot;Andale Mono&quot;, &quot;Ubuntu Mono&quot;, monospace; font-size: 13.005px; white-space: pre-wrap;">sudo docker run --init -d </span><span class="token punctuation" style="box-sizing: border-box; color: #5f6364; font-family: Consolas, Monaco, &quot;Andale Mono&quot;, &quot;Ubuntu Mono&quot;, monospace; font-size: 13.005px; white-space: pre-wrap;">\</span><span style="font-family: Consolas, Monaco, &quot;Andale Mono&quot;, &quot;Ubuntu Mono&quot;, monospace; font-size: 13.005px; white-space: pre-wrap;">
-  --name homeassistant </span><span class="token punctuation" style="box-sizing: border-box; color: #5f6364; font-family: Consolas, Monaco, &quot;Andale Mono&quot;, &quot;Ubuntu Mono&quot;, monospace; font-size: 13.005px; white-space: pre-wrap;">\</span><span style="font-family: Consolas, Monaco, &quot;Andale Mono&quot;, &quot;Ubuntu Mono&quot;, monospace; font-size: 13.005px; white-space: pre-wrap;">
-  --restart</span><span class="token operator" style="background: rgba(255, 255, 255, 0.5); box-sizing: border-box; color: #a67f59; font-family: Consolas, Monaco, &quot;Andale Mono&quot;, &quot;Ubuntu Mono&quot;, monospace; font-size: 13.005px; white-space: pre-wrap;">=</span><span style="font-family: Consolas, Monaco, &quot;Andale Mono&quot;, &quot;Ubuntu Mono&quot;, monospace; font-size: 13.005px; white-space: pre-wrap;">unless-stopped </span><span class="token punctuation" style="box-sizing: border-box; color: #5f6364; font-family: Consolas, Monaco, &quot;Andale Mono&quot;, &quot;Ubuntu Mono&quot;, monospace; font-size: 13.005px; white-space: pre-wrap;">\</span><span style="font-family: Consolas, Monaco, &quot;Andale Mono&quot;, &quot;Ubuntu Mono&quot;, monospace; font-size: 13.005px; white-space: pre-wrap;">
-  -v /etc/localtime:/etc/localtime:ro </span><span class="token punctuation" style="box-sizing: border-box; color: #5f6364; font-family: Consolas, Monaco, &quot;Andale Mono&quot;, &quot;Ubuntu Mono&quot;, monospace; font-size: 13.005px; white-space: pre-wrap;">\</span><span style="font-family: Consolas, Monaco, &quot;Andale Mono&quot;, &quot;Ubuntu Mono&quot;, monospace; font-size: 13.005px; white-space: pre-wrap;">
-  -v /PATH_TO_YOUR_CONFIG:/config </span><span class="token punctuation" style="box-sizing: border-box; color: #5f6364; font-family: Consolas, Monaco, &quot;Andale Mono&quot;, &quot;Ubuntu Mono&quot;, monospace; font-size: 13.005px; white-space: pre-wrap;">\</span><span style="font-family: Consolas, Monaco, &quot;Andale Mono&quot;, &quot;Ubuntu Mono&quot;, monospace; font-size: 13.005px; white-space: pre-wrap;">
-  --network</span><span class="token operator" style="background: rgba(255, 255, 255, 0.5); box-sizing: border-box; color: #a67f59; font-family: Consolas, Monaco, &quot;Andale Mono&quot;, &quot;Ubuntu Mono&quot;, monospace; font-size: 13.005px; white-space: pre-wrap;">=</span><span style="font-family: Consolas, Monaco, &quot;Andale Mono&quot;, &quot;Ubuntu Mono&quot;, monospace; font-size: 13.005px; white-space: pre-wrap;">host </span><span class="token punctuation" style="box-sizing: border-box; color: #5f6364; font-family: Consolas, Monaco, &quot;Andale Mono&quot;, &quot;Ubuntu Mono&quot;, monospace; font-size: 13.005px; white-space: pre-wrap;">\</span></div><div style="color: black;"><span><span style="font-family: Consolas, Monaco, Andale Mono, Ubuntu Mono, monospace;"><span style="font-size: 13.005px; white-space: pre-wrap;">  --privileged \
-  homeassistant/raspberrypi4-homeassistant:stable</span></span></span></div></div><div style="text-align: left;"><br /></div><div style="text-align: left;">&nbsp;Once Home Assistant is done installing, it should start running automatically. Test it out by entering "http://&lt;host&gt;:8123" in your web browser, but replace &lt;host&gt; with your PI's IP that we found earlier (the same address used for SSH). If everything worked you should see this Home Assistant Page:</div><div style="text-align: left;"><br /></div><div><div><div style="text-align: center;"><img alt="" data-original-height="498" data-original-width="527" height="240" src="https://lh3.googleusercontent.com/-QTcvWrMcDcQ/YDr1PLGebrI/AAAAAAAA3JY/Q2_ZepHBudcvKdDq5vkKNzzviyWG1jYnwCLcBGAsYHQ/image.png" width="254" /></div><div style="text-align: center;"><br /></div><div style="text-align: left;">&nbsp;You can now follow the prompts to configure Home Assistant. Once finished, you should see the default interface that looks something like this:</div><div style="text-align: left;"><br /><div class="separator" style="clear: both; text-align: center;"><a href="https://1.bp.blogspot.com/-sjakJ1v_nkE/YDr1o1PGFGI/AAAAAAAA3Jg/Cy5dvlLjOUQd2mVw9q9389ljzQD0pqfPQCLcBGAsYHQ/s2048/Screen%2BShot%2B2021-02-27%2Bat%2B6.44.09%2BPM.png" style="margin-left: 1em; margin-right: 1em;"><img border="0" data-original-height="1086" data-original-width="2048" height="218" src="https://1.bp.blogspot.com/-sjakJ1v_nkE/YDr1o1PGFGI/AAAAAAAA3Jg/Cy5dvlLjOUQd2mVw9q9389ljzQD0pqfPQCLcBGAsYHQ/w410-h218/Screen%2BShot%2B2021-02-27%2Bat%2B6.44.09%2BPM.png" width="410" /></a></div><div class="separator" style="clear: both; text-align: center;"><br /></div><div class="separator" style="clear: both; text-align: left;">&nbsp;With Home Assistant now set up, you should be able to access this interface from any phone or computer on your network by going to the same web address as above and signing in with your username and password. You can also access it with the Home Assistant app if you download it to your phone.</div><div class="separator" style="clear: both; text-align: left;"><br /></div><div class="separator" style="clear: both; text-align: left;">&nbsp;I took an old smartphone I had laying around, mounted it in my van, and installed the Home Assistant app on it. Now I have a permanent screen to access home assistant from, monitor sensors, and control the lights.</div><div class="separator" style="clear: both; text-align: left;"><br /></div><div class="separator" style="clear: both; text-align: center;"><a href="https://1.bp.blogspot.com/-GHVzbbsXPwY/YElF6nGaLKI/AAAAAAAA3PA/kAJtFC7pUDUX0WCQwefi3vxKC2_jxtkSwCPcBGAsYHg/s4032/PXL_20210308_231811950.jpg" style="margin-left: 1em; margin-right: 1em;"><img border="0" data-original-height="3024" data-original-width="4032" src="https://1.bp.blogspot.com/-GHVzbbsXPwY/YElF6nGaLKI/AAAAAAAA3PA/kAJtFC7pUDUX0WCQwefi3vxKC2_jxtkSwCPcBGAsYHg/s320/PXL_20210308_231811950.jpg" width="320" /></a></div><br /><div class="separator" style="clear: both; text-align: left;"><br /></div><div class="separator" style="clear: both; text-align: left;"><br /></div><div class="separator" style="clear: both; text-align: left;">&nbsp;Home assistant isn't very useful without integrating it with the different systems of the van, so next we'll look at using it to control the lights!</div><div class="separator" style="clear: both; text-align: left;"><br /></div><div class="separator" style="clear: both; text-align: center;"><b><span style="font-size: medium;"><a href="control_the_lights.html">Next: Control the Lights</a></span></b></div></div></div></div>
+        <div>&nbsp;After doing the initial setup of the Raspberry Pi, the next step is to install
+          Home Assistant on the Pi. Home Assistant is an open source home automation interface designed to work with lots of
+          existing IoT devices and is very customizable for any application. It's also commonly run on a Raspberry Pi with
+          lots of community support online. That is why I chose it for this project.</div>
+        <div><br /></div>
+        <div>&nbsp;The two recommended ways of installing Home Assistant are installing the full
+          Home Assistant operating system, or installing the Home Assistant container. While it seems like the home assistant
+          operating system has more features, it also limits the Raspberry Pi to only running Home Assistant. Since I want to
+          run other things on the Raspberry Pi as well and have better control of the Pi's interfaces, I will be going with
+          the container installation.</div>
+        <div><br /></div>
+        <div>&nbsp;In order to install the container, we first need to install Docker. This can be
+          done by first downloading the install script with:</div>
+        <div class="terminal">
+          curl -fsSL https://get.docker.com -o get-docker.sh</div>
+        <div>You can then run the script with:</div>
+        <div class="terminal">
+          sudo sh get-docker.sh</div>
+        <div>&nbsp;Once Docker is installed we can now install Home Assistant. The Home Assistant
+          website has good instructions here, although we need to make one small modification:</div>
+        <div class="tut_link"><a
+            href="https://www.home-assistant.io/installation/raspberrypi#install-home-assistant-container">https://www.home-assistant.io/installation/raspberrypi#install-home-assistant-container</a>
+        </div>
+        <div><br /></div>
+        <div>&nbsp;Since we want Home Assistant to have access to the GPIO as well as USB devices,
+          we need to add the "--privileged" flag to the docker run command. We also want to run it as
+          administrator so we add "sudo" to the start of the command. This is what I ran to install Home Assistant on my Pi:
+        </div>
+        <div class="terminal">
+          <div>sudo docker run --init -d \</div>
+          <div>&nbsp;&nbsp;--name homeassistant \</div>
+          <div>&nbsp;&nbsp;--restart=unless-stopped \</div>
+          <div>&nbsp;&nbsp;-v /etc/localtime:/etc/localtime:ro \</div>
+          <div>&nbsp;&nbsp;-v /PATH_TO_YOUR_CONFIG:/config \</div>
+          <div>&nbsp;&nbsp;--network=host \</div>
+          <div>&nbsp;&nbsp;--privileged \</div>
+          <div>&nbsp;&nbsp;homeassistant/raspberrypi4-homeassistant:stable</div>
+        </div>
+        <div><br /></div>
+        <div>&nbsp;Once Home Assistant is done installing, it should start running automatically.
+          Test it out by entering "http://&lt;host&gt;:8123" in your web browser, but replace &lt;host&gt; with your PI's IP
+          that we found earlier (the same address used for SSH). If everything worked you should see this Home Assistant Page:
+        </div>
+        <div><br /></div>
+        <div class="tut_img">
+          <img src="assets/img/install/install2.png">
+        </div>
+        <div style="text-align: center;"><br /></div>
+        <div>&nbsp;You can now follow the prompts to configure Home Assistant. Once finished,
+          you should see the default interface that looks something like this:</div>
+        <div><br /></div>
+        <div class = "tut_img">
+          <img src="assets/img/install/install3.png">
+        </div>
+        <div><br /></div>
+        <div>&nbsp;With Home Assistant now set up, you should
+          be able to access this interface from any phone or computer on your network by going to the same web address
+          as above and signing in with your username and password. You can also access it with the Home Assistant app if
+          you download it to your phone.</div>
+        <div><br /></div>
+        <div>&nbsp;I took an old smartphone I had laying
+          around, mounted it in my van, and installed the Home Assistant app on it. Now I have a permanent screen to
+          access home assistant from, monitor sensors, and control the lights.</div>
+        <div><br /></div>
+        <div class="tut_img">
+          <img src="assets/img/install/install4.jpg">
+        </div>
+        <div><br /></div>
+        <div><br /></div>
+        <div>&nbsp;Home assistant isn't very useful without
+          integrating it with the different systems of the van, so next we'll look at using it to control the lights!
+        </div>
+        <div><br /></div>
+        <div class="next_link">
+          <a href="control_the_lights.html">Next: Control the Lights</a>
+        </div>
       </div>
     </section>
 

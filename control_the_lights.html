@@ -91,9 +91,127 @@
       </div>
     </section><!-- End Breadcrumbs Section -->
 
+    <section class="tutorial_imgs">
+        <div class="row">
+          <div class="portfolio-details-slider swiper">
+            <div class="swiper-wrapper align-items-center">
+  
+              <div class="swiper-slide">
+                <img src="assets/img/lights/lights1.png" class="tut_swiper_img" alt="">
+              </div>
+  
+              <div class="swiper-slide">
+                <img src="assets/img/lights/lights2.jpeg" class="tut_swiper_img" alt="">
+              </div>
+  
+              <div class="swiper-slide">
+                <img src="assets/img/lights/lights3.png" class="tut_swiper_img" alt="">
+              </div>
+  
+            </div>
+            <div class="swiper-pagination"></div>
+          </div>
+        </div>
+      </section>
+
     <section class="inner-page">
       <div class="container">
-        <p class="p1" style="font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;">&nbsp;With Home Assistant installed we can now add a first interface which will be control of the lights. This will involve some wiring, soldering, and circuit work, so a basic understanding of circuits is recommended. We'll need a few items for this to work:</p><div style="background-color: #eeeeee; border: 2px solid rgb(221, 221, 221); color: #555555; margin: 10px; padding: 2px 6px 4px;"><ul><li><b><a href="https://www.amazon.com/gp/product/B06WP7169Y/ref=as_li_tl?ie=UTF8&amp;tag=vanomation-20&amp;camp=1789&amp;creative=9325&amp;linkCode=as2&amp;creativeASIN=B06WP7169Y&amp;linkId=3be991778778c769b4582ff3fd4a4ba6" target="_blank">Raspberry Pi Starter Kit</a>:</b>&nbsp;I recommend picking up a starter kit for the raspberry pi similar to this one. It comes with some basic electrical components, a breadboard, and a GPIO extension board which will be very useful for prototyping circuits</li><li><b><a href="https://www.amazon.com/gp/product/B073VDX4B7/ref=as_li_tl?ie=UTF8&amp;tag=vanomation-20&amp;camp=1789&amp;creative=9325&amp;linkCode=as2&amp;creativeASIN=B073VDX4B7&amp;linkId=e8baa273a2819a9f5851b84aba30f11c" target="_blank">Soldering Iron</a>:</b> A basic kit like this one will do the trick if you don't have a soldering iron already. Also comes with a multimeter which is handy for checking your work and debugging</li><li><b><a href="https://www.amazon.com/gp/product/B07CTF1JVD/ref=as_li_tl?ie=UTF8&amp;tag=vanomation-20&amp;camp=1789&amp;creative=9325&amp;linkCode=as2&amp;creativeASIN=B07CTF1JVD&amp;linkId=5b21249afdac19079ee775e0168d1535" target="_blank">N-Channel MOSFETs</a>: </b>These will be used to switch on and off the lights</li><li><b><a href="https://www.amazon.com/gp/product/B012ZOI3ZW/ref=as_li_tl?ie=UTF8&amp;tag=vanomation-20&amp;camp=1789&amp;creative=9325&amp;linkCode=as2&amp;creativeASIN=B012ZOI3ZW&amp;linkId=8f0e10c49e17592d6413f989b1a17041" target="_blank">Lights</a>: </b>I use these 12V LED lights in my van</li></ul><div></div></div><p class="p1" style="font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><br /></p><p class="p1" style="font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;">&nbsp;The Raspberry Pi GPIO pins operate at 3.3V, so they can't be used to drive our lights directly. Instead we need a way to use the GPIO pins to switch on and off a 12V source to the lights. We will do this using an N-Channel MOSFET. Here is the basic circuit:</p><p class="p1" style="font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><br /></p><div class="separator" style="clear: both; text-align: center;"><a href="https://1.bp.blogspot.com/-IvittC6JASc/YM-Uxre2Q4I/AAAAAAAA57Q/GJ9MqckgsjUZ7-PuRj5PKIIWRXZj2LdRACLcBGAsYHQ/s942/Screen%2BShot%2B2021-06-20%2Bat%2B1.18.25%2BPM.png" style="margin-left: 1em; margin-right: 1em;"><img border="0" data-original-height="868" data-original-width="942" src="https://1.bp.blogspot.com/-IvittC6JASc/YM-Uxre2Q4I/AAAAAAAA57Q/GJ9MqckgsjUZ7-PuRj5PKIIWRXZj2LdRACLcBGAsYHQ/s320/Screen%2BShot%2B2021-06-20%2Bat%2B1.18.25%2BPM.png" width="320" /></a></div>&nbsp;The GPIO pin from the Raspberry Pi drives the gate of the MOSFET (pin 2 above). If the voltage on the gate exceeds the gate threshold voltage, the MOSFET will turn on allowing current to flow from the drain (pin 1) to the source (pin 3). Make sure the gate threshold voltage on the MOSFET that you use is less than 3.3V or the Raspberry Pi will not be able to drive it. A 10k resistor is also added between the gate and ground to keep the MOSFET turned off if the GPIO pin is not configured correctly.<div><br /></div><div>&nbsp;I put this circuit together by soldering wires directly to the MOSFET and connecting the gate wire to a breadboard where I have the 10k resistor and the GPIO extension board which connects it back to the Raspberry Pi. It's a little hacked together, but it works. I plan on eventually putting this together onto a PCB to clean things up a bit.</div><div><br /></div><div class="separator" style="clear: both; text-align: center;"><a href="https://1.bp.blogspot.com/-X_hR0GA80tU/YM-sWBtRZJI/AAAAAAAA57k/AxIjowGBbxwPFvtKK5ucDnpiWS1IrzzmQCPcBGAsYHg/s4032/PXL_20210620_205910626.jpg" style="margin-left: 1em; margin-right: 1em;"><img border="0" data-original-height="3024" data-original-width="4032" src="https://1.bp.blogspot.com/-X_hR0GA80tU/YM-sWBtRZJI/AAAAAAAA57k/AxIjowGBbxwPFvtKK5ucDnpiWS1IrzzmQCPcBGAsYHg/s320/PXL_20210620_205910626.jpg" width="320" /></a></div><br /><div><br /></div><div><br /></div><div>&nbsp;For the GPIO pin, make sure you use GPIO12, 13, 18, or 19 since these are the hardware PWM pins on the Raspberry Pi that will allow for dimming. I used 12 and 13 and built the circuit twice since I have two different zones for the lights in my van.<br /><p class="p1" style="font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><br /></p><p class="p1" style="font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;">&nbsp;Next we need to set up the Raspberry Pi to be able to control these GPIO pins. We need to first install and enable pigpiod:</p><div style="background-color: #eeeeee; border: 2px solid rgb(221, 221, 221); margin: 10px; padding: 2px 6px 4px;"><span style="color: #666666; font-family: Menlo;"><span style="background-color: transparent; font-size: 11px;">sudo apt-get install pigpio<br /></span><span style="font-size: 11px;">sudo systemctl enable pigpiod</span></span></div><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;"></span></p><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span style="font-family: Times; font-size: medium;">&nbsp;We then need to enable remote GPIO on the Raspberry Pi. Enter the raspi-config utility:</span></p><div style="background-color: #eeeeee; border: 2px solid rgb(221, 221, 221); margin: 10px; padding: 2px 6px 4px;"><span style="color: #666666; font-family: Menlo;"><span style="font-size: 11px;">sudo raspi-config</span></span></div><p>&nbsp;Choose option 3 - Interface Options, then option P8 - Remote GPIO, then Yes to enable. Exit out and reboot the Raspberry Pi for changes to take effect.</p><p>&nbsp;The last step is to add the light entities to Home Assistant. Navigate to your home assistant directory (/home/pi/homeassistant in my case). Add the following to your&nbsp;configuration.yaml file:</p><div style="background-color: #eeeeee; border: 2px solid rgb(221, 221, 221); margin: 10px; padding: 2px 6px 4px;"><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;">light:</span></p><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;"><span class="Apple-converted-space">&nbsp; </span>- platform: rpi_gpio_pwm</span></p><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;"><span class="Apple-converted-space">&nbsp; &nbsp; </span>leds:</span></p><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;"><span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; </span>- name: Bed Lights<span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span></span></p><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;"><span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; &nbsp; </span>driver: gpio</span></p><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;"><span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; &nbsp; </span>pins: [12]</span></p><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;"><span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; &nbsp; </span>type: simple</span></p><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;"><span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; &nbsp; </span>frequency: 50000</span></p><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;"><span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; </span>- name: Main Lights</span></p><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;"><span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; &nbsp; </span>driver: gpio</span></p><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;"><span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; &nbsp; </span>pins: [13]</span></p><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;"><span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; &nbsp; </span>type: simple</span></p><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;"><span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; &nbsp; </span>frequency: 50000</span></p></div><p>&nbsp;This configuration is for two light zones, one controlled by GPIO12 and one by GPIO13. You can change the names and pin numbers to match your configuration. For the frequency, I played around with it until I found a value that worked well. Too low and you can notice the lights flickering when dimmed. Certain values also seemed to cause a ringing noise from the lights.</p><p>&nbsp;After restarting home assistant you should be able to edit the dashboard and add a light card to control your lights!</p><div class="separator" style="clear: both; text-align: center;"><a href="https://1.bp.blogspot.com/-MpJXwd2JCLI/YM-rtXSptCI/AAAAAAAA57Y/PKNd_LhFXRYXwXGH1WD5ZBXMxOsRNNNwQCLcBGAsYHQ/s1572/Screen%2BShot%2B2021-06-20%2Bat%2B2.57.05%2BPM.png" style="margin-left: 1em; margin-right: 1em;"><img border="0" data-original-height="508" data-original-width="1572" height="125" src="https://1.bp.blogspot.com/-MpJXwd2JCLI/YM-rtXSptCI/AAAAAAAA57Y/PKNd_LhFXRYXwXGH1WD5ZBXMxOsRNNNwQCLcBGAsYHQ/w390-h125/Screen%2BShot%2B2021-06-20%2Bat%2B2.57.05%2BPM.png" width="390" /></a></div><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;"><br /></span></p><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;"><br /></span></p><p class="p1" style="font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px; text-align: center;"><a href="add_wireless_switches.html"><span class="s1" style="font-family: Menlo; font-size: 11px; font-variant-ligatures: no-common-ligatures;"><b style="font-family: Times; font-size: medium; font-variant-ligatures: normal;"><span style="font-size: medium;">Next:&nbsp;</span></b></span><span style="text-align: left;"><span style="color: #0000ee; font-size: medium;"><b>Adding Zigbee Light Switches</b></span></span></a></p></div>
+        <div>
+          &nbsp;With Home Assistant installed we can now add a first interface which will be control of the lights. This
+          will involve some wiring, soldering, and circuit work, so a basic understanding of circuits is recommended. We'll
+          need a few items for this to work:
+        <div class="amazon">
+          <ul>
+            <li><b><a href="https://www.amazon.com/gp/product/B06WP7169Y" target="_blank">
+              Raspberry Pi Starter Kit</a>:</b>&nbsp;I recommend picking up a starter kit for the
+              raspberry pi similar to this one. It comes with some basic electrical components, a breadboard, and a GPIO
+              extension board which will be very useful for prototyping circuits</li>
+            <li><b><a href="https://www.amazon.com/gp/product/B073VDX4B7" target="_blank">
+              Soldering Iron</a>:</b> A basic kit like this one will do the trick if you don't have a
+              soldering iron already. Also comes with a multimeter which is handy for checking your work and debugging</li>
+            <li><b><a href="https://www.amazon.com/gp/product/B07CTF1JVD"target="_blank">
+              N-Channel MOSFETs</a>: </b>These will be used to switch on and off the lights</li>
+            <li><b><a href="https://www.amazon.com/gp/product/B012ZOI3ZW" target="_blank">
+              Lights</a>: </b>I use these 12V LED lights in my van</li>
+          </ul>
+        </div>
+        <div><br /></div>
+        <div>
+          &nbsp;The Raspberry Pi GPIO pins operate at 3.3V, so they can't be used to drive our lights directly. Instead we
+          need a way to use the GPIO pins to switch on and off a 12V source to the lights. We will do this using an
+          N-Channel MOSFET. Here is the basic circuit:</div>
+        <div><br /></div>
+        <div class="tut_img">
+          <img src="assets/img/lights/lights1.png">
+        </div>
+        <div><br /></div>
+        <div>
+          &nbsp;The GPIO pin from the Raspberry Pi drives the gate of the MOSFET (pin 2 above).
+          If the voltage on the gate exceeds the gate threshold voltage, the MOSFET will turn on allowing current to flow from
+          the drain (pin 1) to the source (pin 3). Make sure the gate threshold voltage on the MOSFET that you use is less
+          than 3.3V or the Raspberry Pi will not be able to drive it. A 10k resistor is also added between the gate and ground
+          to keep the MOSFET turned off if the GPIO pin is not configured correctly.</div>
+        <div><br /></div>
+        <div>&nbsp;I put this circuit together by soldering wires directly to the MOSFET and connecting the gate wire to a
+          breadboard where I have the 10k resistor and the GPIO extension board which connects it back to the Raspberry Pi.
+          It's a little hacked together, but it works. I plan on eventually putting this together onto a PCB to clean things
+          up a bit.</div>
+        <div><br /></div>
+        <div class="tut_img">
+          <img src="assets/img/lights/lights2.jpeg">
+        </div>
+        <div><br /></div>
+        <div>&nbsp;For the GPIO pin, make sure you use GPIO12, 13, 18, or 19 since these are the hardware PWM pins on the
+          Raspberry Pi that will allow for dimming. I used 12 and 13 and built the circuit twice since I have two different
+          zones for the lights in my van.</div>
+        <div><br /></div>
+        <div>
+          &nbsp;Next we need to set up the Raspberry Pi to be able to control these GPIO pins. We need to first install
+          and enable pigpiod:</div>
+        <div class="terminal">
+          sudo apt-get install pigpio<br />
+          sudo systemctl enable pigpiod
+        </div>
+        <div>
+          We then need to enable remote GPIO on the Raspberry Pi. Enter the raspi-config utility:</div>
+        <div class="terminal">
+          sudo raspi-config
+        </div>
+        <div>&nbsp;Choose option 3 - Interface Options, then option P8 - Remote GPIO, then Yes to enable. Exit out and
+          reboot the Raspberry Pi for changes to take effect.</div>
+        <div><br /></div>
+        <div>&nbsp;The last step is to add the light entities to Home Assistant. Navigate to your home assistant directory
+          (/home/pi/homeassistant in my case). Add the following to your&nbsp;configuration.yaml file:</div>
+        <div class="terminal">
+            light:<br>
+            - platform: rpi_gpio_pwm<br>
+            &emsp;leds:<br>
+            &emsp;&emsp;- name: Bed Lights<br>
+            &emsp;&emsp;&emsp;driver: gpio<br>
+            &emsp;&emsp;&emsp;pins: [12]<br>
+            &emsp;&emsp;&emsp;type: simple<br>
+            &emsp;&emsp;&emsp;frequency: 50000<br>
+            &emsp;&emsp;- name: Main Lights<br>
+            &emsp;&emsp;&emsp;driver: gpio<br>
+            &emsp;&emsp;&emsp;pins: [13]<br>
+            &emsp;&emsp;&emsp;type: simple<br>
+            &emsp;&emsp;&emsp;frequency: 50000
+        </div>
+        <div>&nbsp;This configuration is for two light zones, one controlled by GPIO12 and one by GPIO13. You can change the
+          names and pin numbers to match your configuration. For the frequency, I played around with it until I found a
+          value that worked well. Too low and you can notice the lights flickering when dimmed. Certain values also seemed
+          to cause a ringing noise from the lights.</div>
+        <div>&nbsp;After restarting home assistant you should be able to edit the dashboard and add a light card to control
+          your lights!</div>
+        <div><br /></div>
+        <div class="tut_img">
+          <img src="assets/img/lights/lights2.jpeg">
+        </div>
+        <div><br /></div>
+        <div class="next_link">
+          <a href="add_wireless_switches.html">Next: Adding Wireless Switches</a>
+        </div>
+        <div><br /></div>
       </div>
     </section>
 

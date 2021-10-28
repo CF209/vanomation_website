@@ -91,9 +91,121 @@
       </div>
     </section><!-- End Breadcrumbs Section -->
 
+    <section class="tutorial_imgs">
+        <div class="row">
+          <div class="portfolio-details-slider swiper">
+            <div class="swiper-wrapper align-items-center">
+  
+              <div class="swiper-slide">
+                <img src="assets/img/switches/switches4.jpg" class="tut_swiper_img" alt="">
+              </div>
+
+              <div class="swiper-slide">
+                <img src="assets/img/switches/switches5.jpg" class="tut_swiper_img" alt="">
+              </div>
+
+              <div class="swiper-slide">
+                <img src="assets/img/switches/switches6.jpg" class="tut_swiper_img" alt="">
+              </div>
+
+              <div class="swiper-slide">
+                <img src="assets/img/switches/switches7.jpg" class="tut_swiper_img" alt="">
+              </div>
+
+              <div class="swiper-slide">
+                <img src="assets/img/switches/switches8.jpg" class="tut_swiper_img" alt="">
+              </div>
+  
+            </div>
+            <div class="swiper-pagination"></div>
+          </div>
+        </div>
+      </section>
+
     <section class="inner-page">
       <div class="container">
-        &nbsp;With my lights now setup through Home Assistant I could control them from my phone or computer, but it would be nice to have some physical switches around the van as well. Wiring up light switches can be a pain and a lot of work, so I decided to use some Zigbee wireless buttons instead.<div><br /></div><div>&nbsp;A few things are needed to get this set up:</div><div style="background-color: #eeeeee; border: 2px solid rgb(221, 221, 221); margin: 10px; padding: 2px 6px 4px;"><ul><li><span style="color: #555555;"><b><a href="https://www.amazon.com/gp/product/B07D19YXND/ref=as_li_tl?ie=UTF8&amp;tag=vanomation-20&amp;camp=1789&amp;creative=9325&amp;linkCode=as2&amp;creativeASIN=B07D19YXND&amp;linkId=c5291c7f9989bf00f4f2751c32e6df35" target="_blank">Aqara Wireless Mini Switch</a></b></span><b style="color: #555555;">:</b><span style="color: #555555;">&nbsp;These buttons are wireless and battery powered, so it's easy to install them anywhere you'd like</span></li><li style="color: #555555;"><b><a href="https://www.amazon.com/gp/product/B07KW1N1MR/ref=as_li_tl?ie=UTF8&amp;tag=vanomation-20&amp;camp=1789&amp;creative=9325&amp;linkCode=as2&amp;creativeASIN=B07KW1N1MR&amp;linkId=197f3de39a53a889ae28307d232ab8d0" target="_blank">Zigbee USB Dongle</a>: </b>The Raspberry Pi doesn't have Zigbee, so a dongle is needed. There are more expensive options that have more range and can handle more devices, but this one is cheap and good enough for my use case. This one also comes with the programming adapter which is needed</li><li style="color: #555555;"><b><a href="https://www.amazon.com/gp/product/B07T13JX32/ref=as_li_tl?ie=UTF8&amp;tag=vanomation-20&amp;camp=1789&amp;creative=9325&amp;linkCode=as2&amp;creativeASIN=B07T13JX32&amp;linkId=78fc28d9ef2a75b4c18484ffddcec43c" target="_blank">CC Debugger</a>: </b>This device is used to program the Zigbee dongle</li></ul><div style="color: #555555;"></div></div><div><span>&nbsp;The first step is to program the Zigbee dongle with the correct firmware. It is well documented how to do this on other sites. I followed the instructions here:</span></div><div><span><br /></span></div><div><span><a href="https://www.zigbee2mqtt.io/information/flashing_the_cc2531.html" target="_blank">https://www.zigbee2mqtt.io/information/flashing_the_cc2531.html</a></span></div><div><br /></div><div>&nbsp;Once the dongle is programmed you can insert it into the Raspberry Pi. To add it into Home Assistant you then need to add the Zigbee Home Automation integration. Go to 'Configuraton' then 'Integrations', then click 'Add Integration'. Search for Zigbee and add the integration. It should automatically detect the Zigbee dongle and set itself up.</div><div><br /></div><div>&nbsp;Next we need to configure the Aqara Wireless Switches. From the Integrations page, click configure on your Zigbee integration then click 'Add Device'. Take out your Aqara switch and remove the plastic tab protecting the battery. Press and hold the small button on top of the device, and Home Assistant should discover it as seen below.</div><div><br /></div><div class="separator" style="clear: both; text-align: center;"><a href="https://1.bp.blogspot.com/-BrcD2kLzxV4/YM-4zSouwOI/AAAAAAAA578/zF3JG1V9kpg1i13Qlj--PEWMcNM5g-ABwCLcBGAsYHQ/s1140/Screen%2BShot%2B2021-06-20%2Bat%2B3.44.26%2BPM.png" style="margin-left: 1em; margin-right: 1em;"><img border="0" data-original-height="1140" data-original-width="860" height="320" src="https://1.bp.blogspot.com/-BrcD2kLzxV4/YM-4zSouwOI/AAAAAAAA578/zF3JG1V9kpg1i13Qlj--PEWMcNM5g-ABwCLcBGAsYHQ/s320/Screen%2BShot%2B2021-06-20%2Bat%2B3.44.26%2BPM.png" /></a></div><br /><div>&nbsp;Sometimes this takes a few tries and it helps to hold the button closer to the Raspberry Pi when doing this. After it is discovered you can change the name of the device to something more descriptive.</div><div><br /></div><div>&nbsp;With the button now configured in Home Assistant the last step is to link it to the lights with an automation. Create a new automation by going to 'Configuration', 'Automations', and 'Add Automation'. Add a new trigger for the automation to start when the button is pressed:</div><div><br /></div><div class="separator" style="clear: both; text-align: center;"><a href="https://1.bp.blogspot.com/-VHmfu3NMK0A/YM_AD5ujO1I/AAAAAAAA58E/gdb3eOkn1QMYzQoDJ87tlTGYy0DrMSi2gCLcBGAsYHQ/s1218/Screen%2BShot%2B2021-06-20%2Bat%2B4.22.02%2BPM.png" style="margin-left: 1em; margin-right: 1em;"><img border="0" data-original-height="458" data-original-width="1218" height="130" src="https://1.bp.blogspot.com/-VHmfu3NMK0A/YM_AD5ujO1I/AAAAAAAA58E/gdb3eOkn1QMYzQoDJ87tlTGYy0DrMSi2gCLcBGAsYHQ/w346-h130/Screen%2BShot%2B2021-06-20%2Bat%2B4.22.02%2BPM.png" width="346" /></a></div><br /><div>&nbsp;And then add an action to toggle the light:</div><div><br /></div><div class="separator" style="clear: both; text-align: center;"><a href="https://1.bp.blogspot.com/-X6DK-BJNtAQ/YM_AYTLTXEI/AAAAAAAA58M/ox8MVB8gOuIgOC7EdfxhecE6nORxwVeFQCLcBGAsYHQ/s1216/Screen%2BShot%2B2021-06-20%2Bat%2B4.22.30%2BPM.png" style="margin-left: 1em; margin-right: 1em;"><img border="0" data-original-height="648" data-original-width="1216" height="189" src="https://1.bp.blogspot.com/-X6DK-BJNtAQ/YM_AYTLTXEI/AAAAAAAA58M/ox8MVB8gOuIgOC7EdfxhecE6nORxwVeFQCLcBGAsYHQ/w354-h189/Screen%2BShot%2B2021-06-20%2Bat%2B4.22.30%2BPM.png" width="354" /></a></div><br /><div>&nbsp;The 'transition' property adds a cool effect of gradually increasing/decreasing brightness over the specified time period. I also created a second automation for controlling the bed lights from a double press of the button.</div><div><br /></div><div>&nbsp;The button should now work for controlling the lights! You can repeat the same steps to add more buttons as well. I have one by the steering wheel, one by the sliding door, one by the bed, and one centered on a cabinet.</div><div><br /></div><div>&nbsp;You can also follow the same above steps to add other Zigbee devices. <a href="https://www.amazon.com/gp/product/B07D37FKGY/ref=as_li_tl?ie=UTF8&amp;tag=vanomation-20&amp;camp=1789&amp;creative=9325&amp;linkCode=as2&amp;creativeASIN=B07D37FKGY&amp;linkId=58c472a8e8f536abb650b0fe81f96010" target="_blank">I added this temperature and humidity sensor</a></div><div><br /></div><div class="separator" style="clear: both; text-align: center;"><a href="https://1.bp.blogspot.com/-lkPr_BFSkZk/YM_Dvualr6I/AAAAAAAA58s/OYNW3RqBF8gGUVNcywyuwiX3ssa1ZYiowCPcBGAsYHg/s3077/PXL_20210620_223414356.jpg" style="margin-left: 1em; margin-right: 1em;"><img border="0" data-original-height="3077" data-original-width="3024" height="320" src="https://1.bp.blogspot.com/-lkPr_BFSkZk/YM_Dvualr6I/AAAAAAAA58s/OYNW3RqBF8gGUVNcywyuwiX3ssa1ZYiowCPcBGAsYHg/s320/PXL_20210620_223414356.jpg" /></a></div><div><br /></div><div style="text-align: center;"><b><span style="font-size: medium;"><a href="monitor_solar_power.html">Next:&nbsp;Monitoring Solar Power</a></span></b></div>
+        <div>&nbsp;With my lights now setup through Home Assistant I could control them from my phone or computer, but it would
+          be nice to have some physical switches around the van as well. Wiring up light switches can be a pain and a lot of
+          work, so I decided to use some Zigbee wireless buttons instead.</div>
+        <div><br /></div>
+        <div>&nbsp;A few things are needed to get this set up:</div>
+        <div class="amazon">
+          <ul>
+            <li><b><a href="https://www.amazon.com/gp/product/B07D19YXND" target="_blank">
+              Aqara Wireless Mini Switch</a>:</b>
+              &nbsp;These buttons are wireless and battery powered, so it's easy to install them
+              anywhere you'd like</li>
+            <li><b><a href="https://www.amazon.com/gp/product/B07KW1N1MR" target="_blank">
+              Zigbee USB Dongle</a>: </b>
+              The Raspberry Pi doesn't have Zigbee, so a dongle is needed.
+              There are more expensive options that have more range and can handle more devices, but this one is cheap and
+              good enough for my use case. This one also comes with the programming adapter which is needed</li>
+            <li><b><a href="https://www.amazon.com/gp/product/B07T13JX32" target="_blank">
+              CC Debugger</a>: </b>This device is used to program the Zigbee dongle</li>
+          </ul>
+        </div>
+        <div>&nbsp;The first step is to program the Zigbee dongle with the correct firmware. It is well documented how
+            to do this on other sites. I followed the instructions here:</div>
+        <div class="tut_link"><a
+          href="https://www.zigbee2mqtt.io/information/flashing_the_cc2531.html" target="_blank">https://www.zigbee2mqtt.io/information/flashing_the_cc2531.html</a>
+        </div>
+        <div><br /></div>
+        <div>&nbsp;Once the dongle is programmed you can insert it into the Raspberry Pi. To add it into Home Assistant you
+          then need to add the Zigbee Home Automation integration. Go to 'Configuraton' then 'Integrations', then click 'Add
+          Integration'. Search for Zigbee and add the integration. It should automatically detect the Zigbee dongle and set
+          itself up.</div>
+        <div><br /></div>
+        <div>&nbsp;Next we need to configure the Aqara Wireless Switches. From the Integrations page, click configure on
+          your Zigbee integration then click 'Add Device'. Take out your Aqara switch and remove the plastic tab protecting
+          the battery. Press and hold the small button on top of the device, and Home Assistant should discover it as seen
+          below.</div>
+        <div><br /></div>
+        <div class="tut_img">
+          <img src="assets/img/switches/switches1.png">
+        </div>
+        <div><br /></div>
+        <div>&nbsp;Sometimes this takes a few tries and it helps to hold the button closer to the Raspberry Pi when doing
+          this. After it is discovered you can change the name of the device to something more descriptive.</div>
+        <div><br /></div>
+        <div>&nbsp;With the button now configured in Home Assistant the last step is to link it to the lights with an
+          automation. Create a new automation by going to 'Configuration', 'Automations', and 'Add Automation'. Add a new
+          trigger for the automation to start when the button is pressed:</div>
+        <div><br /></div>
+        <div class="tut_img">
+          <img src="assets/img/switches/switches2.png">
+        </div>
+        <div><br /></div>
+        <div>&nbsp;And then add an action to toggle the light:</div>
+        <div><br /></div>
+        <div class="tut_img">
+          <img src="assets/img/switches/switches3.png">
+        </div>
+        <div><br /></div>
+        <div>&nbsp;The 'transition' property adds a cool effect of gradually increasing/decreasing brightness over the
+          specified time period. I also created a second automation for controlling the bed lights from a double press of
+          the button.</div>
+        <div><br /></div>
+        <div>&nbsp;The button should now work for controlling the lights! You can repeat the same steps to add more buttons
+          as well. I have one by the steering wheel, one by the sliding door, one by the bed, and one centered on a cabinet.
+        </div>
+        <div><br /></div>
+        <div class="tut_img">
+          <img src="assets/img/switches/switches4.jpg">
+        </div>
+        <div><br /></div>
+        <div>&nbsp;You can also follow the same above steps to add other Zigbee devices. I added this temperature and humidity sensor:</div>
+        <div class="tut_link">
+          <a href="https://www.amazon.com/gp/product/B07D37FKGY" target="_blank">https://www.amazon.com/gp/product/B07D37FKGY</a>
+        </div>
+        <div><br /></div>
+        <div class="tut_img">
+          <img src="assets/img/switches/switches8.jpg">
+        </div>
+        <div><br /></div>
+        <div class="next_link">
+          <a href="monitor_solar_power.html">Next: Monitoring Solar Power</a>
+        </div>
+        <div><br /></div>
       </div>
     </section>
 

@@ -187,15 +187,16 @@
         <div>The ESPHome code was pretty straightforward for this one. Just a simple output switch:</div>
         <div class="terminal">
             switch:<br>
-            - platform: gpio<br>
-            &emsp;pin: 26<br>
-            &emsp;name: "Solenoid"<br>
+            &emsp; - platform: gpio<br>
+            &emsp;&emsp;&emsp; pin: 26<br>
+            &emsp;&emsp;&emsp; name: "Solenoid"<br>
         </div>
         <div>With the ESP32 programmed, I could now control the solenoid from Home Assistant!</div>
         <div><br /></div>
         <div class="tut_img">
           <img src="assets/img/drawer/drawer4.png">
         </div>
+        <div><br /></div>
         <div>&nbsp;This solved the first part of the problem, but I still wanted to have the drawer automatically lock
           when I'm driving. Some different solutions I was thinking of for this included using the accelerometer from the
           van tilt sensor to detect motion, or connecting to a bluetooth OBD2 adapter and reading the speed of the van.
@@ -220,10 +221,10 @@
           configurations.yaml file:</div>
         <div class="terminal">
             binary_sensor:<br>
-            - platform: rpi_gpio<br>
-            &emsp;ports:<br>
-            &emsp;&emsp;26: Van Ignition<br>
-            &emsp;invert_logic: true          
+            &emsp; - platform: rpi_gpio<br>
+            &emsp;&emsp;&emsp; ports:<br>
+            &emsp;&emsp;&emsp;&emsp;&emsp; 26: Van Ignition<br>
+            &emsp;&emsp;&emsp; invert_logic: true          
         </div>
         <div>&nbsp;This sets up the sensor on GPIO pin 26 on the Raspberry Pi and re-inverts it. After restarting Home
           Assistant you should now have this sensor in your setup.</div>

@@ -48,6 +48,7 @@ h1, h2, h3, h4, h5, h6 {
   padding: 2px 6px 4px;
   text-align: left;
   font-family: monospace;
+  font-size: 0.9rem;
 }
 
 .tutorial_imgs {
@@ -66,6 +67,15 @@ h1, h2, h3, h4, h5, h6 {
 .tut_img img {
   max-width: 100%;
   max-height: 500px;
+}
+
+.fut_img {
+  text-align: center;
+}
+
+.fut_img img {
+  max-width: 100%;
+  max-height: 300px;
 }
 
 .tut_link {

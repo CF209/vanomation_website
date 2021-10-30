@@ -183,20 +183,20 @@
           to add:</div>
         <div class="terminal">
           i2c:<br>
-          &emsp;sda: 2<br>
-          &emsp;scl: 14<br>
+          &emsp; sda: 2<br>
+          &emsp; scl: 14<br>
           <br>
           sensor:<br>
-          &emsp;- platform: mpu6050<br>
-          &emsp;&emsp;address: 0x68<br>
-          &emsp;&emsp;update_interval: 200ms<br>
-          &emsp;&emsp;accel_x:<br>
-          &emsp;&emsp;&emsp;name: "MPU6050 Accel X"<br>
-          &emsp;&emsp;accel_y:<br>
-          &emsp;&emsp;&emsp;name: "MPU6050 Accel Y"
+          &emsp; - platform: mpu6050<br>
+          &emsp;&emsp;&emsp; address: 0x68<br>
+          &emsp;&emsp;&emsp; update_interval: 200ms<br>
+          &emsp;&emsp;&emsp; accel_x:<br>
+          &emsp;&emsp;&emsp;&emsp;&emsp; name: "MPU6050 Accel X"<br>
+          &emsp;&emsp;&emsp; accel_y:<br>
+          &emsp;&emsp;&emsp;&emsp;&emsp; name: "MPU6050 Accel Y"
         </div>
         <div><br /></div>
-        <div>&nbsp;This sets up the i2c pins (change these if your configuration is different), then sets up the MPU6050
+        <div>&nbsp;This sets up the i2c pins (change these pin numbers if your configuration is different), then sets up the MPU6050
           sensor. The default i2c address for the MPU6050 is 0x68. I set an update interval of 200ms. The only two
           readings we then need from it are acceleration on the X and Y axes which can then be used to calculate the left
           to right tilt and the front to back tilt of the van. I then programmed the ESP8266 and mounted it underneath my
@@ -205,44 +205,44 @@
         <div>&nbsp;With the ESPHome integration in Home Assistant, the new sensor was automatically detected and added. I
           could now view the X and Y acceleration values from the device, but to make it more readable I wanted to convert
           these values to degrees. With some digging around I found this equation:&nbsp;</div>
-        <div>&nbsp;tilt in degrees = arcsin(acceleration / gravity) * 180 / pi</div>
+        <div class="terminal">tilt in degrees = arcsin(acceleration / gravity) * 180 / pi</div>
         <div><br /></div>
         <div>&nbsp;Adding this equation into Home Assistant, I was now getting tilt readings on two axes in degrees. The
           readings seemed a bit off though, so the sensor most likely needed to be calibrated. To calibrate, I used an app
           on my phone to measure the tilt and set my phone on top of my bed platform. I took measurements with the van
           parked at different inclines and averaged the differences to come up with an offset value. I also noticed that
           the degrees readings were inverted from what I wanted, so I added a -1 multiplyer. The final equation was:</div>
-        <div>&nbsp; tilt in degrees = ((arcsin(acceleration / gravity) * 180 / pi) - offset) * -1</div>
+        <div class="terminal">tilt in degrees = ((arcsin(acceleration / gravity) * 180 / pi) - offset) * -1</div>
         <div><br /></div>
         <div>Here is the code I added to the Home Assistant configuration file to add this:</div>
         <div class="terminal">
-          &emsp;- platform: template<br>
-          &emsp;&emsp;sensors:<br>
-          &emsp;&emsp;&emsp;x_angle:<br>
-          &emsp;&emsp;&emsp;&emsp;friendly_name: "X Angle"<br>
-          &emsp;&emsp;&emsp;&emsp;unit_of_measurement: "°"<br>
-          &emsp;&emsp;&emsp;&emsp;value_template: '{{ ((asin((states("sensor.mpu6050_accel_x") | float) / 9.81) * 180 / pi) - 2.8) * -1 }}'<br>
-          &emsp;&emsp;&emsp;y_angle:<br>
-          &emsp;&emsp;&emsp;&emsp;friendly_name: "Y Angle"<br>
-          &emsp;&emsp;&emsp;&emsp;unit_of_measurement: "°"<br>
-          &emsp;&emsp;&emsp;&emsp;value_template: '{{ ((asin((states("sensor.mpu6050_accel_y") | float) / 9.81) * 180 / pi) + 0.3) * -1 }}'
+          &emsp; - platform: template<br>
+          &emsp;&emsp;&emsp; sensors:<br>
+          &emsp;&emsp;&emsp;&emsp;&emsp; x_angle:<br>
+          &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; friendly_name: "X Angle"<br>
+          &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; unit_of_measurement: "°"<br>
+          &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; value_template: '{{ ((asin((states("sensor.mpu6050_accel_x") | float) / 9.81) * 180 / pi) - 2.8) * -1 }}'<br>
+          &emsp;&emsp;&emsp;&emsp;&emsp; y_angle:<br>
+          &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; friendly_name: "Y Angle"<br>
+          &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; unit_of_measurement: "°"<br>
+          &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; value_template: '{{ ((asin((states("sensor.mpu6050_accel_y") | float) / 9.81) * 180 / pi) + 0.3) * -1 }}'
         </div>
         <div>&nbsp;There also seemed to be quite a bit of noise on the sensor, so I added a low pass filter as well. It's not perfect, but it helps a bit:</div>
         <div class="terminal">
-          &emsp;- platform: filter<br>
-          &emsp;&emsp;name: "Filtered X Angle"<br>
-          &emsp;&emsp;entity_id: sensor.x_angle<br>
-          &emsp;&emsp;filters:<br>
-          &emsp;&emsp;&emsp;- filter: lowpass<br>
-          &emsp;&emsp;&emsp;&emsp;time_constant: 5<br>
-          &emsp;&emsp;&emsp;&emsp;precision: 1<br>
-          &emsp;- platform: filter<br>
-          &emsp;&emsp;name: "Filtered Y Angle"<br>
-          &emsp;&emsp;entity_id: sensor.y_angle<br>
-          &emsp;&emsp;filters:<br>
-          &emsp;&emsp;&emsp;- filter: lowpass<br>
-          &emsp;&emsp;&emsp;&emsp;time_constant: 5<br>
-          &emsp;&emsp;&emsp;&emsp;precision: 1
+          &emsp; - platform: filter<br>
+          &emsp;&emsp;&emsp; name: "Filtered X Angle"<br>
+          &emsp;&emsp;&emsp; entity_id: sensor.x_angle<br>
+          &emsp;&emsp;&emsp; filters:<br>
+          &emsp;&emsp;&emsp;&emsp;&emsp; - filter: lowpass<br>
+          &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; time_constant: 5<br>
+          &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; precision: 1<br>
+          &emsp; - platform: filter<br>
+          &emsp;&emsp;&emsp; name: "Filtered Y Angle"<br>
+          &emsp;&emsp;&emsp; entity_id: sensor.y_angle<br>
+          &emsp;&emsp;&emsp; filters:<br>
+          &emsp;&emsp;&emsp;&emsp;&emsp; - filter: lowpass<br>
+          &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; time_constant: 5<br>
+          &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; precision: 1
         </div>
         <div>&nbsp;The end result is a Home Assistant sensor showing the tilt of the van which makes finding a level parking spot quite a bit easier.</div>
         <div><br /></div>

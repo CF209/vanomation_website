@@ -97,11 +97,19 @@
             <div class="swiper-wrapper align-items-center">
   
               <div class="swiper-slide">
+                <img src="assets/img/solar/solar4.jpg" class="tut_swiper_img" alt="">
+              </div>
+
+              <div class="swiper-slide">
                 <img src="assets/img/solar/solar1.jpeg" class="tut_swiper_img" alt="">
               </div>
   
               <div class="swiper-slide">
                 <img src="assets/img/solar/solar2.jpeg" class="tut_swiper_img" alt="">
+              </div>
+
+              <div class="swiper-slide">
+                <img src="assets/img/solar/solar5.jpg" class="tut_swiper_img" alt="">
               </div>
   
               <div class="swiper-slide">
@@ -125,11 +133,11 @@
               Renogy Rover Charge Controller</a>:</b>
               &nbsp;I have the 30Aversion shown here, but this setup should work with any of charge controllers in this series</li>
             <li><b><a href="https://www.amazon.com/gp/product/B00IDSM6BW" target="_blank">
-              USB Serial Dongle</a></b></li>
+              USB Serial Dongle</a>:</b>&nbsp;For serial communication from the Raspberry Pi to the Charge Controller</li>
             <li><b><a href="https://www.amazon.com/gp/product/B0054RRCHI" target="_blank">
-              DB9 to RJ12 adapter</a></b></li>
+              DB9 to RJ12 adapter</a>:</b>&nbsp;The charge controller uses a non-standard serial pinout, so this adapter is needed to connect to it</li>
             <li><b><a href="https://www.amazon.com/gp/product/B08BHVF6XS" target="_blank">
-              RJ12 Cable</a></b></li>
+              RJ12 Cable</a>:</b>&nbsp;To connect from the adapter to the Charge Controller</li>
           </ul>
         </div>
         <div>&nbsp;In order for the Raspberry Pi to communicate with the Renogy charge controller, we need a USB to RJ12
@@ -139,6 +147,10 @@
         <div>&nbsp;The three components of the cable are the USB serial dongle which allows the raspberry pi to
           communicate in the correct protocol for the charge controller, then the DB9 to RJ12 adapter and the RJ12 cable
           which allows you to connect to the Renogy charge controller with the correct pin mapping.</div>
+        <div><br /></div>
+        <div>&nbsp;The Renogy Charge Controller uses a non-standard pinout which is why we will be using the modular adapter kit. 
+          This kit allows you to use any pin mapping you'd like when going from RJ12 to DB9, but requires a bit of work to get set up correctly.
+        </div>
         <div><br /></div>
         <div>&nbsp;The pin mapping of the RJ12 connector for the Renogy charge controller is: TX/RX/GND/GND/+12V/+12V. On
           the USB serial dongle, pin 2 is RXD, pin 3 is TXD, and pin 5 is GND. We need to connect the RJ12 TX to the serial dongle RXD and the RJ12 RX to the serial dongle TXD. We then need to also connect GND. This is done using the DB9 to RJ12 adapter as shown below.</div>
@@ -153,6 +165,10 @@
         <div><br /></div>
         <div>&nbsp;Once the cable is made, I recommend connecting it to the Renogy charge controller, then using a multimeter to test the pin voltages before connecting it to the serial dongle. TX to GND and TX to RX should both be about 5V. Make sure you didn't accidentally connect the 12V pins or you could fry the serial dongle and possibly even the raspberry pi.</div>
         <div><br /></div>
+        <div class="tut_img">
+          <img src="assets/img/solar/solar5.jpg">
+        </div>
+        <div><br /></div>
         <div>&nbsp;With the cable now connected between the raspberry pi and the charge controller, we now need some
           software to read registers from the charge controller. First find the name of the USB serial dongle on your
           raspberry pi with:</div>
@@ -166,7 +182,8 @@
         <div class="tut_link"><a
             href="https://github.com/corbinbs/solarshed" target="_blank">https://github.com/corbinbs/solarshed</a>
         </div>
-        <div>You can install Solarshed with:</div>
+        <div><br /></div>
+        <div>&nbsp;You can install Solarshed with:</div>
         <div class="terminal">
             pip install solarshed
         </div>
@@ -174,11 +191,12 @@
             second using Solarshed and publishes the data to the MQTT server running on the Raspberry Pi:
         </div>
         <div class="tut_link">
-          <a href="https://github.com/CF209/vanomation/blob/main/python/solar/solar_mqtt.py" target="_blank">https://github.com/CF209/vanomation/blob/main/python/solar/solar_mqtt.py</a>
+          <a href="https://github.com/CF209/vanomation/blob/main/python/solar/solar_mqtt.py" target="_blank">solar_mqtt.py</a>
         </div>
+        <div><br /></div>
         <div>&nbsp;If your serial dongle is at a different address, you can change it on this line:</div>
         <div class="terminal">
-          controller = RenogyRover('/dev/ttyUSB0', 1)
+          controller = RenogyRover(<b>'/dev/ttyUSB0'</b>, 1)
         </div>
         <div>&nbsp;You can also edit the script to add monitoring of more than just power or other features.</div>
         <div><br /></div>
@@ -195,7 +213,7 @@
             <br>
             [Service]<br>
             Type=idle<br>
-            ExecStart=/usr/bin/python3 /home/pi/python/solar/solar_mqtt.py<br>
+            ExecStart=/usr/bin/python3 <b>/home/pi/python/solar/solar_mqtt.py</b><br>
             WorkingDirectory=/home/pi<br>
             User=pi<br>
             <br>
@@ -214,11 +232,11 @@
         <div>&nbsp;The final step is to add this new sensor to Home Assistant. In Home Assistant, go to Configuration -&gt; Integrations and add the MQTT integration if you don't have it already. Now go to your configuration.yaml file in your homeassistant directory and add the following sensor:</div>
         <div class="terminal">
             sensor:<br>
-            &emsp;- platform: mqtt<br>
-            &emsp;&emsp;state_topic: "van/solar/power"<br>
-            &emsp;&emsp;name: 'Solar Power'<br>
-            &emsp;&emsp;unit_of_measurement: 'W'<br>
-            &emsp;&emsp;value_template: '{{ value_json.power }}'
+            &emsp; - platform: mqtt<br>
+            &emsp;&emsp;&emsp; state_topic: "van/solar/power"<br>
+            &emsp;&emsp;&emsp; name: 'Solar Power'<br>
+            &emsp;&emsp;&emsp; unit_of_measurement: 'W'<br>
+            &emsp;&emsp;&emsp; value_template: '{{ value_json.power }}'
         </div>
         <div>&nbsp;Restart Home Assistant and you should now be able to add the sensor to your dashboard!</div>
         <div><br /></div>
@@ -227,8 +245,9 @@
         </div>
         <div><br /></div>
         <div class="next_link">
-            <a href="monitor_water_level.html">Next: Monitoring Water Level</a>
-          </div>
+          <a href="monitor_water_level.html">Next: Monitoring Water Level</a>
+        </div>
+        <div><br /></div>
       </div>
     </section>
 

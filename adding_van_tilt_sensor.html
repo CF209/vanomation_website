@@ -91,9 +91,169 @@
       </div>
     </section><!-- End Breadcrumbs Section -->
 
+    <section class="tutorial_imgs">
+      <div class="row">
+        <div class="portfolio-details-slider swiper">
+          <div class="swiper-wrapper align-items-center">
+
+            <div class="swiper-slide">
+              <img src="assets/img/tilt/tilt1.jpeg" class="tut_swiper_img" alt="">
+            </div>
+
+            <div class="swiper-slide">
+              <img src="assets/img/tilt/tilt2.png" class="tut_swiper_img" alt="">
+            </div>
+
+            <div class="swiper-slide">
+              <img src="assets/img/tilt/tilt3.jpeg" class="tut_swiper_img" alt="">
+            </div>
+
+            <div class="swiper-slide">
+              <img src="assets/img/tilt/tilt4.png" class="tut_swiper_img" alt="">
+            </div>
+
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+      </div>
+    </section>
+
     <section class="inner-page">
       <div class="container">
-        <p>&nbsp;&nbsp;&nbsp;The next sensor that I thought would be useful in the van was a level sensor to see how flat the van currently is. When parking for the night, it's always more comfortable to sleep if the van is level. I would always find myself using rocks or inching forward and backward and ask myself "is it better now?". The easy solution would be to just stick a bubble level somewhere, but I thought it would be much more interesting to incorporate it into my Home Assistant setup.</p><div>Items needed to set this up:</div><div style="background-color: #eeeeee; border: 2px solid rgb(221, 221, 221); margin: 10px; padding: 2px 6px 4px;"><ul><li><b style="color: #555555;"><a href="https://www.adafruit.com/product/3886" target="_blank">MPU6050 Accelerometer</a>:</b><span style="color: #555555;">&nbsp;This device essentially measures gravity on 3 axes and can tell you which way is down. It also has a gyroscope which is not needed for this project</span></li><li style="color: #555555;"><b>Other electronics: </b>Either an ESP32/ESP8266 to send the data to your Raspberry Pi, or interface it with the Raspberry Pi directly<b>&nbsp;</b></li></ul><div style="color: #555555;"></div></div><div><br /></div><div>&nbsp;Any 2 or 3-axis accelerometer can be used for this project, but I chose to use the MPU6050&nbsp; because it's widely available and many breakout boards exist for it.</div><div><br /></div><div style="text-align: center;"><a href="https://cdn-shop.adafruit.com/1200x900/3886-00.jpg"><img border="0" data-original-height="600" data-original-width="800" height="219" src="https://cdn-shop.adafruit.com/1200x900/3886-00.jpg" width="291" /></a></div><br /><div>&nbsp;The MPU6050 communicates through I2C, so it needs to be connected to the Raspberry Pi or another microcontroller. I wanted to mount it on the bottom of my bed platform which was a little too far from the Raspberry Pi, so I decided to use an ESP8266 to communicate with the MPU6050 and send the data back to the Raspberry Pi over wifi.</div><div><br /></div><div>&nbsp;If you remember the PCB that I designed for the water level sensor, there were a few extra features on that board that I hadn't used. One was this 6-pin header with i2c that I added specifically to accomodate an MPU6050 module. In its default state, this header works with the Adafruit MPU6050 module I linked above. By connecting the JP1 solder jumper, it also accommodates cheaper MPU6050 modules that can be found on Amazon.</div><div><br /></div><div class="separator" style="clear: both; text-align: center;"><a href="https://blogger.googleusercontent.com/img/a/AVvXsEiatcBf0xsW9kl5c7ozYwPwU7MO14DcxZrCJLZzD2VDklGr-y3ffadMChNGMDoySCLCYbnX6JTDRn6Lh14pztYV6bvqWLACH-G_kOPtkfoeKDTRfKaqgLbUtp9PjbGNkV0UaqIDeoGOJEIY6MsPQ7_4lTI6OrodvS8K_N6QsWST0seLN6rhAx3ZnmG_=s1088" style="margin-left: 1em; margin-right: 1em;"><img border="0" data-original-height="626" data-original-width="1088" height="216" src="https://blogger.googleusercontent.com/img/a/AVvXsEiatcBf0xsW9kl5c7ozYwPwU7MO14DcxZrCJLZzD2VDklGr-y3ffadMChNGMDoySCLCYbnX6JTDRn6Lh14pztYV6bvqWLACH-G_kOPtkfoeKDTRfKaqgLbUtp9PjbGNkV0UaqIDeoGOJEIY6MsPQ7_4lTI6OrodvS8K_N6QsWST0seLN6rhAx3ZnmG_=w376-h216" width="376" /></a></div><div><br /></div>&nbsp; The full KICAD files can be found here:<div><a href="https://github.com/CF209/kicad/tree/main/ESP8266_Water_Sensor">https://github.com/CF209/kicad/tree/main/ESP8266_Water_Sensor<br /></a><div><br /></div><div class="separator" style="clear: both; text-align: center;"><a href="https://blogger.googleusercontent.com/img/a/AVvXsEioAypGrtqmO6buL2vv_uqIm5oPI1fHSjgrWyW4Hd2McJC_fCd1dPvk16Px7IKOrmBc2yW2g7veY0UaTUOdc81nomoFX-A_aWLtCq0W94v2Wymp3Rljxo8U1C9W2CEFWDUrlFNA8hpJpS-keClLONooJzeUp6xmpfU2khvFilOyH2D6KcR2p3SBx-WB=s2267" style="margin-left: 1em; margin-right: 1em;"><img border="0" data-original-height="2267" data-original-width="2256" height="320" src="https://blogger.googleusercontent.com/img/a/AVvXsEioAypGrtqmO6buL2vv_uqIm5oPI1fHSjgrWyW4Hd2McJC_fCd1dPvk16Px7IKOrmBc2yW2g7veY0UaTUOdc81nomoFX-A_aWLtCq0W94v2Wymp3Rljxo8U1C9W2CEFWDUrlFNA8hpJpS-keClLONooJzeUp6xmpfU2khvFilOyH2D6KcR2p3SBx-WB=s320" width="318" /></a></div><br /><div>&nbsp;I forgot to take a picture of the assembled board, but you can see J1 in the picture above where the module is mounted.</div><div><br /></div><div>&nbsp;Next is the software for the ESP8266. Luckily there's functionality in ESPHome for the MPU6050, so the software part is very easy. Details on this can be found here:&nbsp; &nbsp;<a href="https://esphome.io/components/sensor/mpu6050.html">https://esphome.io/components/sensor/mpu6050.html</a></div><div><br /></div><div>&nbsp;To create the new ESPHome file, open up the ESPHome dashboard (<a href="http://192.168.0.101:6052/">http://192.168.0.101:6052/</a>&nbsp;in my case) and click the plus button in the bottom right. Choose "Generic ESP8266" and enter your wifi information. In the config file you'll then want to add:</div><div><div><span><div><div style="background-color: #eeeeee; border: 2px solid rgb(221, 221, 221); margin: 10px; padding: 2px 6px 4px;"><p class="p1" style="color: black; font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span style="font-variant-ligatures: no-common-ligatures;">i2c:</span></p><p class="p1" style="font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span style="font-family: Menlo;"><span style="font-size: 11px; font-variant-ligatures: no-common-ligatures;">&nbsp; sda: 2</span></span></p><p class="p1" style="font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span style="font-family: Menlo;"><span style="font-size: 11px; font-variant-ligatures: no-common-ligatures;">&nbsp; scl: 14</span></span></p><p class="p1" style="font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span style="font-family: Menlo;"><span style="font-size: 11px; font-variant-ligatures: no-common-ligatures;"><br /></span></span></p><p class="p1" style="font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span style="font-family: Menlo;"><span style="font-size: 11px; font-variant-ligatures: no-common-ligatures;">sensor:</span></span></p><p class="p1" style="font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span style="font-family: Menlo;"><span style="font-size: 11px; font-variant-ligatures: no-common-ligatures;">&nbsp; - platform: mpu6050</span></span></p><p class="p1" style="font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span style="font-family: Menlo;"><span style="font-size: 11px; font-variant-ligatures: no-common-ligatures;">&nbsp; &nbsp; address: 0x68</span></span></p><p class="p1" style="font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span style="font-family: Menlo;"><span style="font-size: 11px; font-variant-ligatures: no-common-ligatures;">&nbsp; &nbsp; update_interval: 200ms</span></span></p><p class="p1" style="font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span style="font-family: Menlo;"><span style="font-size: 11px; font-variant-ligatures: no-common-ligatures;">&nbsp; &nbsp; accel_x:</span></span></p><p class="p1" style="font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span style="font-family: Menlo;"><span style="font-size: 11px; font-variant-ligatures: no-common-ligatures;">&nbsp; &nbsp; &nbsp; name: "MPU6050 Accel X"</span></span></p><p class="p1" style="font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span style="font-family: Menlo;"><span style="font-size: 11px; font-variant-ligatures: no-common-ligatures;">&nbsp; &nbsp; accel_y:</span></span></p><p class="p1" style="font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span style="font-size: 11px; font-variant-ligatures: no-common-ligatures;"><span class="s1" style="font-family: Menlo;"></span></span></p><p class="p1" style="font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span style="font-family: Menlo;"><span style="font-size: 11px; font-variant-ligatures: no-common-ligatures;">&nbsp; &nbsp; &nbsp; name: "MPU6050 Accel Y"</span></span></p></div></div></span></div><div></div></div><div><br /></div><div>&nbsp;This sets up the i2c pins (change these if your configuration is different), then sets up the MPU6050 sensor. The default i2c address for the MPU6050 is 0x68. I set an update interval of 200ms. The only two readings we then need from it are acceleration on the X and Y axes which can then be used to calculate the left to right tilt and the front to back tilt of the van. I then programmed the ESP8266 and mounted it underneath my bed.</div><div><br /></div><div>&nbsp;With the ESPHome integration in Home Assistant, the new sensor was automatically detected and added. I could now view the X and Y acceleration values from the device, but to make it more readable I wanted to convert these values to degrees. With some digging around I found this equation:&nbsp;</div><div>&nbsp;tilt in degrees = arcsin(acceleration / gravity) * 180 / pi</div><div><br /></div><div>&nbsp;Adding this equation into Home Assistant, I was now getting tilt readings on two axes in degrees. The readings seemed a bit off though, so the sensor most likely needed to be calibrated. To calibrate, I used an app on my phone to measure the tilt and set my phone on top of my bed platform. I took measurements with the van parked at different inclines and averaged the differences to come up with an offset value. I also noticed that the degrees readings were inverted from what I wanted, so I added a -1 multiplyer. The final equation was:</div><div>&nbsp; tilt in degrees = ((arcsin(acceleration / gravity) * 180 / pi) - offset) * -1</div><div><br /></div><div>Here is the code I added to the Home Assistant configuration file to add this:</div><div><div><div><span style="font-family: Menlo;"><div><div style="background-color: #eeeeee; border: 2px solid rgb(221, 221, 221); font-size: 11px; font-variant-ligatures: no-common-ligatures; margin: 10px; padding: 2px 6px 4px;"><p class="p1" style="font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;">&nbsp; - platform: template</p><p class="p1" style="font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;">&nbsp; &nbsp; sensors:</p><p class="p1" style="font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;">&nbsp; &nbsp; &nbsp; x_angle:</p><p class="p1" style="font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;">&nbsp; &nbsp; &nbsp; &nbsp; friendly_name: "X Angle"</p><p class="p1" style="font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;">&nbsp; &nbsp; &nbsp; &nbsp; unit_of_measurement: "°"</p><p class="p1" style="font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;">&nbsp; &nbsp; &nbsp; &nbsp; value_template: '{{ ((asin((states("sensor.mpu6050_accel_x") | float) / 9.81) * 180 / pi) - 2.8) * -1 }$</p><p class="p1" style="font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;">&nbsp; &nbsp; &nbsp; y_angle:</p><p class="p1" style="font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;">&nbsp; &nbsp; &nbsp; &nbsp; friendly_name: "Y Angle"</p><p class="p1" style="font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;">&nbsp; &nbsp; &nbsp; &nbsp; unit_of_measurement: "°"</p><p class="p1" style="font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;">&nbsp; &nbsp; &nbsp; &nbsp; value_template: '{{ ((asin((states("sensor.mpu6050_accel_y") | float) / 9.81) * 180 / pi) + 0.3) * -1 }$</p></div></div></span></div><div></div></div><div>&nbsp;There also seemed to be quite a bit of noise on the sensor, so I added a low pass filter as well. It's not perfect, but it helps a bit:</div></div><div><div><span style="font-family: Menlo;"><div><div style="background-color: #eeeeee; border: 2px solid rgb(221, 221, 221); font-size: 11px; font-variant-ligatures: no-common-ligatures; margin: 10px; padding: 2px 6px 4px;"><p class="p1" style="font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"></p><p class="p1" style="font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;">&nbsp; - platform: filter</p><p class="p1" style="font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;">&nbsp; &nbsp; name: "Filtered X Angle"</p><p class="p1" style="font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;">&nbsp; &nbsp; entity_id: sensor.x_angle</p><p class="p1" style="font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;">&nbsp; &nbsp; filters:</p><p class="p1" style="font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;">&nbsp; &nbsp; &nbsp; - filter: lowpass</p><p class="p1" style="font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;">&nbsp; &nbsp; &nbsp; &nbsp; time_constant: 5</p><p class="p1" style="font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;">&nbsp; &nbsp; &nbsp; &nbsp; precision: 1</p><p class="p1" style="font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;">&nbsp; - platform: filter</p><p class="p1" style="font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;">&nbsp; &nbsp; name: "Filtered Y Angle"</p><p class="p1" style="font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;">&nbsp; &nbsp; entity_id: sensor.y_angle</p><p class="p1" style="font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;">&nbsp; &nbsp; filters:</p><p class="p1" style="font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;">&nbsp; &nbsp; &nbsp; - filter: lowpass</p><p class="p1" style="font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;">&nbsp; &nbsp; &nbsp; &nbsp; time_constant: 5</p><p class="p1" style="font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;">&nbsp; &nbsp; &nbsp; &nbsp; precision: 1</p></div></div></span></div><div></div></div><div>&nbsp;The end result is a Home Assistant sensor showing the tilt of the van which makes finding a level parking spot quite a bit easier.</div><div><br /></div><div class="separator" style="clear: both; text-align: center;"><a href="https://blogger.googleusercontent.com/img/a/AVvXsEhOAMncErVUDTVOSl_0ODaY8EwK-o1OBUP51QjfFrRNesFwy2GmEVlwTq8b3RJ3VW0-O7cMrM0OwXl_ubHx8fHR-IFHzf1vPvNYgwoQh9N7j0Z7V1KuhU7CRmBP-H-bEdN7KDCo7x-nLqlgQeLNsVTIm-GCv464tiqbTagKoaP9TPaGZSGLEFat9NsA=s1006" style="margin-left: 1em; margin-right: 1em;"><img border="0" data-original-height="770" data-original-width="1006" height="245" src="https://blogger.googleusercontent.com/img/a/AVvXsEhOAMncErVUDTVOSl_0ODaY8EwK-o1OBUP51QjfFrRNesFwy2GmEVlwTq8b3RJ3VW0-O7cMrM0OwXl_ubHx8fHR-IFHzf1vPvNYgwoQh9N7j0Z7V1KuhU7CRmBP-H-bEdN7KDCo7x-nLqlgQeLNsVTIm-GCv464tiqbTagKoaP9TPaGZSGLEFat9NsA=s320" width="320" /></a></div><br /><div><br /></div><div style="text-align: center;"><b><span style="font-size: medium;"><a href="autolocking_drawers.html"><span style="color: #29aae1; font-family: Arial, Tahoma, Helvetica, FreeSans, sans-serif;"><span style="background-color: white;">Next:&nbsp;</span></span><span style="color: #0000ee;"><u>Auto-Locking Drawers</u></span></a></span></b></div></div>
+        <div>&nbsp;The next sensor that I thought would be useful in the van was a level sensor to see how flat
+          the van currently is. When parking for the night, it's always more comfortable to sleep if the van is level. I
+          would always find myself using rocks or inching forward and backward and ask myself "is it better now?". The easy
+          solution would be to just stick a bubble level somewhere, but I thought it would be much more interesting to
+          incorporate it into my Home Assistant setup.</div>
+        <div><br /></div>
+        <div>Items needed to set this up:</div>
+        <div class="amazon">
+          <ul>
+            <li><b><a href="https://www.adafruit.com/product/3886" target="_blank">MPU6050
+                Accelerometer</a>:</b>&nbsp;This device essentially measures gravity on 3
+                axes and can tell you which way is down. It also has a gyroscope which is not needed for this project
+            </li>
+            <li><b>Other electronics: </b>Either an ESP32/ESP8266 to send the data to your Raspberry
+              Pi, or interface it with the Raspberry Pi directly</li>
+          </ul>
+        </div>
+        <div><br /></div>
+        <div>&nbsp;Any 2 or 3-axis accelerometer can be used for this project, but I chose to use the MPU6050 because
+          it's widely available and many breakout boards exist for it.</div>
+        <div><br /></div>
+        <div class="tut_img">
+          <img src="assets/img/tilt/tilt1.jpeg">
+        </div>
+        <div><br /></div>
+        <div>&nbsp;The MPU6050 communicates through I2C, so it needs to be connected to the Raspberry Pi or another
+          microcontroller. I wanted to mount it on the bottom of my bed platform which was a little too far from the
+          Raspberry Pi, so I decided to use an ESP8266 to communicate with the MPU6050 and send the data back to the
+          Raspberry Pi over wifi.</div>
+        <div><br /></div>
+        <div>&nbsp;If you remember the PCB that I designed for the water level sensor, there were a few extra features on
+          that board that I hadn't used. One was this 6-pin header with i2c that I added specifically to accomodate an
+          MPU6050 module. In its default state, this header works with the Adafruit MPU6050 module I linked above. By
+          connecting the JP1 solder jumper, it also accommodates cheaper MPU6050 modules that can be found on Amazon.</div>
+        <div><br /></div>
+        <div class="tut_img">
+          <img src="assets/img/tilt/tilt2.png">
+        </div>
+        <div><br /></div>
+        <div>&nbsp; The full KICAD files can be found here:</div>
+        <div class="tut_link">
+          <a href="https://github.com/CF209/kicad/tree/main/ESP8266_Water_Sensor" target="_blank">ESP8266 PCB KICAD Files</a>
+        </div>
+        <div><br /></div>
+        <div class="tut_img">
+          <img src="assets/img/tilt/tilt3.jpeg">
+        </div>
+        <div><br /></div>
+        <div>&nbsp;I forgot to take a picture of the assembled board, but you can see J1 in the picture above where the
+          module is mounted.</div>
+        <div><br /></div>
+        <div>&nbsp;Next is the software for the ESP8266. Luckily there's functionality in ESPHome for the MPU6050, so the
+          software part is very easy. Details on this can be found here:</div>
+        <div class="tut_link">
+          <a href="https://esphome.io/components/sensor/mpu6050.html" target="_blank">ESPHome MPU6050</a>
+        </div>
+        <div><br /></div>
+        <div>&nbsp;To create the new ESPHome file, open up the ESPHome dashboard (<a
+            href="http://192.168.0.101:6052/">http://192.168.0.101:6052/</a>&nbsp;in my case) and click the plus button in
+          the bottom right. Choose "Generic ESP8266" and enter your wifi information. In the config file you'll then want
+          to add:</div>
+        <div class="terminal">
+          i2c:<br>
+          &emsp;sda: 2<br>
+          &emsp;scl: 14<br>
+          <br>
+          sensor:<br>
+          &emsp;- platform: mpu6050<br>
+          &emsp;&emsp;address: 0x68<br>
+          &emsp;&emsp;update_interval: 200ms<br>
+          &emsp;&emsp;accel_x:<br>
+          &emsp;&emsp;&emsp;name: "MPU6050 Accel X"<br>
+          &emsp;&emsp;accel_y:<br>
+          &emsp;&emsp;&emsp;name: "MPU6050 Accel Y"
+        </div>
+        <div><br /></div>
+        <div>&nbsp;This sets up the i2c pins (change these if your configuration is different), then sets up the MPU6050
+          sensor. The default i2c address for the MPU6050 is 0x68. I set an update interval of 200ms. The only two
+          readings we then need from it are acceleration on the X and Y axes which can then be used to calculate the left
+          to right tilt and the front to back tilt of the van. I then programmed the ESP8266 and mounted it underneath my
+          bed.</div>
+        <div><br /></div>
+        <div>&nbsp;With the ESPHome integration in Home Assistant, the new sensor was automatically detected and added. I
+          could now view the X and Y acceleration values from the device, but to make it more readable I wanted to convert
+          these values to degrees. With some digging around I found this equation:&nbsp;</div>
+        <div>&nbsp;tilt in degrees = arcsin(acceleration / gravity) * 180 / pi</div>
+        <div><br /></div>
+        <div>&nbsp;Adding this equation into Home Assistant, I was now getting tilt readings on two axes in degrees. The
+          readings seemed a bit off though, so the sensor most likely needed to be calibrated. To calibrate, I used an app
+          on my phone to measure the tilt and set my phone on top of my bed platform. I took measurements with the van
+          parked at different inclines and averaged the differences to come up with an offset value. I also noticed that
+          the degrees readings were inverted from what I wanted, so I added a -1 multiplyer. The final equation was:</div>
+        <div>&nbsp; tilt in degrees = ((arcsin(acceleration / gravity) * 180 / pi) - offset) * -1</div>
+        <div><br /></div>
+        <div>Here is the code I added to the Home Assistant configuration file to add this:</div>
+        <div class="terminal">
+          &emsp;- platform: template<br>
+          &emsp;&emsp;sensors:<br>
+          &emsp;&emsp;&emsp;x_angle:<br>
+          &emsp;&emsp;&emsp;&emsp;friendly_name: "X Angle"<br>
+          &emsp;&emsp;&emsp;&emsp;unit_of_measurement: "°"<br>
+          &emsp;&emsp;&emsp;&emsp;value_template: '{{ ((asin((states("sensor.mpu6050_accel_x") | float) / 9.81) * 180 / pi) - 2.8) * -1 }}'<br>
+          &emsp;&emsp;&emsp;y_angle:<br>
+          &emsp;&emsp;&emsp;&emsp;friendly_name: "Y Angle"<br>
+          &emsp;&emsp;&emsp;&emsp;unit_of_measurement: "°"<br>
+          &emsp;&emsp;&emsp;&emsp;value_template: '{{ ((asin((states("sensor.mpu6050_accel_y") | float) / 9.81) * 180 / pi) + 0.3) * -1 }}'
+        </div>
+        <div>&nbsp;There also seemed to be quite a bit of noise on the sensor, so I added a low pass filter as well. It's not perfect, but it helps a bit:</div>
+        <div class="terminal">
+          &emsp;- platform: filter<br>
+          &emsp;&emsp;name: "Filtered X Angle"<br>
+          &emsp;&emsp;entity_id: sensor.x_angle<br>
+          &emsp;&emsp;filters:<br>
+          &emsp;&emsp;&emsp;- filter: lowpass<br>
+          &emsp;&emsp;&emsp;&emsp;time_constant: 5<br>
+          &emsp;&emsp;&emsp;&emsp;precision: 1<br>
+          &emsp;- platform: filter<br>
+          &emsp;&emsp;name: "Filtered Y Angle"<br>
+          &emsp;&emsp;entity_id: sensor.y_angle<br>
+          &emsp;&emsp;filters:<br>
+          &emsp;&emsp;&emsp;- filter: lowpass<br>
+          &emsp;&emsp;&emsp;&emsp;time_constant: 5<br>
+          &emsp;&emsp;&emsp;&emsp;precision: 1
+        </div>
+        <div>&nbsp;The end result is a Home Assistant sensor showing the tilt of the van which makes finding a level parking spot quite a bit easier.</div>
+        <div><br /></div>
+        <div class="tut_img">
+          <img src="assets/img/tilt/tilt4.png">
+        </div>
+        <div><br /></div>
+        <div class="next_link">
+          <a href="autolocking_drawers.html">Next: Auto-Locking Drawers</a>
+        </div>
+        <div><br /></div>
       </div>
     </section>
 
@@ -104,6 +264,9 @@
     <div class="footer-top">
       <div class="container">
         <div class="row">
+          <p style="text-align: center">
+            See more at <a href="https://github.com/CF209">https://github.com/CF209</a>
+          </p>
 
         </div>
       </div>

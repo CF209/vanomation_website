@@ -91,9 +91,144 @@
       </div>
     </section><!-- End Breadcrumbs Section -->
 
+    <section class="tutorial_imgs">
+        <div class="row">
+          <div class="portfolio-details-slider swiper">
+            <div class="swiper-wrapper align-items-center">
+  
+              <div class="swiper-slide">
+                <img src="assets/img/solar/solar1.jpeg" class="tut_swiper_img" alt="">
+              </div>
+  
+              <div class="swiper-slide">
+                <img src="assets/img/solar/solar2.jpeg" class="tut_swiper_img" alt="">
+              </div>
+  
+              <div class="swiper-slide">
+                <img src="assets/img/solar/solar3.png" class="tut_swiper_img" alt="">
+              </div>
+  
+            </div>
+            <div class="swiper-pagination"></div>
+          </div>
+        </div>
+      </section>
+
     <section class="inner-page">
       <div class="container">
-        &nbsp;With the lights set up and working, next I wanted to add some monitoring of different systems in the van. The first one I thought I'd tackle was monitoring the solar power by interfacing with my charge controller.<div><br /></div><div>Items needed to set this up:</div><div style="background-color: #eeeeee; border: 2px solid rgb(221, 221, 221); margin: 10px; padding: 2px 6px 4px;"><ul><li><b style="color: #555555;"><a href="https://www.amazon.com/gp/product/B07DNVW37B/ref=as_li_qf_asin_il_tl?ie=UTF8&amp;tag=vanomation-20&amp;creative=9325&amp;linkCode=as2&amp;creativeASIN=B07DNVW37B&amp;linkId=c44c0c756eaa97f54617c61b74d41d4f" target="_blank">Renogy Rover Charge Controller</a>:</b><span style="color: #555555;">&nbsp;I have the 30A version shown here, but this setup should work with any of charge controllers in this series</span></li><li style="color: #555555;"><b><a href="https://www.amazon.com/gp/product/B00IDSM6BW/ref=as_li_qf_asin_il_tl?ie=UTF8&amp;tag=vanomation-20&amp;creative=9325&amp;linkCode=as2&amp;creativeASIN=B00IDSM6BW&amp;linkId=87f73b7dbc3036253e5a8779797ff92d" target="_blank">USB Serial Dongle</a></b></li><li style="color: #555555;"><b><a href="https://www.amazon.com/gp/product/B0054RRCHI/ref=as_li_qf_asin_il_tl?ie=UTF8&amp;tag=vanomation-20&amp;creative=9325&amp;linkCode=as2&amp;creativeASIN=B0054RRCHI&amp;linkId=07bd7751d8997d4b3f435d982202e1ed" target="_blank">DB9 to RJ12 adapter</a></b></li><li style="color: #555555;"><b><a href="https://www.amazon.com/gp/product/B08BHVF6XS/ref=as_li_qf_asin_il_tl?ie=UTF8&amp;tag=vanomation-20&amp;creative=9325&amp;linkCode=as2&amp;creativeASIN=B08BHVF6XS&amp;linkId=ca312d690359da76885a0c909c9d5cdb" target="_blank">RJ12 Cable</a></b></li></ul><div style="color: #555555;"></div></div>&nbsp;In order for the Raspberry Pi to communicate with the Renogy charge controller, we need a USB to RJ12 serial cable. Renogy used to include this cable with their charge controllers, but since introducing their bluetooth module, they stopped making it. So instead we'll have to make our own!<div><br /><div>&nbsp;The three components of the cable are the USB serial dongle which allows the raspberry pi to communicate in the correct protocol for the charge controller, then the DB9 to RJ12 adapter and the RJ12 cable which allows you to connect to the Renogy charge controller with the correct pin mapping.</div></div><div><br /></div><div>&nbsp;The pin mapping of the RJ12 connector for the Renogy charge controller is: TX/RX/GND/GND/+12V/+12V. On the USB serial dongle, pin 2 is RXD, pin 3 is TXD, and pin 5 is GND. We need to connect the RJ12 TX to the serial dongle RXD and the RJ12 RX to the serial dongle TXD. We then need to also connect GND. This is done using the DB9 to RJ12 adapter as shown below.</div><div><br /></div><div class="separator" style="clear: both; text-align: center;"><a href="https://blogger.googleusercontent.com/img/a/AVvXsEiANrFuyTW8n4GAPC7WZft2DLuXtRVngtv4X3QoLr2UHNnu3ll7kT53h32o2ZjJQ4UqvAunTI7sK2Cin-zoN832LpxS-TQgv7H3PBQf4CjPfp9YRjom-zG2E88kq9ZAMzcv4_wgvqu93Mb7IY6iGJWgBIL7vr6iAHdGR5lZCTdWAKOMLzmGo8OsL-MT=s610" style="margin-left: 1em; margin-right: 1em;"><img border="0" data-original-height="406" data-original-width="610" height="213" src="https://blogger.googleusercontent.com/img/a/AVvXsEiANrFuyTW8n4GAPC7WZft2DLuXtRVngtv4X3QoLr2UHNnu3ll7kT53h32o2ZjJQ4UqvAunTI7sK2Cin-zoN832LpxS-TQgv7H3PBQf4CjPfp9YRjom-zG2E88kq9ZAMzcv4_wgvqu93Mb7IY6iGJWgBIL7vr6iAHdGR5lZCTdWAKOMLzmGo8OsL-MT=s320" width="320" /></a></div><div class="separator" style="clear: both; text-align: center;"><br /></div><div class="separator" style="clear: both; text-align: center;"><a href="https://blogger.googleusercontent.com/img/a/AVvXsEjNC3WMrrl_Ru6oSGIMA_VWzJmfHiDDPbhaoKJli01ei3YClIv8S4wkvidLskGDH2rWRw1bbPACEJDmeOMXTNHmmxOYN3isaW42Y5kTo8cjpe1L7I4tD0l3fivRX3QXUWII27XvraJIE9-HI-kd8kFUuuhvCBx1jwExOI11wBzXjpXwkZv__xOSvySk=s2651" style="margin-left: 1em; margin-right: 1em;"><img border="0" data-original-height="1543" data-original-width="2651" height="186" src="https://blogger.googleusercontent.com/img/a/AVvXsEjNC3WMrrl_Ru6oSGIMA_VWzJmfHiDDPbhaoKJli01ei3YClIv8S4wkvidLskGDH2rWRw1bbPACEJDmeOMXTNHmmxOYN3isaW42Y5kTo8cjpe1L7I4tD0l3fivRX3QXUWII27XvraJIE9-HI-kd8kFUuuhvCBx1jwExOI11wBzXjpXwkZv__xOSvySk=s320" width="320" /></a></div><div class="separator" style="clear: both; text-align: center;"><br /></div>&nbsp;Once the cable is made, I recommend connecting it to the Renogy charge controller, then using a multimeter to test the pin voltages before connecting it to the serial dongle. TX to GND and TX to RX should both be about 5V. Make sure you didn't accidentally connect the 12V pins or you could fry the serial dongle and possibly even the raspberry pi.<div><br /></div><div>&nbsp;With the cable now connected between the raspberry pi and the charge controller, we now need some software to read registers from the charge controller. First find the name of the USB serial dongle on your raspberry pi with:</div><div><div style="background-color: #eeeeee; border: 2px solid rgb(221, 221, 221); color: #555555; margin: 10px; padding: 2px 6px 4px;"><p class="p1" style="color: black; font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="color: #39c026; font-variant-ligatures: no-common-ligatures;"><b>pi@raspberrypi</b></span><span class="s2" style="font-variant-ligatures: no-common-ligatures;">:</span><span class="s3" style="color: #5620f4; font-variant-ligatures: no-common-ligatures;"><b>~ $</b></span><span class="s2" style="font-variant-ligatures: no-common-ligatures;"> ls /dev/*USB*</span></p><p class="p2" style="color: #878a04; font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s4" style="background-color: black; font-variant-ligatures: no-common-ligatures;"><b>/dev/ttyUSB0</b></span></p></div>&nbsp;Now we can start writing a python program. Luckily, someone has already written a library called solarshed that handles reading data from the charge controller. <a href="https://github.com/corbinbs/solarshed" target="_blank">More info on this library here</a>.You can install it with:</div><div><div style="background-color: #eeeeee; border: 2px solid rgb(221, 221, 221); margin: 10px; padding: 2px 6px 4px;"><span style="color: #555555;">pip install solarshed</span></div><div>&nbsp; I have a basic program posted here that reads the current solar power from the charge controller every second and publishes the data to the MQTT server running on the Raspberry Pi:</div></div><div style="text-align: left;"><a href="https://github.com/CF209/vanomation/blob/main/python/solar/solar_mqtt.py" target="_blank">https://github.com/CF209/vanomation/blob/main/python/solar/solar_mqtt.py</a></div><div style="text-align: left;"><br /></div><div>&nbsp;If your serial dongle is at a different address, you can change it on this line:</div><div><div style="background-color: #eeeeee; border: 2px solid rgb(221, 221, 221); margin: 10px; padding: 2px 6px 4px;"><span style="color: #555555;">controller = RenogyRover('/dev/ttyUSB0', 1)</span></div></div><div>&nbsp;You can also edit the script to add monitoring of more than just power or other features.</div><div><br /></div><div>&nbsp;In order to have this script always running, we will turn it into a systemd service. Create a new file with:</div><div><div style="background-color: #eeeeee; border: 2px solid rgb(221, 221, 221); margin: 10px; padding: 2px 6px 4px;"><span style="color: #555555;">sudo nano /lib/systemd/system/solar_mqqt.service</span></div></div><div>And add the following to the file changing&nbsp;ExecStart path to the path of your python script:</div><div><div style="background-color: #eeeeee; border: 2px solid rgb(221, 221, 221); color: #555555; margin: 10px; padding: 2px 6px 4px;"><p class="p1" style="color: black; font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;">[Unit]</span></p><p class="p1" style="color: black; font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;">Description=Solar MQTT</span></p><p class="p1" style="color: black; font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;">After=multi-user.target</span></p><p class="p2" style="color: black; font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px; min-height: 13px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;"></span><br /></p><p class="p1" style="color: black; font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;">[Service]</span></p><p class="p1" style="color: black; font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;">Type=idle</span></p><p class="p1" style="color: black; font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;">ExecStart=/usr/bin/python3 /home/pi/python/solar/solar_mqtt.py</span></p><p class="p1" style="color: black; font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;">WorkingDirectory=/home/pi</span></p><p class="p1" style="color: black; font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;">User=pi</span></p><p class="p2" style="color: black; font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px; min-height: 13px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;"></span><br /></p><p class="p1" style="color: black; font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;">[Install]</span></p><p class="p1" style="color: black; font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;">WantedBy=multi-user.target</span></p></div></div><div>&nbsp;Save the file, then you can enable the service with:</div><div><div style="background-color: #eeeeee; border: 2px solid rgb(221, 221, 221); margin: 10px; padding: 2px 6px 4px;"><span style="color: #555555;">sudo systemctl daemon-reload<br />sudo systemctl enable solar_mqqt.service</span></div></div><div>To check that the service is running:</div><div><div style="background-color: #eeeeee; border: 2px solid rgb(221, 221, 221); margin: 10px; padding: 2px 6px 4px;"><span style="color: #555555;">sudo systemctl status solar_mqtt.service</span></div></div><div>&nbsp;The final step is to add this new sensor to Home Assistant. In Home Assistant, go to Configuration -&gt; Integrations and add the MQTT integration if you don't have it already. Now go to your configuration.yaml file in your homeassistant directory and add the following sensor:</div><div><div><div style="background-color: #eeeeee; border: 2px solid rgb(221, 221, 221); margin: 10px; padding: 2px 6px 4px;"><p class="p1" style="font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span style="font-family: Menlo;"><span style="font-size: 11px; font-variant-ligatures: no-common-ligatures;">sensor:</span></span></p><p class="p1" style="font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span style="font-family: Menlo;"><span style="font-size: 11px; font-variant-ligatures: no-common-ligatures;">&nbsp; - platform: mqtt</span></span></p><p class="p1" style="font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span style="font-family: Menlo;"><span style="font-size: 11px; font-variant-ligatures: no-common-ligatures;">&nbsp; &nbsp; state_topic: "van/solar/power"</span></span></p><p class="p1" style="font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span style="font-family: Menlo;"><span style="font-size: 11px; font-variant-ligatures: no-common-ligatures;">&nbsp; &nbsp; name: 'Solar Power'</span></span></p><p class="p1" style="font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span style="font-family: Menlo;"><span style="font-size: 11px; font-variant-ligatures: no-common-ligatures;">&nbsp; &nbsp; unit_of_measurement: 'W'</span></span></p><p class="p1" style="font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span style="font-family: Menlo;"><span style="font-size: 11px; font-variant-ligatures: no-common-ligatures;">&nbsp; &nbsp; value_template: '{{ value_json.power }}'</span></span></p></div></div></div><div>&nbsp;Restart Home Assistant and you should now be able to add the sensor to your dashboard!</div><div><br /></div><div class="separator" style="clear: both; text-align: center;"><a href="https://blogger.googleusercontent.com/img/a/AVvXsEgvTWmWPBeVlJJ2NLUIfC2SN79QFDM3OjsjAFDkZTffl1gs1NCS2hy6GBrhPQdxTKdG6_F7O258WdivhERxL6fWzUusePLy_iGqAjK_WlazfMrslmi-Nz4Ms7W949bV0PqtfR0YJc4QPMYXi_-ksl7m0-EfppY3xvPOpfK3Pd1KZbKfjYTyuKrWnt46=s781" style="margin-left: 1em; margin-right: 1em;"><img border="0" data-original-height="375" data-original-width="781" height="154" src="https://blogger.googleusercontent.com/img/a/AVvXsEgvTWmWPBeVlJJ2NLUIfC2SN79QFDM3OjsjAFDkZTffl1gs1NCS2hy6GBrhPQdxTKdG6_F7O258WdivhERxL6fWzUusePLy_iGqAjK_WlazfMrslmi-Nz4Ms7W949bV0PqtfR0YJc4QPMYXi_-ksl7m0-EfppY3xvPOpfK3Pd1KZbKfjYTyuKrWnt46=s320" width="320" /></a></div><div><br /></div><div style="text-align: center;"><a href="monitor_water_level.html"><b><span style="font-size: medium;">Next:&nbsp;</span></b><span style="text-align: left;"><span style="color: #0000ee; font-size: medium;"><b><u>Monitoring Water Level</u></b></span></span></a></div><div><br /></div>
+        <div>&nbsp;With the lights set up and working, next I wanted to add some monitoring of different systems in the  van. The first one I thought I'd tackle was monitoring the solar power by interfacing with my charge controller. </div>
+        <div><br /></div>
+        <div>Items needed to set this up:</div>
+        <div class="amazon">
+          <ul>
+            <li><b><a href="https://www.amazon.com/gp/product/B07DNVW37B" target="_blank">
+              Renogy Rover Charge Controller</a>:</b>
+              &nbsp;I have the 30Aversion shown here, but this setup should work with any of charge controllers in this series</li>
+            <li><b><a href="https://www.amazon.com/gp/product/B00IDSM6BW" target="_blank">
+              USB Serial Dongle</a></b></li>
+            <li><b><a href="https://www.amazon.com/gp/product/B0054RRCHI" target="_blank">
+              DB9 to RJ12 adapter</a></b></li>
+            <li><b><a href="https://www.amazon.com/gp/product/B08BHVF6XS" target="_blank">
+              RJ12 Cable</a></b></li>
+          </ul>
+        </div>
+        <div>&nbsp;In order for the Raspberry Pi to communicate with the Renogy charge controller, we need a USB to RJ12
+        serial cable. Renogy used to include this cable with their charge controllers, but since introducing their bluetooth
+        module, they stopped making it. So instead we'll have to make our own!</div>
+        <div><br /></div>
+        <div>&nbsp;The three components of the cable are the USB serial dongle which allows the raspberry pi to
+          communicate in the correct protocol for the charge controller, then the DB9 to RJ12 adapter and the RJ12 cable
+          which allows you to connect to the Renogy charge controller with the correct pin mapping.</div>
+        <div><br /></div>
+        <div>&nbsp;The pin mapping of the RJ12 connector for the Renogy charge controller is: TX/RX/GND/GND/+12V/+12V. On
+          the USB serial dongle, pin 2 is RXD, pin 3 is TXD, and pin 5 is GND. We need to connect the RJ12 TX to the serial dongle RXD and the RJ12 RX to the serial dongle TXD. We then need to also connect GND. This is done using the DB9 to RJ12 adapter as shown below.</div>
+        <div><br /></div>
+        <div class="tut_img">
+          <img src="assets/img/solar/solar1.jpeg">
+        </div>
+        <div><br /></div>
+        <div class="tut_img">
+          <img src="assets/img/solar/solar2.jpeg">
+        </div>
+        <div><br /></div>
+        <div>&nbsp;Once the cable is made, I recommend connecting it to the Renogy charge controller, then using a multimeter to test the pin voltages before connecting it to the serial dongle. TX to GND and TX to RX should both be about 5V. Make sure you didn't accidentally connect the 12V pins or you could fry the serial dongle and possibly even the raspberry pi.</div>
+        <div><br /></div>
+        <div>&nbsp;With the cable now connected between the raspberry pi and the charge controller, we now need some
+          software to read registers from the charge controller. First find the name of the USB serial dongle on your
+          raspberry pi with:</div>
+        <div class="terminal">
+            pi@raspberrypi:~ $ ls /dev/*USB*<br>
+            /dev/ttyUSB0
+        </div>
+        <div>&nbsp;Now we can start writing a python program. Luckily, someone has already written a library called
+          Solarshed that handles reading data from the charge controller. More info on this library here:
+        </div>
+        <div class="tut_link"><a
+            href="https://github.com/corbinbs/solarshed" target="_blank">https://github.com/corbinbs/solarshed</a>
+        </div>
+        <div>You can install Solarshed with:</div>
+        <div class="terminal">
+            pip install solarshed
+        </div>
+        <div>&nbsp; I have a basic program posted here that reads the current solar power from the charge controller every
+            second using Solarshed and publishes the data to the MQTT server running on the Raspberry Pi:
+        </div>
+        <div class="tut_link">
+          <a href="https://github.com/CF209/vanomation/blob/main/python/solar/solar_mqtt.py" target="_blank">https://github.com/CF209/vanomation/blob/main/python/solar/solar_mqtt.py</a>
+        </div>
+        <div>&nbsp;If your serial dongle is at a different address, you can change it on this line:</div>
+        <div class="terminal">
+          controller = RenogyRover('/dev/ttyUSB0', 1)
+        </div>
+        <div>&nbsp;You can also edit the script to add monitoring of more than just power or other features.</div>
+        <div><br /></div>
+        <div>&nbsp;In order to have this script always running, we will turn it into a systemd service. Create a new file
+          with:</div>
+        <div class="terminal">
+          sudo nano /lib/systemd/system/solar_mqqt.service
+        </div>
+        <div>And add the following to the file changing the ExecStart path to the path of your python script:</div>
+        <div class="terminal">
+            [Unit]<br>
+            Description=Solar MQTT<br>
+            After=multi-user.target<br>
+            <br>
+            [Service]<br>
+            Type=idle<br>
+            ExecStart=/usr/bin/python3 /home/pi/python/solar/solar_mqtt.py<br>
+            WorkingDirectory=/home/pi<br>
+            User=pi<br>
+            <br>
+            [Install]<br>
+            WantedBy=multi-user.target
+        </div>
+        <div>&nbsp;Save the file, then you can enable the service with:</div>
+        <div class="terminal">
+            sudo systemctl daemon-reload<br>
+            sudo systemctl enable solar_mqqt.service
+        </div>
+        <div>To check that the service is running:</div>
+        <div class="terminal">
+            sudo systemctl status solar_mqtt.service
+        </div>
+        <div>&nbsp;The final step is to add this new sensor to Home Assistant. In Home Assistant, go to Configuration -&gt; Integrations and add the MQTT integration if you don't have it already. Now go to your configuration.yaml file in your homeassistant directory and add the following sensor:</div>
+        <div class="terminal">
+            sensor:<br>
+            &emsp;- platform: mqtt<br>
+            &emsp;&emsp;state_topic: "van/solar/power"<br>
+            &emsp;&emsp;name: 'Solar Power'<br>
+            &emsp;&emsp;unit_of_measurement: 'W'<br>
+            &emsp;&emsp;value_template: '{{ value_json.power }}'
+        </div>
+        <div>&nbsp;Restart Home Assistant and you should now be able to add the sensor to your dashboard!</div>
+        <div><br /></div>
+        <div class="tut_img">
+          <img src="assets/img/solar/solar3.png">
+        </div>
+        <div><br /></div>
+        <div class="next_link">
+            <a href="monitor_water_level.html">Next: Monitoring Water Level</a>
+          </div>
       </div>
     </section>
 

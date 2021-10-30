@@ -91,9 +91,192 @@
       </div>
     </section><!-- End Breadcrumbs Section -->
 
+    <section class="tutorial_imgs">
+        <div class="row">
+          <div class="portfolio-details-slider swiper">
+            <div class="swiper-wrapper align-items-center">
+  
+              <div class="swiper-slide">
+                <img src="assets/img/propane/propane6.jpg" class="tut_swiper_img" alt="">
+              </div>
+
+              <div class="swiper-slide">
+                <img src="assets/img/propane/propane7.jpg" class="tut_swiper_img" alt="">
+              </div>
+
+              <div class="swiper-slide">
+                <img src="assets/img/propane/propane1.webp" class="tut_swiper_img" alt="">
+              </div>
+
+              <div class="swiper-slide">
+                <img src="assets/img/propane/propane4.png" class="tut_swiper_img" alt="">
+              </div>
+
+              <div class="swiper-slide">
+                <img src="assets/img/propane/propane5.png" class="tut_swiper_img" alt="">
+              </div>
+  
+            </div>
+            <div class="swiper-pagination"></div>
+          </div>
+        </div>
+      </section>
+
     <section class="inner-page">
       <div class="container">
-        <p>&nbsp; &nbsp;Next up was a monitoring system for the level of my propane tank. I have a standard 20lb propane tank in my van. It's stored in a sealed box with a vent to the outside, so the traditional method of lifting the tank to see how heavy it is and guess how much is left is out of the question. To avoid running out of propane at an inconvenient time, I needed a way to monitor its current level wirelessly.</p><div>Items needed to set this up:</div><div style="background-color: #eeeeee; border: 2px solid rgb(221, 221, 221); margin: 10px; padding: 2px 6px 4px;"><ul><li><b style="color: #555555;"><a href="https://www.homedepot.com/p/Worthington-20-lbs-Empty-Propane-Tank-309791/202034840" target="_blank">Propane Tank</a>:</b><span style="color: #555555;">&nbsp;Any standard 20lb propane tank should work. Other size tanks could work as well, but would need some modifications to my script</span></li><li style="color: #555555;"><b><a href="https://www.amazon.com/gp/product/B01C5RQJHS" target="_blank">Bluetooth Propane Sensor</a>:</b><span style="color: #555555;">&nbsp;This is the only wireless propane sensor I've been able to find</span></li></ul><div style="color: #555555;"></div></div><div>&nbsp;The propane sensor has its own app which works pretty well on its own. I would always forget to check it though.&nbsp;I wanted to integrate it into my Home Assistant setup so I could look at one location for all the systems in the van.</div><div><br /></div><div class="separator" style="clear: both; text-align: center;"><a href="https://play-lh.googleusercontent.com/rxtNqFVg_dNXrxlPcX1nnaOC3swdf5I6WMJXLpSMNw-AjzhsXv5qATfRWLg3cuV9pIKK=s1440-rw" style="margin-left: 1em; margin-right: 1em;"><img border="0" data-original-height="1440" data-original-width="720" height="340" src="https://play-lh.googleusercontent.com/rxtNqFVg_dNXrxlPcX1nnaOC3swdf5I6WMJXLpSMNw-AjzhsXv5qATfRWLg3cuV9pIKK=w170-h340" width="170" /></a></div><div><br /></div>&nbsp;I reached out to Mopeka to see if they had an API for the sensors, but never received a response. Looks like my only option would be to reverse engineer the app.<div><br /></div><div>&nbsp;I knew that the sensor communicated using bluetooth, so the first step was to see if I could connect to the device with the Raspberry Pi and read any sort of data from it. With some more research, I figured out that the device acts as a BLE beacon and sends out its advertisement data every 10 seconds (this interval can be changed by holding the SYNC button for 5 seconds). I was able to read this using hcitool and hcidump. I ran these three commands in separate terminal sessions:</div><div><div><div style="background-color: #eeeeee; border: 2px solid rgb(221, 221, 221); margin: 10px; padding: 2px 6px 4px;"><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;"><span class="s1" style="color: #39c026;"><b>pi@raspberrypi</b></span><span class="s2">:</span><span class="s3" style="color: #5620f4;"><b>~ $</b></span><span class="s2">&nbsp;</span></span><span style="font-variant-ligatures: no-common-ligatures;">sudo hcidump</span></p><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s2" style="color: #ca3323; font-variant-ligatures: no-common-ligatures;"><b><br /></b></span></p><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;"><span class="s1" style="color: #39c026;"><b>pi@raspberrypi</b></span><span class="s2">:</span><span class="s3" style="color: #5620f4;"><b>~ $</b></span><span class="s2">&nbsp;</span></span><span style="font-variant-ligatures: no-common-ligatures;">sudo hcidump</span><span style="font-variant-ligatures: no-common-ligatures;">&nbsp;</span><span style="font-variant-ligatures: no-common-ligatures;">--raw</span></p><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span style="font-variant-ligatures: no-common-ligatures;"><br /></span></p><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;"><span class="s1" style="color: #39c026;"><b>pi@raspberrypi</b></span><span class="s2">:</span><span class="s3" style="color: #5620f4;"><b>~ $</b></span><span class="s2">&nbsp;</span></span><span style="font-variant-ligatures: no-common-ligatures;">sudo hcitool lescan</span></p></div></div></div><div><div>&nbsp;"sudo hcitool lescan" scans for bluetooth low energy devices while "hcidump" and "hcidump --raw" dump information from scanned devices. Here are the outputs that I got from the propane sensor:</div><div><div><div style="background-color: #eeeeee; border: 2px solid rgb(221, 221, 221); margin: 10px; padding: 2px 6px 4px;"><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;">&gt; HCI Event: LE Meta Event (0x3e) plen 43</span></p><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;"><span class="Apple-converted-space">&nbsp; &nbsp; </span>LE Advertising Report</span></p><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;"><span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; </span>ADV_NONCONN_IND - Non connectable undirected advertising (3)</span></p><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;"><span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; </span>bdaddr 90:9A:77:1E:8F:DB (Public)</span></p><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;"><span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; </span>Unknown type 0xff with 25 bytes data</span></p><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;"><span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; </span>Shortened service classes: 0xada0</span></p><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;"></span></p><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;"><span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; </span>RSSI: -75</span></p><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;"><br /></span></p><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;">&gt; 04 3E 2B 02 01 03 00 DB 8F 1E 77 9A 90 1F 1A FF 0D 00 00 02<span class="Apple-converted-space">&nbsp;</span></span></p><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;"><span class="Apple-converted-space">&nbsp; </span>7A 61 08 89 73 BE FD F4 17 C1 3E 05 17 5C F0 40 03 3B 1E 8F<span class="Apple-converted-space">&nbsp;</span></span></p><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;"><span class="Apple-converted-space">&nbsp; </span>DB 03 02 A0 AD B6<span class="Apple-converted-space">&nbsp;</span></span></p></div></div><div></div></div><div>&nbsp;The advertisement data included 25 extra bytes of data. I knew the propane level must be encoded in this data somewhere.&nbsp;</div><div><br /></div><div>&nbsp;My first attempt at decoding the data was to concurrently capture that data from hcidump and from the tank check app and see if I could find any correlation between the two. After many attempts though, I couldn't find any sort of obvious correlation. Because of this I concluded that the app must be performing some post processing on the data.</div><div><br /></div><div>&nbsp;My only other path was to reverse engineer the app. With some research I learned of a tool called Apktool which allows you to unpack a .apk file (an android app file) and view the resources used to build it. It also allows you to make changes and rebuild it into a new .apk.</div><div><br /></div><div>&nbsp;I used apktool to unpack V2.5.1 (the latest version when I started working on this) of that tank check app that I downloaded here:&nbsp;&nbsp;<a href="https://apkpure.com/tank-check/com.mopeka.tankcheck" target="_blank">https://apkpure.com/tank-check/com.mopeka.tankcheck</a></div><div><br /></div><div>&nbsp;Browsing through the files, I found that most of the code was written in javascript and contained in a file located here: "assets/www/js/dist.bundle.js". Unfortunately, the code from apktool was not formatted very well and almost impossible to read looking like this:</div><div class="separator" style="clear: both; text-align: center;"><a href="https://blogger.googleusercontent.com/img/a/AVvXsEheA7Cb0FK3RUrnwnROG6kEVB-bv_NRzLHfOPavJ4f6RTXqE3PgFasGqiqu1CJgjC5xZm8SFKelEH__yD_jouqSsKfX1YbCK8bB4dE_t-i82Pvg74rGVJ2BU8Oj3Z05Pwx6Kx_rHpkH0H_0ZXlLu1vA_r9aleyxlsE4uFrywarzas-RxyM9OyNywlfo=s1714" style="margin-left: 1em; margin-right: 1em;"><img border="0" data-original-height="576" data-original-width="1714" height="156" src="https://blogger.googleusercontent.com/img/a/AVvXsEheA7Cb0FK3RUrnwnROG6kEVB-bv_NRzLHfOPavJ4f6RTXqE3PgFasGqiqu1CJgjC5xZm8SFKelEH__yD_jouqSsKfX1YbCK8bB4dE_t-i82Pvg74rGVJ2BU8Oj3Z05Pwx6Kx_rHpkH0H_0ZXlLu1vA_r9aleyxlsE4uFrywarzas-RxyM9OyNywlfo=w462-h156" width="462" /></a></div><div><br /></div><div>I was able to make it more readable using&nbsp;<a href="https://beautifier.io/" target="_blank">https://beautifier.io/</a>:</div><div class="separator" style="clear: both; text-align: center;"><a href="https://blogger.googleusercontent.com/img/a/AVvXsEg1qaYegOSu0cK62bJJEZSvGpg0y2g52cMNd-mSSN1Fc6ACX3CnGYs8_bgS7E5K7Cz-7Kpcf5JSsikZLLMlkBGH0V-18UW1gaI6WCu2Wj4tnkAfFcmunBojrhnppZFMpwuTE1aJbr1xxmOXYrL-Dy0OvOdzotX5PGOCV89swp4c6sb0vhPuRvb0S1cH=s1044" style="margin-left: 1em; margin-right: 1em;"><img border="0" data-original-height="608" data-original-width="1044" height="186" src="https://blogger.googleusercontent.com/img/a/AVvXsEg1qaYegOSu0cK62bJJEZSvGpg0y2g52cMNd-mSSN1Fc6ACX3CnGYs8_bgS7E5K7Cz-7Kpcf5JSsikZLLMlkBGH0V-18UW1gaI6WCu2Wj4tnkAfFcmunBojrhnppZFMpwuTE1aJbr1xxmOXYrL-Dy0OvOdzotX5PGOCV89swp4c6sb0vhPuRvb0S1cH=s320" width="320" /></a></div><div><br /></div><div>&nbsp;Reading through the code, it appeared that apktool preserved the variable and function names that were parts of classes, but not any other variable names. Luckily this was enough to help me follow the code. The first thing I looked for was the piece of code that printed the percentage reading to the app. I knew if I could find this piece of code, I could trace it back to see where the data came from. After finding it, I was also able to edit this code and recompile the apk to print other info to help me decode what was going on.</div><div><br /></div><div>&nbsp;I won't go into too many details on reverse engineering the app from here, but I basically followed the data through the app from when it's first read in the bluetooth advertisement data to it being converted to a percentage. I converted the javascript to python for my own script. I was also able to decode the battery percentage, temperature, and quality of the reading from the data.&nbsp;</div><div><br /></div><div>&nbsp;For reading the bluetooth data in the script, I found another python script online that would read BLE data and converted it for my needs, filtering by the bluetooth address of my propane sensor. The final script which sends this data via MQTT to Home Assistant can be found here. For the script to have access to bluetooth, it must be run with "sudo -E"</div><div><a href="https://github.com/CF209/vanomation/blob/main/python/propane/propane_mqtt.py" target="_blank">https://github.com/CF209/vanomation/blob/main/python/propane/propane_mqtt.py</a></div><br /><div>&nbsp;I then created a systemd service for the script:</div><div><div><div style="background-color: #eeeeee; border: 2px solid rgb(221, 221, 221); margin: 10px; padding: 2px 6px 4px;"><span style="color: #555555;">sudo nano /lib/systemd/system/propane_mqqt.service</span></div></div></div><div><span style="color: #555555;"><div style="color: black;"><div style="background-color: #eeeeee; border: 2px solid rgb(221, 221, 221); color: #555555; margin: 10px; padding: 2px 6px 4px;"><p class="p1" style="color: black; font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;">[Unit]</span></p><p class="p1" style="color: black; font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;">Description=Propane MQTT</span></p><p class="p1" style="color: black; font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;">After=multi-user.target</span></p><p class="p2" style="color: black; font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px; min-height: 13px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;"></span><br /></p><p class="p1" style="color: black; font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;">[Service]</span></p><p class="p1" style="color: black; font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;">Type=idle</span></p><p class="p1" style="color: black; font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;">ExecStart=/usr/bin/sudo -E /usr/bin/python3 /home/pi/python/propane/propane_mqtt.py</span></p><p class="p1" style="color: black; font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;">WorkingDirectory=/home/pi</span></p><p class="p1" style="color: black; font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;">User=pi</span></p><p class="p2" style="color: black; font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px; min-height: 13px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;"></span><br /></p><p class="p1" style="color: black; font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;">[Install]</span></p><p class="p1" style="color: black; font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;">WantedBy=multi-user.target</span></p></div></div></span></div><div><div><div style="background-color: #eeeeee; border: 2px solid rgb(221, 221, 221); margin: 10px; padding: 2px 6px 4px;"><span style="color: #555555;">sudo systemctl daemon-reload<br />sudo systemctl enable propane_mqqt.service</span></div></div></div><div>And added the sensors to Home Assistant:</div><div><div style="background-color: #eeeeee; border: 2px solid rgb(221, 221, 221); margin: 10px; padding: 2px 6px 4px;"><p class="p1" style="font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span style="font-family: Menlo;"><span style="font-size: 11px; font-variant-ligatures: no-common-ligatures;">sensor:</span></span></p><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;"><span class="Apple-converted-space">&nbsp;&nbsp;</span>- platform: mqtt</span></p><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;"><span class="Apple-converted-space">&nbsp; &nbsp; </span>state_topic: "van/propane"</span></p><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;"><span class="Apple-converted-space">&nbsp; &nbsp; </span>name: 'Propane Level'</span></p><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;"><span class="Apple-converted-space">&nbsp; &nbsp; </span>unit_of_measurement: '%'</span></p><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;"><span class="Apple-converted-space">&nbsp; &nbsp; </span>value_template: '{{ value_json.propane_pct }}'</span></p><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;"><span class="Apple-converted-space">&nbsp; </span>- platform: mqtt</span></p><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;"><span class="Apple-converted-space">&nbsp; &nbsp; </span>state_topic: "van/propane"</span></p><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;"><span class="Apple-converted-space">&nbsp; &nbsp; </span>name: 'Propane Sensor Quality'</span></p><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;"><span class="Apple-converted-space">&nbsp; &nbsp; </span>value_template: '{{ value_json.propane_qual }}'</span></p><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;"><span class="Apple-converted-space">&nbsp; </span>- platform: mqtt</span></p><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;"><span class="Apple-converted-space">&nbsp; &nbsp; </span>state_topic: "van/propane"</span></p><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;"><span class="Apple-converted-space">&nbsp; &nbsp; </span>name: 'Propane Sensor Battery'</span></p><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;"><span class="Apple-converted-space">&nbsp; &nbsp; </span>unit_of_measurement: '%'</span></p><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;"><span class="Apple-converted-space">&nbsp; &nbsp; </span>value_template: '{{ value_json.propane_bat }}'</span></p><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;"><span class="Apple-converted-space">&nbsp; </span>- platform: mqtt</span></p><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;"><span class="Apple-converted-space">&nbsp; &nbsp; </span>state_topic: "van/propane"</span></p><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;"><span class="Apple-converted-space">&nbsp; &nbsp; </span>name: 'Propane Sensor Temperature'</span></p><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;"><span class="Apple-converted-space">&nbsp; &nbsp; </span>unit_of_measurement: '°C'</span></p><p class="p1" style="font-family: Menlo; font-size: 11px; font-stretch: normal; font-variant-east-asian: normal; font-variant-numeric: normal; line-height: normal; margin: 0px;"><span class="s1" style="font-variant-ligatures: no-common-ligatures;"><span class="Apple-converted-space">&nbsp; &nbsp; </span>value_template: '{{ value_json.propane_temp }}'</span></p></div></div><div><br /></div><div>The propane sensor can now be added to your Home Assistant dashboard:</div><div><br /></div><div class="separator" style="clear: both; text-align: center;"><a href="https://blogger.googleusercontent.com/img/a/AVvXsEg0S6MD-M7onA4Cg6l_YupY_M1rLP8sYwE98W2Fzt2MsD4NB0Oz7L4BQUIiI92J9KEi0Uhbk4sp-JbDj2gfzHbUxwyyXfhdL3rNELisoAub2EtG3lWPysriHgEc9QXSw6cAiCEBgI2-vdqkhYl_4An7ieiKJFVY1HEJKyxeWclUDihyGZHqqVgBFSzV=s782" style="margin-left: 1em; margin-right: 1em;"><img border="0" data-original-height="380" data-original-width="782" height="155" src="https://blogger.googleusercontent.com/img/a/AVvXsEg0S6MD-M7onA4Cg6l_YupY_M1rLP8sYwE98W2Fzt2MsD4NB0Oz7L4BQUIiI92J9KEi0Uhbk4sp-JbDj2gfzHbUxwyyXfhdL3rNELisoAub2EtG3lWPysriHgEc9QXSw6cAiCEBgI2-vdqkhYl_4An7ieiKJFVY1HEJKyxeWclUDihyGZHqqVgBFSzV=s320" width="320" /></a></div><br /><div class="separator" style="clear: both; text-align: center;"><a href="https://blogger.googleusercontent.com/img/a/AVvXsEjq0mchQFtVh4__EiVAP-gB1BQIi5-FZ-FB509ghyvcsIjCy_4eXHPHbC4ueyZ8FB6uSH5_Jgfcy3ngkymtW-a-2H-IoSJ8uaCs09z1CH0jCrY6e9phLILRpQCvYh8J7ZA5Bg9K7FR7FcL5m5z4J4h6Fyj3VXTlhGs-GzM6dBemeplcMA07uoQxfu-K=s742" style="margin-left: 1em; margin-right: 1em;"><img border="0" data-original-height="170" data-original-width="742" height="73" src="https://blogger.googleusercontent.com/img/a/AVvXsEjq0mchQFtVh4__EiVAP-gB1BQIi5-FZ-FB509ghyvcsIjCy_4eXHPHbC4ueyZ8FB6uSH5_Jgfcy3ngkymtW-a-2H-IoSJ8uaCs09z1CH0jCrY6e9phLILRpQCvYh8J7ZA5Bg9K7FR7FcL5m5z4J4h6Fyj3VXTlhGs-GzM6dBemeplcMA07uoQxfu-K=s320" width="320" /></a></div><br /><div style="text-align: center;"><a href="adding_van_tilt_sensor.html"><b><span style="font-size: medium;"><span face="Arial, Tahoma, Helvetica, FreeSans, sans-serif" style="background-color: white; color: #29aae1; text-decoration-line: none;"><span>Next:&nbsp;</span></span><span face="Arial, Tahoma, Helvetica, FreeSans, sans-serif" style="background-color: white; color: #29aae1; text-align: left; text-decoration-line: none;"><span style="color: #0000ee;"><u>A</u></span></span>dding a Van Tilt Sensor</span></b></a></div></div>
+        <div>&nbsp;Next up was a monitoring system for the level of my propane tank. I have a standard 20lb propane
+          tank in my van. It's stored in a sealed box with a vent to the outside, so the traditional method of lifting the
+          tank to see how heavy it is and guess how much is left is out of the question. To avoid running out of propane at an inconvenient time, I needed a way to monitor its current level wirelessly.</div>
+        <div><br /></div>
+        <div>Items needed to set this up:</div>
+        <div class="amazon">
+          <ul>
+            <li><b><a href="https://www.homedepot.com/p/Worthington-20-lbs-Empty-Propane-Tank-309791/202034840"
+                  target="_blank">Propane Tank</a>:</b>&nbsp;Any standard 20lb propane tank
+                should work. Other size tanks could work as well, but would need some modifications to my script</li>
+            <li><b><a href="https://www.amazon.com/gp/product/B01C5RQJHS" target="_blank">Bluetooth
+                  Propane Sensor</a>:</b>&nbsp;This is the only wireless propane sensor I've
+                been able to find</li>
+          </ul>
+        </div>
+        <div>&nbsp;The propane sensor has its own app which works pretty well on its own. I would always forget to check it
+          though.&nbsp;I wanted to integrate it into my Home Assistant setup so I could look at one location for all the
+          systems in the van.</div>
+        <div><br /></div>
+        <div class="tut_img">
+          <img src="assets/img/propane/propane1.webp">
+        </div>
+        <div><br /></div>
+        <div>&nbsp;I reached out to Mopeka to see if they had an API for the sensors, but never received a
+        response. Looks like my only option would be to reverse engineer the app.</div>
+        <div><br /></div>
+        <div>&nbsp;I knew that the sensor communicated using bluetooth, so the first step was to see if I could connect to
+          the device with the Raspberry Pi and read any sort of data from it. With some more research, I figured out that
+          the device acts as a BLE beacon and sends out its advertisement data every 10 seconds (this interval can be
+          changed by holding the SYNC button for 5 seconds). I was able to read this using hcitool and hcidump. I ran these
+          three commands in separate terminal sessions:</div>
+        <div>
+        <div class="terminal">
+          sudo hcidump<br><br>
+          sudo hcidump --raw<br><br>
+          sudo hcitool lescan
+        </div>
+        <div>&nbsp;"sudo hcitool lescan" scans for bluetooth low energy devices while "hcidump" and "hcidump --raw" dump
+          information from scanned devices. Here are the outputs that I got from the propane sensor:</div>
+        <div class="terminal">
+          stuff**************************************************
+        </div>
+        <div>&nbsp;The advertisement data included 25 extra bytes of data. I knew the propane level must be encoded in
+          this data somewhere.&nbsp;</div>
+        <div><br /></div>
+        <div>&nbsp;My first attempt at decoding the data was to concurrently capture that data from hcidump and from the
+          tank check app and see if I could find any correlation between the two. After many attempts though, I couldn't
+          find any sort of obvious correlation. Because of this I concluded that the app must be performing some post
+          processing on the data.</div>
+        <div><br /></div>
+        <div>&nbsp;My only other path was to reverse engineer the app. With some research I learned of a tool called
+          Apktool which allows you to unpack a .apk file (an android app file) and view the resources used to build it. It
+          also allows you to make changes and rebuild it into a new .apk.</div>
+        <div><br /></div>
+        <div>&nbsp;I used apktool to unpack V2.5.1 (the latest version when I started working on this) of that tank check
+          app that I downloaded here:</div>
+        <div class="tut_link">
+          <a href="https://apkpure.com/tank-check/com.mopeka.tankcheck" target="_blank">Tank Check App</a>
+        </div>
+        <div><br /></div>
+        <div>&nbsp;Browsing through the files, I found that most of the code was written in javascript and contained in a
+          file located here: "assets/www/js/dist.bundle.js". Unfortunately, the code from apktool was not formatted very
+          well and almost impossible to read looking like this:</div>
+        <div class="tut_img">
+          <img src="assets/img/propane/propane2.png">
+        </div>
+        <div><br /></div>
+        <div>I was able to make it more readable using&nbsp;<a href="https://beautifier.io/"
+            target="_blank">https://beautifier.io/</a>:</div>
+        <div class="tut_img">
+          <img src="assets/img/propane/propane3.png">
+        </div>
+        <div><br /></div>
+        <div>&nbsp;Reading through the code, it appeared that apktool preserved the variable and function names that were
+          parts of classes, but not any other variable names. Luckily this was enough to help me follow the code. The
+          first thing I looked for was the piece of code that printed the percentage reading to the app. I knew if I could
+          find this piece of code, I could trace it back to see where the data came from. After finding it, I was also
+          able to edit this code and recompile the apk to print other info to help me decode what was going on.</div>
+        <div><br /></div>
+        <div>&nbsp;I won't go into too many details on reverse engineering the app from here, but I basically followed the
+          data through the app from when it's first read in the bluetooth advertisement data to it being converted to a
+          percentage. I converted the javascript to python for my own script. I was also able to decode the battery
+          percentage, temperature, and quality of the reading from the data.&nbsp;</div>
+        <div><br /></div>
+        <div>&nbsp;For reading the bluetooth data in the script, I found another python script online that would read BLE
+          data and converted it for my needs, filtering by the bluetooth address of my propane sensor. The final script
+          which sends this data via MQTT to Home Assistant can be found here. For the script to have access to bluetooth,
+          it must be run with "sudo -E"</div>
+        <div class="tut_link">
+          <a href="https://github.com/CF209/vanomation/blob/main/python/propane/propane_mqtt.py" target="_blank">Propane Level Python Script</a>
+        </div>
+        <div><br /></div>
+        <div>&nbsp;I then created a systemd service for the script:</div>
+        <div class="terminal">
+          sudo nano /lib/systemd/system/propane_mqqt.service
+        </div>
+        <div class="terminal">
+            [Unit]<br>
+            Description=Propane MQTT<br>
+            After=multi-user.target<br>
+            <br>
+            [Service]<br>
+            Type=idle<br>
+            ExecStart=/usr/bin/sudo -E /usr/bin/python3 /home/pi/python/propane/propane_mqtt.py<br>
+            WorkingDirectory=/home/pi<br>
+            User=pi<br>
+            <br>
+            [Install]<br>
+            WantedBy=multi-user.target
+        </div>
+        <div class="terminal">
+          sudo systemctl daemon-reload<br>
+          sudo systemctl enable propane_mqqt.service
+        </div>
+        <div>And added the sensors to Home Assistant:</div>
+        <div class="terminal">
+            sensor:<br>
+            - platform: mqtt<br>
+              state_topic: "van/propane"<br>
+              name: 'Propane Level'<br>
+              unit_of_measurement: '%'<br>
+              value_template: '{{ value_json.propane_pct }}'<br>
+            - platform: mqtt<br>
+              state_topic: "van/propane"<br>
+              name: 'Propane Sensor Quality'<br>
+              value_template: '{{ value_json.propane_qual }}'<br>
+            - platform: mqtt<br>
+              state_topic: "van/propane"<br>
+              name: 'Propane Sensor Battery'<br>
+              unit_of_measurement: '%'<br>
+              icon: mdi:battery-50<br>
+              value_template: '{{ value_json.propane_bat }}'<br>
+            - platform: mqtt<br>
+              state_topic: "van/propane"<br>
+              name: 'Propane Sensor Temperature'<br>
+              unit_of_measurement: '°C'<br>
+              value_template: '{{ value_json.propane_temp }}'
+        </div>
+        <div><br /></div>
+        <div>The propane sensor can now be added to your Home Assistant dashboard:</div>
+        <div><br /></div>
+        <div class="tut_img">
+          <img src="assets/img/propane/propane4.png">
+        </div>
+        <div><br /></div>
+        <div class="tut_img">
+          <img src="assets/img/propane/propane5.png">
+        </div>
+        <div><br /></div>
+        <div class="next_link">
+          <a href="adding_van_tilt_sensor.html">Next: Adding a Van Tilt Sensor</a>
+        </div>
+        <div><br /></div>
       </div>
     </section>
 

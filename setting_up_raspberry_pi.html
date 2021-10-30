@@ -97,6 +97,10 @@
             <div class="swiper-wrapper align-items-center">
   
               <div class="swiper-slide">
+                <img src="assets/img/raspi/raspi5.jpeg" class="tut_swiper_img" alt="">
+              </div>
+
+              <div class="swiper-slide">
                 <img src="assets/img/raspi/raspi1.png" class="tut_swiper_img" alt="">
               </div>
   
@@ -130,16 +134,16 @@
         <div class="amazon">
           <ul>
             <li><b><a href="https://www.amazon.com/gp/product/B07TC2BK1X" target="_blank">Raspberry Pi</a>:&nbsp;</b>
-              I'm using the Raspberry 4 with 4GB RAM but any recent model should also work
+              I'm using the Raspberry 4 with 4GB RAM. The Raspberry Pi 3 should also work, but the 4 is recommended
             </li>
             <li><b><a href="https://www.amazon.com/gp/product/B08K8Q74XL" target="_blank">USB Outlet</a>:&nbsp;</b>
               Must be capable of delivering 3A at 5V. The USB-C output from this one works</li>
             <li><b><a href="https://www.amazon.com/gp/product/B01GGKZ1VA" target="_blank">USB Cable</a>:&nbsp;</b>
-              Any USB-C to USB-C cable should work</li>
-            <li><b><a href="https://www.amazon.com/gp/product/B08GYBBBBH" target="_blank">Micro SD Card</a>:&nbsp;</b>
-              I'm using this 64GB card in my Raspberry Pi</li>
+              Any USB-C cable you have lying around should work</li>
+            <li><b><a href="https://www.amazon.com/gp/product/B07G3GMRYF" target="_blank">Micro SD Card</a>:&nbsp;</b>
+              Ideally get one that is Application Class 2 as they handle small I/O much more consistently than cards not optimized to host applications. A 32 GB or bigger card is recommended.</li>
             <li><b><a href="https://www.amazon.com/gp/product/B01N5RCZQH" target="_blank">Router</a>:&nbsp;</b>
-              I chose the TP-Link AC750 because it's cheap and has the WiFi-as-WAN function which allow me to use my phone's hotspot or connect to nearby WiFi for internet</li>
+              I chose the TP-Link AC750 because it's cheap and has the WiFi-as-WAN function which allow me to use my phone's hotspot or connect to nearby WiFi networks for internet</li>
             <li><b>Laptop:&nbsp;</b>Any Windows/MAC/Linux machine with an SD card reader works. If you don't have an SD
               card reader,&nbsp;<a href="https://www.amazon.com/Vanja-Adapter-Portable-Memory-Reader/dp/B07P7FRYG3" target="_blank">a cheap one like this should work</a></li>
           </ul>
@@ -176,11 +180,12 @@
         <div class="terminal">
           touch ssh
         </div>
-        <div>To set up the wifi, add a wpa_supplicant.conf file:</div>
+        <div>&nbsp;If connecting the Raspberry Pi to the router with an ethernet cable you can skip this next step. 
+          To set up the wifi, add a wpa_supplicant.conf file:</div>
         <div class="terminal">
           nano wpa_supplicant.conf
         </div>
-        <div>Add the following to this file:</div>
+        <div>&nbsp;Add the following to this file:</div>
         <div class="terminal">
             ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev<br>
             update_config=1<br>
@@ -192,7 +197,7 @@
             }
         </div>
         <div>
-          Replace NETWORK_SSID and PASSWORD with your wifi info, then save the file with "ctrl-x", "y", and "enter".
+          &nbsp;Replace NETWORK_SSID and PASSWORD with your wifi info, then save the file with "ctrl-x", "y", and "enter".
         </div>
         <div><br /></div>
         <div>&nbsp;The SD card is now fully set up and ready to be installed in your Raspberry Pi! Safely eject the SD
@@ -228,7 +233,8 @@
         <div>&nbsp;Since the Raspberry Pi can now be fully accessed remotely, you can now install it away somewhere out of
           sight. Don't make it too inaccessible though since we'll eventually be connecting to the GPIO pins and USB ports
           for future projects. I screwed mine into the wall of my electronics cabinet where my Van's power system is since
-          it's a good central location and I'll eventually be interfacing with some of the other components in there.
+          it's a good central location and I'll eventually be interfacing with some of the other components in there. It's 
+          a bit of a mess of wires right now, but I plan to clean it up a bit once this project is more finalized.
         </div>
         <div><br /></div>
         <div class="tut_img">

@@ -97,12 +97,36 @@
             <div class="swiper-wrapper align-items-center">
   
               <div class="swiper-slide">
-                <img src="assets/img/water/water1.png" class="tut_swiper_img" alt="">
+                <img src="assets/img/water/water1.jpeg" class="tut_swiper_img" alt="">
               </div>
 
               <div class="swiper-slide">
-                  <img src="assets/img/water/water2.png" class="tut_swiper_img" alt="">
-                </div>
+                <img src="assets/img/water/water2.png" class="tut_swiper_img" alt="">
+              </div>
+
+              <div class="swiper-slide">
+                <img src="assets/img/water/water3.png" class="tut_swiper_img" alt="">
+              </div>
+
+              <div class="swiper-slide">
+                <img src="assets/img/water/water4.jpeg" class="tut_swiper_img" alt="">
+              </div>
+
+              <div class="swiper-slide">
+                <img src="assets/img/water/water5.jpeg" class="tut_swiper_img" alt="">
+              </div>
+
+              <div class="swiper-slide">
+                <img src="assets/img/water/water6.png" class="tut_swiper_img" alt="">
+              </div>
+
+              <div class="swiper-slide">
+                <img src="assets/img/water/water7.png" class="tut_swiper_img" alt="">
+              </div>
+
+              <div class="swiper-slide">
+                <img src="assets/img/water/water8.png" class="tut_swiper_img" alt="">
+              </div>
   
             </div>
             <div class="swiper-pagination"></div>
@@ -116,6 +140,7 @@
         <div>&nbsp; The next thing in my van that I wanted to monitor was the amount of water in my freshwater tank.
           Previously I would have to peek through a little door on the side of my cabinet and make a rough estimate, so
           being able to quickly pull out my phone and check was a huge improvement.</div>
+        <div><br /></div>
         <div>Items needed to set this up:</div>
         <div class="amazon">
           <ul>
@@ -135,6 +160,7 @@
                   using an ESP8266, but other options can be used. See below for details</li>
           </ul>
         </div>
+        <div><br /></div>
         <div>&nbsp;For this project we will be cutting a hole in the top of the water tank, so be very careful or you could
         ruin your tank.</div>
         <div><br /></div>
@@ -160,7 +186,7 @@
           you're good to go!</div>
         <div><br /></div>
         <div class="tut_img">
-          <img src="assets/img/water/water1.png">
+          <img src="assets/img/water/water1.jpeg">
         </div>
         <div><br /></div>
         <div>&nbsp;Next we need to connect this sensor into Home Assistant. This water level sensor essentially acts as a
@@ -172,7 +198,7 @@
           <img src="assets/img/water/water2.png">
         </div>
         <div><br /></div>
-        <div>&nbsp;Connector J4 connects to the water level sensor, and the water voltage signal goes to the ADC. The
+        <div>&nbsp;Connector J4 connects to the water level sensor, and the water_voltage signal goes to the ADC. The
           water level sensor should be able to be connected in either direction since it's just a resistor, but one of the
           wires was black so I connected that one to GND. The capacitor was added to help reduce any noise. The ADC I'm
           using has a max voltage of 1V. By choosing a resistor value of 1k, this should in theory create a voltage range
@@ -189,7 +215,7 @@
         <div><br /></div>
         <div>&nbsp;For the ESP8266 I designed
           a custom PCB. This PCB runs on the 12V which I already have wired all over my van, uses a 3.3V step down
-          buck converter to power the ESP8266, and has a connector for the water level sensor wires and the voltage
+          buck converter to power the ESP8266, has a connector for the water level sensor wires, and has the voltage
           divider circuit described above. The board also has a few other features that I plan to use for future
           projects, but can be ignored for now. All chosen components are also easily hand-solderable. The KICAD files
           can be found here:</div>
@@ -198,7 +224,7 @@
         </div>
         <div><br /></div>
         <div class="tut_img">
-          <img src="assets/img/water/water4.png">
+          <img src="assets/img/water/water4.jpeg">
         </div>
         <div><br /></div>
         <div>&nbsp;The easiest way to configure an ESP8266 or ESP32 device to work with Home Assistant is by using
@@ -218,12 +244,12 @@
           code to the file:</div>
         <div class="terminal">
             sensor:<br>
-            &emsp;- platform: adc<br>
-            &emsp;&emsp;pin: A0<br>
-            &emsp;&emsp;name: "Water Level Voltage"<br>
-            &emsp;&emsp;id: water_voltage<br>
-            &emsp;&emsp;update_interval: 1s<br>
-            &emsp;&emsp;accuracy_decimals: 3
+            &emsp; - platform: adc<br>
+            &emsp;&emsp;&emsp; pin: A0<br>
+            &emsp;&emsp;&emsp; name: "Water Level Voltage"<br>
+            &emsp;&emsp;&emsp; id: water_voltage<br>
+            &emsp;&emsp;&emsp; update_interval: 1s<br>
+            &emsp;&emsp;&emsp; accuracy_decimals: 3
         </div>
         <div>&nbsp;This code tells the ESP8266 to read the voltage on the ADC pin every 1 second. To initially program
           the device, select the correct device in the upper right hand corner, then click "Upload". For my custom board
@@ -235,7 +261,7 @@
         <div>&nbsp;With it programmed, I could now install it with the water sensor</div>
         <div><br /></div>
         <div class="tut_img">
-          <img src="assets/img/water/water5.png">
+          <img src="assets/img/water/water5.jpeg">
         </div>
         <div><br /></div>
         <div>&nbsp;To connect it to Home Assistant, open the webpage and go to Configurations -&gt; Integrations and add
@@ -246,7 +272,7 @@
           <img src="assets/img/water/water6.png">
         </div>
         <div><br /></div>
-        <div>Because I wasn't sure what voltages I'd see at different water levels, I kept logs of the voltage as my
+        <div>&nbsp;Because I wasn't sure what voltages I'd see at different water levels, I kept logs of the voltage as my
           water tank was emptied and then fully refilled. I then had a complete set of data and could assign percentage
           values to different voltages.</div>
         <div><br /></div>
@@ -257,45 +283,45 @@
         <div>&nbsp;I then added the following code to my ESPHome file and updated it to now send percent values in
           addition to voltages:</div>
         <div class="terminal">
-          &emsp;- platform: template<br>
-          &emsp;&emsp;name: "Water Level Percent"<br>
-          &emsp;&emsp;unit_of_measurement: "%"<br>
-          &emsp;&emsp;accuracy_decimals: 0<br>
-          &emsp;&emsp;update_interval: 1s<br>
-          &emsp;&emsp;lambda: |-<br>
-          &emsp;&emsp;  if (id(water_voltage).state &lt; 0.162) {<br>
-          &emsp;&emsp;    return 100;<br>
-          &emsp;&emsp;  } else if (id(water_voltage).state &lt; 0.194) {<br>
-          &emsp;&emsp;    return 93;<br>
-          &emsp;&emsp;  } else if (id(water_voltage).state &lt; 0.2255) {<br>
-          &emsp;&emsp;    return 87;<br>
-          &emsp;&emsp;  } else if (id(water_voltage).state &lt; 0.2505) {<br>
-          &emsp;&emsp;    return 80;<br>
-          &emsp;&emsp;  } else if (id(water_voltage).state &lt; 0.2705) {<br>
-          &emsp;&emsp;    return 73;<br>
-          &emsp;&emsp;  } else if (id(water_voltage).state &lt; 0.29) {<br>
-          &emsp;&emsp;    return 67;<br>
-          &emsp;&emsp;  } else if (id(water_voltage).state &lt; 0.308) {<br>
-          &emsp;&emsp;    return 60;<br>
-          &emsp;&emsp;  } else if (id(water_voltage).state &lt; 0.326) {<br>
-          &emsp;&emsp;    return 53;<br>
-          &emsp;&emsp;  } else if (id(water_voltage).state &lt; 0.3445) {<br>
-          &emsp;&emsp;    return 47;<br>
-          &emsp;&emsp;  } else if (id(water_voltage).state &lt; 0.362) {<br>
-          &emsp;&emsp;    return 40;<br>
-          &emsp;&emsp;  } else if (id(water_voltage).state &lt; 0.398) {<br>
-          &emsp;&emsp;    return 33;<br>
-          &emsp;&emsp;  } else if (id(water_voltage).state &lt; 0.452) {<br>
-          &emsp;&emsp;    return 27;<br>
-          &emsp;&emsp;  } else if (id(water_voltage).state &lt; 0.5045) {<br>
-          &emsp;&emsp;    return 20;<br>
-          &emsp;&emsp;  } else if (id(water_voltage).state &lt; 0.562) {<br>
-          &emsp;&emsp;    return 13;<br>
-          &emsp;&emsp;  } else if (id(water_voltage).state &lt; 0.6215) {<br>
-          &emsp;&emsp;    return 7;<br>
-          &emsp;&emsp;  } else {<br>
-          &emsp;&emsp;    return 0;<br>
-          &emsp;&emsp;  }
+          &emsp; - platform: template<br>
+          &emsp;&emsp;&emsp; name: "Water Level Percent"<br>
+          &emsp;&emsp;&emsp; unit_of_measurement: "%"<br>
+          &emsp;&emsp;&emsp; accuracy_decimals: 0<br>
+          &emsp;&emsp;&emsp; update_interval: 1s<br>
+          &emsp;&emsp;&emsp; lambda: |-<br>
+          &emsp;&emsp;&emsp;  if (id(water_voltage).state &lt; 0.162) {<br>
+          &emsp;&emsp;&emsp;&emsp;    return 100;<br>
+          &emsp;&emsp;&emsp;  } else if (id(water_voltage).state &lt; 0.194) {<br>
+          &emsp;&emsp;&emsp;&emsp;    return 93;<br>
+          &emsp;&emsp;&emsp;  } else if (id(water_voltage).state &lt; 0.2255) {<br>
+          &emsp;&emsp;&emsp;&emsp;    return 87;<br>
+          &emsp;&emsp;&emsp;  } else if (id(water_voltage).state &lt; 0.2505) {<br>
+          &emsp;&emsp;&emsp;&emsp;    return 80;<br>
+          &emsp;&emsp;&emsp;  } else if (id(water_voltage).state &lt; 0.2705) {<br>
+          &emsp;&emsp;&emsp;&emsp;    return 73;<br>
+          &emsp;&emsp;&emsp;  } else if (id(water_voltage).state &lt; 0.29) {<br>
+          &emsp;&emsp;&emsp;&emsp;    return 67;<br>
+          &emsp;&emsp;&emsp;  } else if (id(water_voltage).state &lt; 0.308) {<br>
+          &emsp;&emsp;&emsp;&emsp;    return 60;<br>
+          &emsp;&emsp;&emsp;  } else if (id(water_voltage).state &lt; 0.326) {<br>
+          &emsp;&emsp;&emsp;&emsp;    return 53;<br>
+          &emsp;&emsp;&emsp;  } else if (id(water_voltage).state &lt; 0.3445) {<br>
+          &emsp;&emsp;&emsp;&emsp;    return 47;<br>
+          &emsp;&emsp;&emsp;  } else if (id(water_voltage).state &lt; 0.362) {<br>
+          &emsp;&emsp;&emsp;&emsp;    return 40;<br>
+          &emsp;&emsp;&emsp;  } else if (id(water_voltage).state &lt; 0.398) {<br>
+          &emsp;&emsp;&emsp;&emsp;    return 33;<br>
+          &emsp;&emsp;&emsp;  } else if (id(water_voltage).state &lt; 0.452) {<br>
+          &emsp;&emsp;&emsp;&emsp;    return 27;<br>
+          &emsp;&emsp;&emsp;  } else if (id(water_voltage).state &lt; 0.5045) {<br>
+          &emsp;&emsp;&emsp;&emsp;    return 20;<br>
+          &emsp;&emsp;&emsp;  } else if (id(water_voltage).state &lt; 0.562) {<br>
+          &emsp;&emsp;&emsp;&emsp;    return 13;<br>
+          &emsp;&emsp;&emsp;  } else if (id(water_voltage).state &lt; 0.6215) {<br>
+          &emsp;&emsp;&emsp;&emsp;    return 7;<br>
+          &emsp;&emsp;&emsp;  } else {<br>
+          &emsp;&emsp;&emsp;&emsp;    return 0;<br>
+          &emsp;&emsp;&emsp;  }
         </div>
         <div>&nbsp;Success! I now have a fully functional water level sensor integrated with Home Assistant.</div>
         <div><br /></div>

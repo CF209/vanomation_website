@@ -105,7 +105,7 @@
               </div>
 
               <div class="swiper-slide">
-                <img src="assets/img/propane/propane1.webp" class="tut_swiper_img" alt="">
+                <img src="assets/img/propane/propane1.png" class="tut_swiper_img" alt="">
               </div>
 
               <div class="swiper-slide">
@@ -139,12 +139,12 @@
                 been able to find</li>
           </ul>
         </div>
-        <div>&nbsp;The propane sensor has its own app which works pretty well on its own. I would always forget to check it
+        <div>&nbsp;The propane sensor has its own app which works decently well on its own. I would always forget to check it
           though.&nbsp;I wanted to integrate it into my Home Assistant setup so I could look at one location for all the
           systems in the van.</div>
         <div><br /></div>
         <div class="tut_img">
-          <img src="assets/img/propane/propane1.webp">
+          <img src="assets/img/propane/propane1.png">
         </div>
         <div><br /></div>
         <div>&nbsp;I reached out to Mopeka to see if they had an API for the sensors, but never received a
@@ -164,7 +164,17 @@
         <div>&nbsp;"sudo hcitool lescan" scans for bluetooth low energy devices while "hcidump" and "hcidump --raw" dump
           information from scanned devices. Here are the outputs that I got from the propane sensor:</div>
         <div class="terminal">
-          stuff**************************************************
+            > HCI Event: LE Meta Event (0x3e) plen 43<br>
+            &nbsp;&nbsp;&nbsp; LE Advertising Report<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ADV_NONCONN_IND - Non connectable undirected advertising (3)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bdaddr 90:9A:77:1E:8F:DB (Public)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Unknown type 0xff with 25 bytes data<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Shortened service classes: 0xada0<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; RSSI: -75<br>
+            <br>
+            > 04 3E 2B 02 01 03 00 DB 8F 1E 77 9A 90 1F 1A FF 0D 00 00 02 <br>
+            &nbsp; 7A 61 08 89 73 BE FD F4 17 C1 3E 05 17 5C F0 40 03 3B 1E 8F <br>
+            &nbsp; DB 03 02 A0 AD B6 
         </div>
         <div>&nbsp;The advertisement data included 25 extra bytes of data. I knew the propane level must be encoded in
           this data somewhere.&nbsp;</div>
@@ -174,7 +184,7 @@
           find any sort of obvious correlation. Because of this I concluded that the app must be performing some post
           processing on the data.</div>
         <div><br /></div>
-        <div>&nbsp;My only other path was to reverse engineer the app. With some research I learned of a tool called
+        <div>&nbsp;My only other path was to reverse engineer the app to figure out what sort of post processing was being done. With some research I learned of a tool called
           Apktool which allows you to unpack a .apk file (an android app file) and view the resources used to build it. It
           also allows you to make changes and rebuild it into a new .apk.</div>
         <div><br /></div>
@@ -241,26 +251,26 @@
         <div>And added the sensors to Home Assistant:</div>
         <div class="terminal">
             sensor:<br>
-            - platform: mqtt<br>
-              state_topic: "van/propane"<br>
-              name: 'Propane Level'<br>
-              unit_of_measurement: '%'<br>
-              value_template: '{{ value_json.propane_pct }}'<br>
-            - platform: mqtt<br>
-              state_topic: "van/propane"<br>
-              name: 'Propane Sensor Quality'<br>
-              value_template: '{{ value_json.propane_qual }}'<br>
-            - platform: mqtt<br>
-              state_topic: "van/propane"<br>
-              name: 'Propane Sensor Battery'<br>
-              unit_of_measurement: '%'<br>
-              icon: mdi:battery-50<br>
-              value_template: '{{ value_json.propane_bat }}'<br>
-            - platform: mqtt<br>
-              state_topic: "van/propane"<br>
-              name: 'Propane Sensor Temperature'<br>
-              unit_of_measurement: '°C'<br>
-              value_template: '{{ value_json.propane_temp }}'
+            &nbsp; - platform: mqtt<br>
+            &nbsp;&nbsp;&nbsp; state_topic: "van/propane"<br>
+            &nbsp;&nbsp;&nbsp; name: 'Propane Level'<br>
+            &nbsp;&nbsp;&nbsp; unit_of_measurement: '%'<br>
+            &nbsp;&nbsp;&nbsp; value_template: '{{ value_json.propane_pct }}'<br>
+            &nbsp; - platform: mqtt<br>
+            &nbsp;&nbsp;&nbsp; state_topic: "van/propane"<br>
+            &nbsp;&nbsp;&nbsp; name: 'Propane Sensor Quality'<br>
+            &nbsp;&nbsp;&nbsp; value_template: '{{ value_json.propane_qual }}'<br>
+            &nbsp; - platform: mqtt<br>
+            &nbsp;&nbsp;&nbsp; state_topic: "van/propane"<br>
+            &nbsp;&nbsp;&nbsp; name: 'Propane Sensor Battery'<br>
+            &nbsp;&nbsp;&nbsp; unit_of_measurement: '%'<br>
+            &nbsp;&nbsp;&nbsp; icon: mdi:battery-50<br>
+            &nbsp;&nbsp;&nbsp; value_template: '{{ value_json.propane_bat }}'<br>
+            &nbsp; - platform: mqtt<br>
+            &nbsp;&nbsp;&nbsp; state_topic: "van/propane"<br>
+            &nbsp;&nbsp;&nbsp; name: 'Propane Sensor Temperature'<br>
+            &nbsp;&nbsp;&nbsp; unit_of_measurement: '°C'<br>
+            &nbsp;&nbsp;&nbsp; value_template: '{{ value_json.propane_temp }}'
         </div>
         <div><br /></div>
         <div>The propane sensor can now be added to your Home Assistant dashboard:</div>

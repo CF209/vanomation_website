@@ -97,6 +97,10 @@
             <div class="swiper-wrapper align-items-center">
   
               <div class="swiper-slide">
+                <img src="assets/img/lights/lights4.jpeg" class="tut_swiper_img" alt="">
+              </div>
+
+              <div class="swiper-slide">
                 <img src="assets/img/lights/lights1.png" class="tut_swiper_img" alt="">
               </div>
   
@@ -123,12 +127,16 @@
         <div class="amazon">
           <ul>
             <li><b><a href="https://www.amazon.com/gp/product/B06WP7169Y" target="_blank">
-              Raspberry Pi Starter Kit</a>:</b>&nbsp;I recommend picking up a starter kit for the
-              raspberry pi similar to this one. It comes with some basic electrical components, a breadboard, and a GPIO
+              Raspberry Pi Starter Kit</a>:</b>&nbsp;If you're new to electronics, I recommend picking up a starter kit for the
+              raspberry pi similar to this one. It comes with some basic electrical components, wires, a breadboard, and a GPIO
               extension board which will be very useful for prototyping circuits</li>
-            <li><b><a href="https://www.amazon.com/gp/product/B073VDX4B7" target="_blank">
+            <li><b><a href="https://www.amazon.com/ANBES-Soldering-Iron-Kit-Electronics/dp/B06XZ31W3M" target="_blank">
               Soldering Iron</a>:</b> A basic kit like this one will do the trick if you don't have a
-              soldering iron already. Also comes with a multimeter which is handy for checking your work and debugging</li>
+              soldering iron already</li>
+            <li><b><a href="https://www.amazon.com/Fluke-101-Multimeter-Resistance-Capacitance/dp/B00HE6MIJY" target="_blank">
+              Multimeter</a>:</b> It's always a good idea to check for shorts with a multimeter before powering up 
+              any circuits. It's also a great debugging tool. I had a cheaper one, but it was unreliable and it 
+              eventually broke, so I upgraded to a more reputable brand like Fluke</li>
             <li><b><a href="https://www.amazon.com/gp/product/B07CTF1JVD"target="_blank">
               N-Channel MOSFETs</a>: </b>These will be used to switch on and off the lights</li>
             <li><b><a href="https://www.amazon.com/gp/product/B012ZOI3ZW" target="_blank">
@@ -152,7 +160,7 @@
           than 3.3V or the Raspberry Pi will not be able to drive it. A 10k resistor is also added between the gate and ground
           to keep the MOSFET turned off if the GPIO pin is not configured correctly.</div>
         <div><br /></div>
-        <div>&nbsp;I put this circuit together by soldering wires directly to the MOSFET and connecting the gate wire to a
+        <div>&nbsp;I put this circuit together by soldering wires directly to the MOSFETs and connecting the gate wire to a
           breadboard where I have the 10k resistor and the GPIO extension board which connects it back to the Raspberry Pi.
           It's a little hacked together, but it works. I plan on eventually putting this together onto a PCB to clean things
           up a bit.</div>
@@ -162,7 +170,7 @@
         </div>
         <div><br /></div>
         <div>&nbsp;For the GPIO pin, make sure you use GPIO12, 13, 18, or 19 since these are the hardware PWM pins on the
-          Raspberry Pi that will allow for dimming. I used 12 and 13 and built the circuit twice since I have two different
+          Raspberry Pi that will allow for dimming. I used 12 and 13 and replicated the circuit twice since I have two different
           zones for the lights in my van.</div>
         <div><br /></div>
         <div>
@@ -173,7 +181,7 @@
           sudo systemctl enable pigpiod
         </div>
         <div>
-          We then need to enable remote GPIO on the Raspberry Pi. Enter the raspi-config utility:</div>
+            &nbsp;We then need to enable remote GPIO on the Raspberry Pi. Enter the raspi-config utility:</div>
         <div class="terminal">
           sudo raspi-config
         </div>
@@ -185,27 +193,28 @@
         <div class="terminal">
             light:<br>
             - platform: rpi_gpio_pwm<br>
-            &emsp;leds:<br>
-            &emsp;&emsp;- name: Bed Lights<br>
-            &emsp;&emsp;&emsp;driver: gpio<br>
-            &emsp;&emsp;&emsp;pins: [12]<br>
-            &emsp;&emsp;&emsp;type: simple<br>
-            &emsp;&emsp;&emsp;frequency: 50000<br>
-            &emsp;&emsp;- name: Main Lights<br>
-            &emsp;&emsp;&emsp;driver: gpio<br>
-            &emsp;&emsp;&emsp;pins: [13]<br>
-            &emsp;&emsp;&emsp;type: simple<br>
-            &emsp;&emsp;&emsp;frequency: 50000
+            &emsp; leds:<br>
+            &emsp; - name: Bed Lights<br>
+            &emsp;&emsp;&emsp; driver: gpio<br>
+            &emsp;&emsp;&emsp; pins: [12]<br>
+            &emsp;&emsp;&emsp; type: simple<br>
+            &emsp;&emsp;&emsp; frequency: 50000<br>
+            &emsp; - name: Main Lights<br>
+            &emsp;&emsp;&emsp; driver: gpio<br>
+            &emsp;&emsp;&emsp; pins: [13]<br>
+            &emsp;&emsp;&emsp; type: simple<br>
+            &emsp;&emsp;&emsp; frequency: 50000
         </div>
         <div>&nbsp;This configuration is for two light zones, one controlled by GPIO12 and one by GPIO13. You can change the
           names and pin numbers to match your configuration. For the frequency, I played around with it until I found a
           value that worked well. Too low and you can notice the lights flickering when dimmed. Certain values also seemed
-          to cause a ringing noise from the lights.</div>
+          to cause a high pitched ringing noise from the lights.</div>
+        <div><br /></div>
         <div>&nbsp;After restarting home assistant you should be able to edit the dashboard and add a light card to control
           your lights!</div>
         <div><br /></div>
         <div class="tut_img">
-          <img src="assets/img/lights/lights2.jpeg">
+          <img src="assets/img/lights/lights3.png">
         </div>
         <div><br /></div>
         <div class="next_link">

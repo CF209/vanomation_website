@@ -204,10 +204,9 @@
           batteries from the alternator when the engine is running. If I could also detect this signal on the Raspberry
           Pi, I could lock the drawer when the engine is running.</div>
         <div><br /></div>
-        <div>&nbsp;I'm not an expert on how the ignition wires work, but my guess was that there's a voltage when the van
-          is on, and it's grounded when the van is off. My multimeter unfortunately broke, so I wasn't able to double
-          check this, but I continued with this assumption anyways. I assume the voltage on this signal would be too high
-          for the Raspberry Pi GPIO pins, so I used a MOSFET to step down the voltage:</div>
+        <div>&nbsp;I wasn't sure how the ignition wire worked, so I used a multimeter to read the voltage. The wire read 0V 
+          when the ignition was off, and about 14.3V when it was on. A simple discrete signal like this is exactly what I 
+          was hoping for! The 14.3V is way too high for the Raspberry Pi GPIO pins, so I used a MOSFET to step down the voltage:</div>
         <div><br /></div>
         <div class="tut_img">
           <img src="assets/img/drawer/drawer5.png">

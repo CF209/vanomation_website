@@ -216,6 +216,8 @@
             ExecStart=/usr/bin/python3 <b>/home/pi/python/solar/solar_mqtt.py</b><br>
             WorkingDirectory=/home/pi<br>
             User=pi<br>
+            Restart=on-failure<br>
+            RestartSec=5s<br>
             <br>
             [Install]<br>
             WantedBy=multi-user.target

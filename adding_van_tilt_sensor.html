@@ -97,6 +97,10 @@
           <div class="swiper-wrapper align-items-center">
 
             <div class="swiper-slide">
+              <img src="assets/img/tilt/tilt5.png" class="tut_swiper_img" alt="">
+            </div>
+
+            <div class="swiper-slide">
               <img src="assets/img/tilt/tilt1.jpeg" class="tut_swiper_img" alt="">
             </div>
 
@@ -248,6 +252,30 @@
         <div><br /></div>
         <div class="tut_img">
           <img src="assets/img/tilt/tilt4.png">
+        </div>
+        <div><br /></div>
+        <div>&nbsp;Update: I wasn't very happy with how these sensors displayed in the Home Assistant interface, so I decided to make 
+          my own lovelace card to better show this sensor output. Here is what it now looks like:
+        </div>
+        <div><br /></div>
+        <div class="tut_img">
+          <img src="assets/img/tilt/tilt5.png">
+        </div>
+        <div><br /></div>
+        <div>&nbsp;The code for this new card can be found here:</div>
+        <div class="tut_link">
+          <a href="https://github.com/CF209/van-tilt-sensor-custom-card" target="_blank">Van Tilt Sensor Custom Card</a>
+        </div>
+        <div><br /></div>
+        <div>&nbsp;To install the card, create a new folder in your "homeassistant/www/" directory called "van-tilt-card" and 
+          download the files to this directory. Then in Home Assistant go to Configuration - Lovelace Dashboards - Resources and click 
+          "Add Resource". Enter "/local/van-tilt-card/van-tilt-card.js" for the URL and "JavaScript Module" for the type and click create. 
+          Back in your main dashboard, you can now manually add the new card with the following code:
+        </div>
+        <div class="terminal">
+            type: 'custom:van-tilt-card'<br>
+            entity_x: sensor.filtered_x_angle<br>
+            entity_y: sensor.filtered_y_angle
         </div>
         <div><br /></div>
         <div class="next_link">

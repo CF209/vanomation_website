@@ -232,7 +232,7 @@
           allows you to apply future updates wirelessly. You can install ESPHome in docker using:&nbsp;</div>
         <div class="terminal">
           sudo docker pull esphome/esphome<br>
-          sudo docker run -d --name="esphome " --net=host -p 6052:6052 -p 6123:6123 --privileged --restart always -v /home/pi/esphome:/config esphomt/esphome
+          sudo docker run -d --name="esphome" --net=host -p 6052:6052 -p 6123:6123 --privileged --restart always -v /home/pi/esphome:/config esphome/esphome
         </div>
         <div>&nbsp;I ran it in privileged mode so ESPHome would have access to the USB ports for initially programming
           any ESP32 or ESP8266 devices. After it's running, you should be able to access it by going to&nbsp;<a

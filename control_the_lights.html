@@ -115,6 +115,10 @@
               <div class="swiper-slide">
                 <img src="assets/img/lights/lights5.jpg" class="tut_swiper_img" alt="">
               </div>
+
+              <div class="swiper-slide">
+                <img src="assets/img/lights/lights6.png" class="tut_swiper_img" alt="">
+              </div>
   
             </div>
             <div class="swiper-pagination"></div>
@@ -236,16 +240,18 @@
           the latest C3 version of the ESP32 which wasn't supported by ESPHome yet. Because of this I ended up writing my 
           own software in C for the ESP32. The code can be found here:</div>
         <div class="tut_link">
-          <a href="https://github.com/CF209/esp32c3_mqtt_lights" target="_blank">ESP32-C3 MQTT Light Control</a>
+          <a href="https://github.com/CF209/ESP32-Smart-Light-Control" target="_blank">ESP32 Smart Light Control</a>
         </div>
         <div><br /></div>
-        <div>&nbsp;The code is relatively simple. On startup it connects to the WIFI network and MQTT server and initializes 
-          the PWM outputs. It then subscribes the the MQTT topics for the lights in Home Assistant and adjusts the PWM 
-          duty cycle accordingly when it sees an MQTT message. After adjusting the PWM, it sends another MQTT message back 
-          to confirm that the lights have been adjusted. Many things are hard coded including the WIFI network, 
-          MQTT address, and MQTT topics. I've been running this code for a while without any issues, so it seems relatively 
-          reliable. The biggest issue is that there seems to be some delay in receiving the MQTT messages so when a 
-          lightswitch is pressed it sometimes takes a few seconds for the lights to turn on/off</div>
+        <div>&nbsp;With this code on first startup, the ESP32 starts in softAP mode and hosts a webserver. From the web interface, 
+          you can configure the device to connect to a wifi network, enable/disable and rename the 4 lights, and connect the device 
+          to an MQTT server. With the MQTT integration installed in Home Assistant, the lights should configure and show up 
+          as devices within Home Assistant automatically! Below is the web interface hosted by the ESP32.
+        </div>
+        <div><br /></div>
+        <div class="tut_img">
+          <img src="assets/img/lights/lights6.png">
+        </div>
         <div><br /></div>
         <div class="next_link">
           <a href="add_wireless_switches.html">Next: Adding Wireless Switches</a>

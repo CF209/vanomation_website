@@ -5,7 +5,8 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Inner Page - Squadfree Bootstrap Template</title>
+  <!-- EDIT: Change the page title -->
+  <title>Your Page Title</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -26,58 +27,103 @@
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
-
-  <!-- =======================================================
-  * Template Name: Squadfree - v4.6.0
-  * Template URL: https://bootstrapmade.com/squadfree-free-bootstrap-template-creative/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
 </head>
 
 <body>
 
-  <!-- ======= Header ======= -->
+  <!-- Header - navigation is populated automatically from nav-config.js -->
   <header id="header" class="fixed-top ">
     <div class="container d-flex align-items-center justify-content-between">
-
       <div class="logo">
         <h1 class="text-light"><a href="index.html"><span>Vanomation</span></a></h1>
-        <!-- Uncomment below if you prefer to use an image logo -->
-        <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
       </div>
-
-      <!-- Navigation populated automatically from nav-config.js -->
       <nav id="navbar" class="navbar">
         <ul></ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
-
     </div>
   </header><!-- End Header -->
 
   <main id="main">
 
     <!-- ======= Breadcrumbs Section ======= -->
+    <!-- EDIT: Update the page title in both places below -->
     <section class="breadcrumbs">
       <div class="container">
-
         <div class="d-flex justify-content-between align-items-center">
-          <h2>Inner Page</h2>
+          <h2>Your Page Title</h2>
           <ol>
             <li><a href="index.html">Home</a></li>
-            <li>Inner Page</li>
+            <li>Your Page Title</li>
           </ol>
         </div>
-
       </div>
     </section><!-- End Breadcrumbs Section -->
 
+    <!-- ======= Image Carousel ======= -->
+    <!-- OPTIONAL: Remove this entire section if you don't have images -->
+    <section class="tutorial_imgs">
+      <div class="row">
+        <div class="portfolio-details-slider swiper">
+          <div class="swiper-wrapper align-items-center">
+
+            <!-- EDIT: Add your images here. Copy/paste more swiper-slide divs as needed. -->
+            <div class="swiper-slide">
+              <img src="assets/img/YOUR_FOLDER/image1.jpg" class="tut_swiper_img" alt="">
+            </div>
+
+            <div class="swiper-slide">
+              <img src="assets/img/YOUR_FOLDER/image2.jpg" class="tut_swiper_img" alt="">
+            </div>
+
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======= Tutorial Content ======= -->
+    <!-- EDIT: Replace everything inside .container with your content -->
     <section class="inner-page">
       <div class="container">
-        <p>
-          Example inner page template
-        </p>
+
+        <p>&nbsp;Introduction paragraph goes here...</p>
+
+        <!-- Amazon product links — use .amazon div for the styled box -->
+        <div class="amazon">
+          <ul>
+            <li><b><a href="https://www.amazon.com/..." target="_blank">Product Name</a>:</b>
+              &nbsp;Description of the product and why it's needed.</li>
+            <li><b><a href="https://www.amazon.com/..." target="_blank">Another Product</a>:</b>
+              &nbsp;Description.</li>
+          </ul>
+        </div>
+
+        <div><br /></div>
+
+        <p>&nbsp;More content here...</p>
+
+        <!-- Terminal/code block — use .terminal div for monospace code styling -->
+        <div class="terminal">
+          sudo your-command-here<br />
+          another command
+        </div>
+
+        <p>&nbsp;Explanation after the command...</p>
+
+        <!-- Inline image -->
+        <div class="tut_img">
+          <img src="assets/img/YOUR_FOLDER/diagram.png">
+        </div>
+
+        <div><br /></div>
+
+        <!-- Link to next tutorial — update href and label -->
+        <div class="next_link">
+          <a href="next_tutorial_page.html">Next: Next Tutorial Title</a>
+        </div>
+
+        <div><br /></div>
       </div>
     </section>
 
@@ -91,7 +137,6 @@
           <p style="text-align: center">
             See more at <a href="https://github.com/CF209">https://github.com/CF209</a>
           </p>
-
         </div>
       </div>
     </div>

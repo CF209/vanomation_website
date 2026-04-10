@@ -1,0 +1,43 @@
+---
+layout: default
+---
+
+<main id="main">
+
+  <!-- ======= Breadcrumbs Section ======= -->
+  <section class="breadcrumbs">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center">
+        <h2>{{ page.title }}</h2>
+        <ol>
+          <li><a href="index.html">Home</a></li>
+          <li>{{ page.title }}</li>
+        </ol>
+      </div>
+    </div>
+  </section><!-- End Breadcrumbs Section -->
+
+  {% if page.images %}
+  <section class="tutorial_imgs">
+    <div class="row">
+      <div class="portfolio-details-slider swiper">
+        <div class="swiper-wrapper align-items-center">
+          {% for image in page.images %}
+          <div class="swiper-slide">
+            <img src="{{ image }}" class="tut_swiper_img" alt="">
+          </div>
+          {% endfor %}
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  <section class="inner-page">
+    <div class="container">
+      {{ content }}
+    </div>
+  </section>
+
+</main><!-- End #main -->

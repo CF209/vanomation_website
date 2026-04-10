@@ -1,0 +1,16 @@
+title: Vanomation
+description: Home Automation For Your Van
+url: "https://van-automation.com"
+baseurl: ""
+
+# Keep .html extensions in URLs to preserve existing links
+permalink: /:path:output_ext
+
+# Don't include these in the Jekyll build
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - Readme.txt
+  - _template.html
+  - node_modules
+  - vendor/bundle

@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Inner Page - Squadfree Bootstrap Template</title>
+  <title>{% if page.title %}{{ page.title }} | {% endif %}Vanomation</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -38,13 +38,11 @@
 <body>
 
   <!-- ======= Header ======= -->
-  <header id="header" class="fixed-top ">
+  <header id="header" class="fixed-top{% if page.header_transparent %} header-transparent{% endif %} ">
     <div class="container d-flex align-items-center justify-content-between">
 
       <div class="logo">
         <h1 class="text-light"><a href="index.html"><span>Vanomation</span></a></h1>
-        <!-- Uncomment below if you prefer to use an image logo -->
-        <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
       </div>
 
       <!-- Navigation populated automatically from nav-config.js -->
@@ -56,32 +54,7 @@
     </div>
   </header><!-- End Header -->
 
-  <main id="main">
-
-    <!-- ======= Breadcrumbs Section ======= -->
-    <section class="breadcrumbs">
-      <div class="container">
-
-        <div class="d-flex justify-content-between align-items-center">
-          <h2>Inner Page</h2>
-          <ol>
-            <li><a href="index.html">Home</a></li>
-            <li>Inner Page</li>
-          </ol>
-        </div>
-
-      </div>
-    </section><!-- End Breadcrumbs Section -->
-
-    <section class="inner-page">
-      <div class="container">
-        <p>
-          Example inner page template
-        </p>
-      </div>
-    </section>
-
-  </main><!-- End #main -->
+  {{ content }}
 
   <!-- ======= Footer ======= -->
   <footer id="footer">
@@ -91,7 +64,6 @@
           <p style="text-align: center">
             See more at <a href="https://github.com/CF209">https://github.com/CF209</a>
           </p>
-
         </div>
       </div>
     </div>
@@ -118,7 +90,7 @@
   <script src="assets/vendor/purecounter/purecounter.js"></script>
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
 
-  <!-- Nav config - edit nav-config.js to add/remove tutorial pages -->
+  <!-- Nav config - populated from _data/tutorials.yml -->
   <script src="assets/js/nav-config.js"></script>
   <script src="assets/js/components.js"></script>
 

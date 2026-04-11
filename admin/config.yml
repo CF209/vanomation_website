@@ -13,14 +13,11 @@ collections:
   # automatically gets the header, footer, breadcrumbs, and image carousel.
   - name: "tutorials"
     label: "Tutorial Pages"
-    folder: "."
+    folder: "_tutorials"
     create: true
     extension: "html"
     format: "frontmatter"
     slug: "{{slug}}"
-    filter:
-      field: "layout"
-      value: "tutorial"
     summary: "{{title}}"
     editor:
       preview: false

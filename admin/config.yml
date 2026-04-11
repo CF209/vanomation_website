@@ -2,15 +2,12 @@ backend:
   name: git-gateway
   branch: main
 
-# Where uploaded images are stored
 media_folder: "assets/img/uploads"
 public_folder: "assets/img/uploads"
 
 collections:
 
   # ── Tutorial Pages ──────────────────────────────────────────────────────────
-  # Each tutorial is a separate HTML file. Create a new one here and it
-  # automatically gets the header, footer, breadcrumbs, and image carousel.
   - name: "tutorials"
     label: "Tutorial Pages"
     folder: "_tutorials"
@@ -18,13 +15,16 @@ collections:
     extension: "html"
     format: "frontmatter"
     slug: "{{slug}}"
-    summary: "{{title}}"
+    summary: "{{order}}. {{title}}"
+    sortable_fields: ["order", "title"]
     editor:
       preview: false
     fields:
       - { label: "Layout", name: "layout", widget: "hidden", default: "tutorial" }
       - { label: "Render with Liquid", name: "render_with_liquid", widget: "hidden", default: false }
-      - { label: "Page Title", name: "title", widget: "string", hint: "Shown in the browser tab and breadcrumb" }
+      - { label: "Order", name: "order", widget: "number", hint: "Controls sort order in this list. Should match the position in Tutorial Navigation." }
+      - { label: "Page Title", name: "title", widget: "string" }
+      - { label: "Permalink", name: "permalink", widget: "string", hint: "URL of the page, e.g. /my_new_tutorial.html" }
       - name: "images"
         label: "Carousel Images"
         widget: "list"
@@ -36,25 +36,22 @@ collections:
         widget: "markdown"
         hint: >
           Write your tutorial content here. Switch to HTML mode (the < > button) to use
-          special styled boxes: <div class=\"amazon\">...</div> for product lists,
-          <div class=\"terminal\">...</div> for code/commands,
-          <div class=\"tut_img\"><img src=\"...\"></div> for inline images,
-          <div class=\"next_link\"><a href=\"...\">Next: ...</a></div> for the next-page link.
+          special styled boxes: <div class="amazon">...</div> for product lists,
+          <div class="terminal">...</div> for code/commands,
+          <div class="tut_img"><img src="..."></div> for inline images.
 
   # ── Tutorial Navigation ──────────────────────────────────────────────────────
-  # Controls which tutorials appear in the dropdown menu and their order.
-  # After creating a new tutorial page above, add it here to show it in the nav.
   - name: "navigation"
     label: "Tutorial Navigation"
     files:
       - name: "tutorials_nav"
-        label: "Tutorial List (nav dropdown)"
+        label: "Tutorial List (nav dropdown & Next links)"
         file: "_data/tutorials.yml"
         fields:
           - name: "tutorials"
             label: "Tutorials (in order)"
             widget: "list"
-            hint: "Add an entry here to show a page in the Tutorials dropdown menu."
+            hint: "Controls the dropdown menu order and the Next link at the bottom of each page."
             fields:
               - { label: "Menu Label", name: "label", widget: "string" }
               - { label: "Page filename", name: "href", widget: "string", hint: "e.g. my_new_tutorial.html" }

@@ -38,7 +38,7 @@ layout: default
     <div class="container">
       {{ content }}
 
-      {% assign tutorials = site.data.tutorials %}
+      {% assign tutorials = site.data.tutorials.tutorials %}
       {% assign current_href = page.permalink | remove: '/' %}
       {% for tutorial in tutorials %}
         {% if tutorial.href == current_href %}

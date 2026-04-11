@@ -1,25 +1,21 @@
-# Tutorial navigation list — edit this file to add, remove, or rename tutorials.
-# The dropdown menu on every page is generated from this list automatically.
-#
-# To add a new tutorial:
-#   1. Add an entry here (label + href)
-#   2. Create the new page using _template.html as a starting point
-#      OR create it through the CMS at /admin
-- label: Setting up the Raspberry Pi
-  href: setting_up_raspberry_pi.html
-- label: Installing Home Assistant
-  href: installing_home_assistant.html
-- label: Controlling the Lights
-  href: control_the_lights.html
-- label: Adding Wireless Switches
-  href: add_wireless_switches.html
-- label: Monitoring Solar Power
-  href: monitor_solar_power.html
-- label: Monitoring Water Level
-  href: monitor_water_level.html
-- label: Monitoring Propane Level
-  href: monitor_propane_level.html
-- label: Adding a Van Tilt Sensor
-  href: adding_van_tilt_sensor.html
-- label: Auto-Locking Drawers
-  href: autolocking_drawers.html
+# Tutorial navigation list — edit via the CMS at /admin (Tutorial Navigation)
+# or directly here. Order controls both the dropdown menu and the "Next" links.
+tutorials:
+  - label: Setting up the Raspberry Pi
+    href: setting_up_raspberry_pi.html
+  - label: Installing Home Assistant
+    href: installing_home_assistant.html
+  - label: Controlling the Lights
+    href: control_the_lights.html
+  - label: Adding Wireless Switches
+    href: add_wireless_switches.html
+  - label: Monitoring Solar Power
+    href: monitor_solar_power.html
+  - label: Monitoring Water Level
+    href: monitor_water_level.html
+  - label: Monitoring Propane Level
+    href: monitor_propane_level.html
+  - label: Adding a Van Tilt Sensor
+    href: adding_van_tilt_sensor.html
+  - label: Auto-Locking Drawers
+    href: autolocking_drawers.html

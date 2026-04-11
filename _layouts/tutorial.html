@@ -37,6 +37,20 @@ layout: default
   <section class="inner-page">
     <div class="container">
       {{ content }}
+
+      {% assign tutorials = site.data.tutorials %}
+      {% assign current_href = page.permalink | remove: '/' %}
+      {% for tutorial in tutorials %}
+        {% if tutorial.href == current_href %}
+          {% assign next_tutorial = tutorials[forloop.index] %}
+        {% endif %}
+      {% endfor %}
+      {% if next_tutorial %}
+      <div class="next_link">
+        <a href="{{ next_tutorial.href }}">Next: {{ next_tutorial.label }}</a>
+      </div>
+      <div><br /></div>
+      {% endif %}
     </div>
   </section>
 

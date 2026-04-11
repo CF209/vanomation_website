@@ -39,15 +39,15 @@ layout: default
       {{ content }}
 
       {% assign tutorials = site.data.tutorials.tutorials %}
-      {% assign current_slug = page.name | remove: '.html' %}
+      {% assign current_href = page.permalink | remove: '/' %}
       {% for tutorial in tutorials %}
-        {% if tutorial.slug == current_slug %}
+        {% if tutorial.href == current_href %}
           {% assign next_tutorial = tutorials[forloop.index] %}
         {% endif %}
       {% endfor %}
       {% if next_tutorial %}
       <div class="next_link">
-        <a href="/{{ next_tutorial.slug }}.html">Next: {{ next_tutorial.title }}</a>
+        <a href="{{ next_tutorial.href }}">Next: {{ next_tutorial.label }}</a>
       </div>
       <div><br /></div>
       {% endif %}

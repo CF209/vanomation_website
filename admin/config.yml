@@ -7,38 +7,51 @@ public_folder: "assets/img/uploads"
 
 collections:
 
-  # ── Tutorials ──────────────────────────────────────────────────────────────
-  # Single page: drag to reorder, click to edit, + to add, trash to delete.
-  # Order here controls both the nav dropdown and the "Next" links on each page.
+  # ── Tutorial Pages ──────────────────────────────────────────────────────────
   - name: "tutorials"
-    label: "Tutorials"
+    label: "Tutorial Pages"
+    folder: "_tutorials"
+    create: true
+    extension: "html"
+    format: "frontmatter"
+    slug: "{{slug}}"
+    summary: "{{order}}. {{title}}"
+    sortable_fields: ["order", "title"]
+    editor:
+      preview: false
+    fields:
+      - { label: "Layout", name: "layout", widget: "hidden", default: "tutorial" }
+      - { label: "Render with Liquid", name: "render_with_liquid", widget: "hidden", default: false }
+      - { label: "Order", name: "order", widget: "number", hint: "Controls sort order in this list. Should match the position in Tutorial Navigation." }
+      - { label: "Page Title", name: "title", widget: "string" }
+      - { label: "Permalink", name: "permalink", widget: "string", hint: "URL of the page, e.g. /my_new_tutorial.html" }
+      - name: "images"
+        label: "Carousel Images"
+        widget: "list"
+        required: false
+        hint: "Images shown at the top of the page in a slideshow. Leave empty for no carousel."
+        field: { label: "Image path", name: "item", widget: "image" }
+      - name: "body"
+        label: "Content"
+        widget: "markdown"
+        hint: >
+          Write your tutorial content here. Switch to HTML mode (the < > button) to use
+          special styled boxes: <div class="amazon">...</div> for product lists,
+          <div class="terminal">...</div> for code/commands,
+          <div class="tut_img"><img src="..."></div> for inline images.
+
+  # ── Tutorial Navigation ──────────────────────────────────────────────────────
+  - name: "navigation"
+    label: "Tutorial Navigation"
     files:
-      - name: "tutorials_list"
-        label: "Tutorials"
+      - name: "tutorials_nav"
+        label: "Tutorial List (nav dropdown & Next links)"
         file: "_data/tutorials.yml"
         fields:
           - name: "tutorials"
-            label: "All Tutorials"
+            label: "Tutorials (in order)"
             widget: "list"
-            summary: "{{title}}"
-            hint: "Drag rows to reorder. Click a tutorial to expand and edit it. Use the + button to add a new tutorial."
+            hint: "Controls the dropdown menu order and the Next link at the bottom of each page."
             fields:
-              - { label: "Title", name: "title", widget: "string" }
-              - label: "URL Slug"
-                name: "slug"
-                widget: "string"
-                hint: "Lowercase letters, numbers, and underscores only — no spaces, no .html (e.g. my_tutorial). This becomes the page URL."
-              - name: "images"
-                label: "Carousel Images"
-                widget: "list"
-                required: false
-                hint: "Images shown at the top of the page in a slideshow. Leave empty for no carousel."
-                field: { label: "Image path", name: "item", widget: "image" }
-              - name: "content"
-                label: "Content"
-                widget: "markdown"
-                hint: >
-                  Write your tutorial content here. Switch to HTML mode (the < > button) to use
-                  special styled boxes: <div class="amazon">...</div> for product lists,
-                  <div class="terminal">...</div> for code/commands,
-                  <div class="tut_img"><img src="..."></div> for inline images.
+              - { label: "Menu Label", name: "label", widget: "string" }
+              - { label: "Page filename", name: "href", widget: "string", hint: "e.g. my_new_tutorial.html" }

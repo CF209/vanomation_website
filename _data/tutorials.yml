@@ -1,21 +1,1357 @@
-# Tutorial navigation list — edit via the CMS at /admin (Tutorial Navigation)
-# or directly here. Order controls both the dropdown menu and the "Next" links.
+# Tutorials — single source of truth for both page content and nav order.
+# Edit via the CMS at /admin (Tutorials collection).
+# Order here controls the nav dropdown and the "Next" link at the bottom of each page.
+# The _plugins/tutorial_generator.rb plugin generates the individual HTML pages from this file.
 tutorials:
-  - label: Setting up the Raspberry Pi
-    href: setting_up_raspberry_pi.html
-  - label: Installing Home Assistant
-    href: installing_home_assistant.html
-  - label: Controlling the Lights
-    href: control_the_lights.html
-  - label: Adding Wireless Switches
-    href: add_wireless_switches.html
-  - label: Monitoring Solar Power
-    href: monitor_solar_power.html
-  - label: Monitoring Water Level
-    href: monitor_water_level.html
-  - label: Monitoring Propane Level
-    href: monitor_propane_level.html
-  - label: Adding a Van Tilt Sensor
-    href: adding_van_tilt_sensor.html
-  - label: Auto-Locking Drawers
-    href: autolocking_drawers.html
+  - title: "Setting up the Raspberry Pi"
+    slug: setting_up_raspberry_pi
+    images:
+      - assets/img/raspi/raspi5.jpeg
+      - assets/img/raspi/raspi1.png
+      - assets/img/raspi/raspi2.png
+      - assets/img/raspi/raspi3.jpg
+      - assets/img/raspi/raspi4.png
+    content: |
+      <div>
+                &nbsp;Before we can do anything else, we need to get the Raspberry Pi set up and running the van. This includes
+                finding a suitable power supply, installing the Raspberry Pi OS, setting the Pi up for remote access, and mounting
+                the Pi in the van.
+            </div>
+            <div><br /></div>
+            <div>We need a few items for this:</div>
+            <div class="amazon">
+              <ul>
+                <li><b><a href="https://www.amazon.com/gp/product/B07TC2BK1X" target="_blank">Raspberry Pi</a>:&nbsp;</b>
+                  I'm using the Raspberry 4 with 4GB RAM. The Raspberry Pi 3 should also work, but the 4 is recommended
+                </li>
+                <li><b><a href="https://www.amazon.com/gp/product/B08K8Q74XL" target="_blank">USB Outlet</a>:&nbsp;</b>
+                  Must be capable of delivering 3A at 5V. The USB-C output from this one works</li>
+                <li><b><a href="https://www.amazon.com/gp/product/B01GGKZ1VA" target="_blank">USB Cable</a>:&nbsp;</b>
+                  Any USB-C cable you have lying around should work</li>
+                <li><b><a href="https://www.amazon.com/gp/product/B07G3GMRYF" target="_blank">Micro SD Card</a>:&nbsp;</b>
+                  Ideally get one that is Application Class 2 as they handle small I/O much more consistently than cards not optimized to host applications. A 32 GB or bigger card is recommended.</li>
+                <li><b><a href="https://www.amazon.com/gp/product/B01N5RCZQH" target="_blank">Router</a>:&nbsp;</b>
+                  I chose the TP-Link AC750 because it's cheap and has the WiFi-as-WAN function which allow me to use my phone's hotspot or connect to nearby WiFi networks for internet</li>
+                <li><b>Laptop:&nbsp;</b>Any Windows/MAC/Linux machine with an SD card reader works. If you don't have an SD
+                  card reader,&nbsp;<a href="https://www.amazon.com/Vanja-Adapter-Portable-Memory-Reader/dp/B07P7FRYG3" target="_blank">a cheap one like this should work</a></li>
+              </ul>
+            </div>
+            <div><br /></div>
+            <div>&nbsp;Now that we have everything we need, the first step is to install Raspberry Pi OS on the SD card. For
+              this, I used the Raspberry Pi Imager software available here:
+            <div class="tut_link">
+              <a href="https://www.raspberrypi.org/software/" target="_blank">https://www.raspberrypi.org/software/</a>
+            </div>
+            <div><br /></div>
+            <div>&nbsp;Once you have the imager installed on your laptop, you simply install the SD card, start the imager,
+              choose the operating system, choose your SD card, and click write. For the operating system, I'm using the
+              32-bit Raspberry Pi OS Lite. I chose this option because I'm going to be using a headless setup (no monitor,
+              keyboard, or mouse connected to the Pi) and will be accessing the Pi remotely through SSH.
+            </div>
+            <div><br /></div>
+            <div class="tut_img">
+              <img src="assets/img/raspi/raspi1.png">
+            </div>
+            <div><br /></div>
+            <div>&nbsp;Once writing the SD card is complete, it is safe to remove the card from the system, but we're not done
+              yet. Since we're using a headless setup, we need to enable SSH and configure the wifi network before we can
+              install the SD card in the Pi.
+            </div>
+            <div><br /></div>
+            <div>&nbsp;Remove the SD card, then re-insert it into the computer. You should now see a new volume named 'boot'
+              in the Finder (this is for Mac, but should be similar on Windows/Linux). Navigate to the volume in the terminal:
+            </div>
+            <div class="terminal">
+              cd /Volumes/boot
+            </div>
+            <div>&nbsp;Create an empty file named 'ssh' to enable SSH on the raspberry pi:</div>
+            <div class="terminal">
+              touch ssh
+            </div>
+            <div>&nbsp;If connecting the Raspberry Pi to the router with an ethernet cable you can skip this next step.
+              To set up the wifi, add a wpa_supplicant.conf file:</div>
+            <div class="terminal">
+              nano wpa_supplicant.conf
+            </div>
+            <div>&nbsp;Add the following to this file:</div>
+            <div class="terminal">
+                ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev<br>
+                update_config=1<br>
+                country=US<br>
+                <br>
+                network={<br>
+                  &emsp;  ssid=<b>"NETWORK_SSID"</b><br>
+                  &emsp;  psk=<b>"PASSWORD"</b><br>
+                }
+            </div>
+            <div>
+              &nbsp;Replace NETWORK_SSID and PASSWORD with your wifi info, then save the file with "ctrl-x", "y", and "enter".
+            </div>
+            <div><br /></div>
+            <div>&nbsp;The SD card is now fully set up and ready to be installed in your Raspberry Pi! Safely eject the SD
+              card from your computer and install it in the SD card slot of the Pi. Connect the Pi to power and give it a bit
+              of time to boot up for the first time. The Pi should automatically connect to the wifi network.
+            </div>
+            <div><br /></div>
+            <div>&nbsp;Once it's connected to the wifi network, we need to find the Pi's IP address so we can remotely connect
+              to it. I was able to find this by logging into my router and finding the DHCP Clients List where the client name
+              "raspberrypi" was shown as seen below. Since we don't want this IP address to change when restarting the
+              Raspberry Pi, I used the router's address reservation feature to permanently set the IP address.
+            </div>
+            <div><br /></div>
+            <div class="tut_img">
+              <img src="assets/img/raspi/raspi2.png">
+            </div>
+            <div><br /></div>
+            <div>&nbsp;Once you figure out the IP address, we can now login to the Pi remotely! From your terminal, SSH into
+              the IP address of the Pi. The default password is 'raspberry':
+            </div>
+            <div class="terminal">
+                ssh pi@192.168.0.101
+            </div>
+            <div>If this works, you've successfully set up your Raspberry Pi for remote access!</div>
+            <div><br /></div>
+            <div>You can change the default password with the command 'passwd'. You should also update the Raspberry Pi
+              software with these commands:
+            </div>
+            <div class="terminal">
+              sudo apt-get update<br>
+              sudo apt-get upgrade
+            </div>
+            <div>&nbsp;Since the Raspberry Pi can now be fully accessed remotely, you can now install it away somewhere out of
+              sight. Don't make it too inaccessible though since we'll eventually be connecting to the GPIO pins and USB ports
+              for future projects. I screwed mine into the wall of my electronics cabinet where my Van's power system is since
+              it's a good central location and I'll eventually be interfacing with some of the other components in there. It's
+              a bit of a mess of wires right now, but I plan to clean it up a bit once this project is more finalized.
+            </div>
+            <div><br /></div>
+            <div class="tut_img">
+              <img src="assets/img/raspi/raspi3.jpg">
+            </div>
+            <div><br /></div>
+            <div><br /></div>
+
+  - title: "Installing Home Assistant"
+    slug: installing_home_assistant
+    images:
+      - assets/img/install/install1.png
+      - assets/img/install/install2.png
+      - assets/img/install/install3.png
+      - assets/img/install/install4.jpg
+    content: |
+      <div>&nbsp;After doing the initial setup of the Raspberry Pi, the next step is to install
+                Home Assistant on the Pi. Home Assistant is an open source home automation interface designed to work with lots of
+                existing IoT devices and is very customizable for any application. It's also commonly run on a Raspberry Pi with
+                lots of community support online. That is why I chose it for this project.</div>
+            <div><br /></div>
+            <div>&nbsp;The two recommended ways of installing Home Assistant are installing the full
+              Home Assistant operating system, or installing the Home Assistant container. While it seems like the home assistant
+              operating system has more features, it also limits the Raspberry Pi to only running Home Assistant. Since I want to
+              run other scripts and applications on the Raspberry Pi as well and have better control of the Pi's interfaces, I will be going with
+              the container installation.</div>
+            <div><br /></div>
+            <div>&nbsp;In order to install the container, we first need to install Docker. This can be
+              done by first downloading the install script with:</div>
+            <div class="terminal">
+              curl -fsSL https://get.docker.com -o get-docker.sh</div>
+            <div>You can then run the script with:</div>
+            <div class="terminal">
+              sudo sh get-docker.sh</div>
+            <div>&nbsp;Once Docker is installed we can now install Home Assistant. The Home Assistant
+              website has good instructions here, although we need to make one small modification:</div>
+            <div class="tut_link"><a
+                href="https://www.home-assistant.io/installation/raspberrypi#install-home-assistant-container" target="_blank">Home Assistant Installation</a>
+            </div>
+            <div><br /></div>
+            <div>&nbsp;Since we want Home Assistant to have access to the GPIO as well as USB devices,
+              we need to add the "--privileged" flag to the docker run command. We also want to run it as
+              administrator so we add "sudo" to the start of the command. This is what I ran to install Home Assistant on my Pi:
+            </div>
+            <div class="terminal">
+              <div>sudo docker run --init -d \</div>
+              <div>&nbsp;&nbsp;--name homeassistant \</div>
+              <div>&nbsp;&nbsp;--restart=unless-stopped \</div>
+              <div>&nbsp;&nbsp;-v /etc/localtime:/etc/localtime:ro \</div>
+              <div>&nbsp;&nbsp;-v /PATH_TO_YOUR_CONFIG:/config \</div>
+              <div>&nbsp;&nbsp;--network=host \</div>
+              <div>&nbsp;&nbsp;--privileged \</div>
+              <div>&nbsp;&nbsp;homeassistant/raspberrypi4-homeassistant:stable</div>
+            </div>
+            <div><br /></div>
+            <div>&nbsp;Once Home Assistant is done installing, it should start running automatically.
+              Test it out by entering "http://&lt;host&gt;:8123" in your web browser, but replace &lt;host&gt; with your PI's IP
+              that we found earlier (the same address used for SSH). If everything worked you should see this Home Assistant Page:
+            </div>
+            <div><br /></div>
+            <div class="tut_img">
+              <img src="assets/img/install/install2.png">
+            </div>
+            <div style="text-align: center;"><br /></div>
+            <div>&nbsp;You can now follow the prompts to configure Home Assistant. Once finished,
+              you should see the default interface that looks something like this:</div>
+            <div><br /></div>
+            <div class = "tut_img">
+              <img src="assets/img/install/install3.png">
+            </div>
+            <div><br /></div>
+            <div>&nbsp;With Home Assistant now set up, you should
+              be able to access this interface from any phone or computer on your network by going to the same web address
+              as above and signing in with your username and password. You can also access it with the Home Assistant app if
+              you download it to your phone.</div>
+            <div><br /></div>
+            <div>&nbsp;I originally mounted an old smartphone in the van and installed the Home Assistant app on it, but the screen was a bit small.
+              I recently found a good deal on a Kindle Fire tablet so I'm using that instead. I use the Fully Kiosk app to connect to the
+              Home Assistant webpage and display it as the main screen on the tablet. Now I have a permanent screen to
+              access home assistant from, monitor sensors, and control the lights.</div>
+            <div><br /></div>
+            <div class="tut_img">
+              <img src="assets/img/install/install4.jpg">
+            </div>
+            <div><br /></div>
+            <div><br /></div>
+            <div>&nbsp;Home assistant isn't very useful without
+              integrating it with the different systems of the van, so next we'll look at using it to control the lights!
+            </div>
+            <div><br /></div>
+            <div><br /></div>
+
+  - title: "Controlling the Lights"
+    slug: control_the_lights
+    images:
+      - assets/img/lights/lights4.jpeg
+      - assets/img/lights/lights1.png
+      - assets/img/lights/lights2.jpeg
+      - assets/img/lights/lights3.png
+      - assets/img/lights/lights5.jpg
+      - assets/img/lights/lights6.png
+    content: |
+      <div>
+                &nbsp;With Home Assistant installed we can now add a first interface which will be control of the lights. This
+                will involve some wiring, soldering, and circuit work, so a basic understanding of circuits is recommended. We'll
+                need a few items for this to work:
+            <div class="amazon">
+              <ul>
+                <li><b><a href="https://www.amazon.com/gp/product/B06WP7169Y" target="_blank">
+                  Raspberry Pi Starter Kit</a>:</b>&nbsp;If you're new to electronics, I recommend picking up a starter kit for the
+                  raspberry pi similar to this one. It comes with some basic electrical components, wires, a breadboard, and a GPIO
+                  extension board which will be very useful for prototyping circuits</li>
+                <li><b><a href="https://www.amazon.com/ANBES-Soldering-Iron-Kit-Electronics/dp/B06XZ31W3M" target="_blank">
+                  Soldering Iron</a>:</b> A basic kit like this one will do the trick if you don't have a
+                  soldering iron already</li>
+                <li><b><a href="https://www.amazon.com/Fluke-101-Multimeter-Resistance-Capacitance/dp/B00HE6MIJY" target="_blank">
+                  Multimeter</a>:</b> It's always a good idea to check for shorts with a multimeter before powering up
+                  any circuits. It's also a great debugging tool. I had a cheaper one, but it was unreliable and it
+                  eventually broke, so I upgraded to a more reputable brand like Fluke</li>
+                <li><b><a href="https://www.amazon.com/gp/product/B07CTF1JVD"target="_blank">
+                  N-Channel MOSFETs</a>: </b>These will be used to switch on and off the lights</li>
+                <li><b><a href="https://www.amazon.com/gp/product/B012ZOI3ZW" target="_blank">
+                  Lights</a>: </b>I use these 12V LED lights in my van</li>
+              </ul>
+            </div>
+            <div><br /></div>
+            <div>
+              &nbsp;The Raspberry Pi GPIO pins operate at 3.3V, so they can't be used to drive our lights directly. Instead we
+              need a way to use the GPIO pins to switch on and off a 12V source to the lights. We will do this using an
+              N-Channel MOSFET. Here is the basic circuit:</div>
+            <div><br /></div>
+            <div class="tut_img">
+              <img src="assets/img/lights/lights1.png">
+            </div>
+            <div><br /></div>
+            <div>
+              &nbsp;The GPIO pin from the Raspberry Pi drives the gate of the MOSFET (pin 2 above).
+              If the voltage on the gate exceeds the gate threshold voltage, the MOSFET will turn on allowing current to flow from
+              the drain (pin 1) to the source (pin 3). Make sure the gate threshold voltage on the MOSFET that you use is less
+              than 3.3V or the Raspberry Pi will not be able to drive it. A 10k resistor is also added between the gate and ground
+              to keep the MOSFET turned off if the GPIO pin is not configured correctly.</div>
+            <div><br /></div>
+            <div>&nbsp;I put this circuit together by soldering wires directly to the MOSFETs and connecting the gate wire to a
+              breadboard where I have the 10k resistor and the GPIO extension board which connects it back to the Raspberry Pi.
+              It's a little hacked together, but it works. I plan on eventually putting this together onto a PCB to clean things
+              up a bit.</div>
+            <div><br /></div>
+            <div class="tut_img">
+              <img src="assets/img/lights/lights2.jpeg">
+            </div>
+            <div><br /></div>
+            <div>&nbsp;For the GPIO pin, make sure you use GPIO12, 13, 18, or 19 since these are the hardware PWM pins on the
+              Raspberry Pi that will allow for dimming. I used 12 and 13 and replicated the circuit twice since I have two different
+              zones for the lights in my van.</div>
+            <div><br /></div>
+            <div>
+              &nbsp;Next we need to set up the Raspberry Pi to be able to control these GPIO pins. We need to first install
+              and enable pigpiod:</div>
+            <div class="terminal">
+              sudo apt-get install pigpio<br />
+              sudo systemctl enable pigpiod
+            </div>
+            <div>
+                &nbsp;We then need to enable remote GPIO on the Raspberry Pi. Enter the raspi-config utility:</div>
+            <div class="terminal">
+              sudo raspi-config
+            </div>
+            <div>&nbsp;Choose option 3 - Interface Options, then option P8 - Remote GPIO, then Yes to enable. Exit out and
+              reboot the Raspberry Pi for changes to take effect.</div>
+            <div><br /></div>
+            <div>&nbsp;The last step is to add the light entities to Home Assistant. Navigate to your home assistant directory
+              (/home/pi/homeassistant in my case). Add the following to your&nbsp;configuration.yaml file:</div>
+            <div class="terminal">
+                light:<br>
+                - platform: rpi_gpio_pwm<br>
+                &emsp; leds:<br>
+                &emsp; - name: Bed Lights<br>
+                &emsp;&emsp;&emsp; driver: gpio<br>
+                &emsp;&emsp;&emsp; pins: [12]<br>
+                &emsp;&emsp;&emsp; type: simple<br>
+                &emsp;&emsp;&emsp; frequency: 50000<br>
+                &emsp; - name: Main Lights<br>
+                &emsp;&emsp;&emsp; driver: gpio<br>
+                &emsp;&emsp;&emsp; pins: [13]<br>
+                &emsp;&emsp;&emsp; type: simple<br>
+                &emsp;&emsp;&emsp; frequency: 50000
+            </div>
+            <div>&nbsp;This configuration is for two light zones, one controlled by GPIO12 and one by GPIO13. You can change the
+              names and pin numbers to match your configuration. For the frequency, I played around with it until I found a
+              value that worked well. Too low and you can notice the lights flickering when dimmed. Certain values also seemed
+              to cause a high pitched ringing noise from the lights.</div>
+            <div><br /></div>
+            <div>&nbsp;After restarting home assistant you should be able to edit the dashboard and add a light card to control
+              your lights!</div>
+            <div><br /></div>
+            <div class="tut_img">
+              <img src="assets/img/lights/lights3.png">
+            </div>
+            <div><br /></div>
+            <div>&nbsp;<b>Update:</b> I designed a custom PCB using an ESP32 microcontroller to control the lights so I could
+              clean up the wiring around the Raspberry Pi. I used the same basic circuit as shown above, but with the PWM
+              outputs coming from the ESP32 instead of the Raspberry Pi. The KICAD files for the PCB can be found here:</div>
+            <div class="tut_link">
+              <a href="https://github.com/CF209/kicad/tree/main/ESP32_12v_Relay" target="_blank">ESP32 PCB KICAD Files</a>
+            </div>
+            <div><br /></div>
+            <div class="tut_img">
+              <img src="assets/img/lights/lights5.jpg">
+            </div>
+            <div><br /></div>
+            <div>&nbsp;I had originally planned to use ESPHome for the software on the ESP32, but I designed the PCB to use
+              the latest C3 version of the ESP32 which wasn't supported by ESPHome yet. Because of this I ended up writing my
+              own software in C for the ESP32. The code can be found here:</div>
+            <div class="tut_link">
+              <a href="https://github.com/CF209/ESP32-Smart-Light-Control" target="_blank">ESP32 Smart Light Control</a>
+            </div>
+            <div><br /></div>
+            <div>&nbsp;With this code on first startup, the ESP32 starts in softAP mode and hosts a webserver. From the web interface,
+              you can configure the device to connect to a wifi network, enable/disable and rename the 4 lights, and connect the device
+              to an MQTT server. With the MQTT integration installed in Home Assistant, the lights should configure and show up
+              as devices within Home Assistant automatically! Below is the web interface hosted by the ESP32.
+            </div>
+            <div><br /></div>
+            <div class="tut_img">
+              <img src="assets/img/lights/lights6.png">
+            </div>
+            <div><br /></div>
+            <div><br /></div>
+
+  - title: "Adding Wireless Switches"
+    slug: add_wireless_switches
+    images:
+      - assets/img/switches/switches4.jpg
+      - assets/img/switches/switches5.jpg
+      - assets/img/switches/switches6.jpg
+      - assets/img/switches/switches7.jpg
+      - assets/img/switches/switches8.jpg
+    content: |
+      <div>&nbsp;With my lights now setup through Home Assistant I could control them from my phone or computer, but it would
+                be nice to have some physical switches around the van as well. Wiring up light switches can be a pain and a lot of
+                work, so I decided to use some Zigbee wireless buttons instead.</div>
+            <div><br /></div>
+            <div>&nbsp;A few things are needed to get this set up:</div>
+            <div class="amazon">
+              <ul>
+                <li><b><a href="https://www.amazon.com/gp/product/B07D19YXND" target="_blank">
+                  Aqara Wireless Mini Switch</a>:</b>
+                  &nbsp;These buttons are wireless and battery powered, so it's easy to install them
+                  anywhere you'd like</li>
+                <li><b><a href="https://www.amazon.com/gp/product/B07KW1N1MR" target="_blank">
+                  Zigbee USB Dongle</a>: </b>
+                  The Raspberry Pi doesn't have Zigbee, so a dongle is needed.
+                  There are more expensive options that have more range and can handle more devices, but this one is cheap and
+                  good enough for my use case. This one also comes with the programming adapter which is needed</li>
+                <li><b><a href="https://www.amazon.com/gp/product/B07T13JX32" target="_blank">
+                  CC Debugger</a>: </b>This device is used to program the Zigbee dongle</li>
+              </ul>
+            </div>
+            <div>&nbsp;The first step is to program the Zigbee dongle with the correct firmware. It is well documented how
+                to do this on other sites. I followed the instructions here:</div>
+            <div class="tut_link"><a
+              href="https://www.zigbee2mqtt.io/information/flashing_the_cc2531.html" target="_blank">Flashing the CC2531</a>
+            </div>
+            <div><br /></div>
+            <div class="tut_img">
+              <img src="assets/img/switches/switches9.jpg">
+            </div>
+            <div><br /></div>
+            <div>&nbsp;Once the dongle is programmed you can insert it into the Raspberry Pi. To add it into Home Assistant you
+              then need to add the Zigbee Home Automation integration. Go to 'Configuraton' then 'Integrations', then click 'Add
+              Integration'. Search for Zigbee and add the integration. It should automatically detect the Zigbee dongle and set
+              itself up.</div>
+            <div><br /></div>
+            <div>&nbsp;Next we need to configure the Aqara Wireless Switches. From the Integrations page, click configure on
+              your Zigbee integration then click 'Add Device'. Take out your Aqara switch and remove the plastic tab protecting
+              the battery. Press and hold the small button on top of the device, and Home Assistant should discover it as seen
+              below.</div>
+            <div><br /></div>
+            <div class="tut_img">
+              <img src="assets/img/switches/switches1.png">
+            </div>
+            <div><br /></div>
+            <div>&nbsp;Sometimes this takes a few tries and it helps to hold the button closer to the Raspberry Pi when doing
+              this. After it is discovered you can change the name of the device to something more descriptive.</div>
+            <div><br /></div>
+            <div>&nbsp;With the button now configured in Home Assistant the last step is to link it to the lights with an
+              automation. Create a new automation by going to 'Configuration', 'Automations', and 'Add Automation'. Add a new
+              trigger for the automation to start when the button is pressed:</div>
+            <div><br /></div>
+            <div class="tut_img">
+              <img src="assets/img/switches/switches2.png">
+            </div>
+            <div><br /></div>
+            <div>&nbsp;And then add an action to toggle the light:</div>
+            <div><br /></div>
+            <div class="tut_img">
+              <img src="assets/img/switches/switches3.png">
+            </div>
+            <div><br /></div>
+            <div>&nbsp;The 'transition' property adds a cool effect of gradually increasing/decreasing brightness over the
+              specified time period. I also created a second automation for controlling the bed lights from a double press of
+              the button.</div>
+            <div><br /></div>
+            <div>&nbsp;The button should now work for controlling the lights! You can repeat the same steps to add more buttons
+              as well. I have one by the steering wheel, one by the sliding door, one by the bed, and one centered on a cabinet.
+            </div>
+            <div><br /></div>
+            <div class="tut_img">
+              <img src="assets/img/switches/switches4.jpg">
+            </div>
+            <div><br /></div>
+            <div>&nbsp;You can also follow the same above steps to add other Zigbee devices. I added this temperature and humidity sensor:</div>
+            <div class="tut_link">
+              <a href="https://www.amazon.com/gp/product/B07D37FKGY" target="_blank">Aqara Temperature and Humidity Sensor</a>
+            </div>
+            <div><br /></div>
+            <div class="tut_img">
+              <img src="assets/img/switches/switches8.jpg">
+            </div>
+            <div><br /></div>
+            <div><br /></div>
+
+  - title: "Monitoring Solar Power"
+    slug: monitor_solar_power
+    images:
+      - assets/img/solar/solar4.jpg
+      - assets/img/solar/solar1.jpeg
+      - assets/img/solar/solar2.jpeg
+      - assets/img/solar/solar5.jpg
+      - assets/img/solar/solar3.png
+    content: |
+      <div>&nbsp;With the lights set up and working, next I wanted to add some monitoring of different systems in the  van. The first one I thought I'd tackle was monitoring the solar power by interfacing with my charge controller. </div>
+            <div><br /></div>
+            <div>Items needed to set this up:</div>
+            <div class="amazon">
+              <ul>
+                <li><b><a href="https://www.amazon.com/gp/product/B07DNVW37B" target="_blank">
+                  Renogy Rover Charge Controller</a>:</b>
+                  &nbsp;I have the 30Aversion shown here, but this setup should work with any of charge controllers in this series</li>
+                <li><b><a href="https://www.amazon.com/gp/product/B00IDSM6BW" target="_blank">
+                  USB Serial Dongle</a>:</b>&nbsp;For serial communication from the Raspberry Pi to the Charge Controller</li>
+                <li><b><a href="https://www.amazon.com/gp/product/B0054RRCHI" target="_blank">
+                  DB9 to RJ12 adapter</a>:</b>&nbsp;The charge controller uses a non-standard serial pinout, so this adapter is needed to connect to it</li>
+                <li><b><a href="https://www.amazon.com/gp/product/B08BHVF6XS" target="_blank">
+                  RJ12 Cable</a>:</b>&nbsp;To connect from the adapter to the Charge Controller</li>
+              </ul>
+            </div>
+            <div>&nbsp;In order for the Raspberry Pi to communicate with the Renogy charge controller, we need a USB to RJ12
+            serial cable. Renogy used to include this cable with their charge controllers, but since introducing their bluetooth
+            module, they stopped making it. So instead we'll have to make our own!</div>
+            <div><br /></div>
+            <div>&nbsp;The three components of the cable are the USB serial dongle which allows the raspberry pi to
+              communicate in the correct protocol for the charge controller, then the DB9 to RJ12 adapter and the RJ12 cable
+              which allows you to connect to the Renogy charge controller with the correct pin mapping.</div>
+            <div><br /></div>
+            <div>&nbsp;The Renogy Charge Controller uses a non-standard pinout which is why we will be using the modular adapter kit.
+              This kit allows you to use any pin mapping you'd like when going from RJ12 to DB9, but requires a bit of work to get set up correctly.
+            </div>
+            <div><br /></div>
+            <div>&nbsp;The pin mapping of the RJ12 connector for the Renogy charge controller is: TX/RX/GND/GND/+12V/+12V. On
+              the USB serial dongle, pin 2 is RXD, pin 3 is TXD, and pin 5 is GND. We need to connect the RJ12 TX to the serial dongle RXD and the RJ12 RX to the serial dongle TXD. We then need to also connect GND. This is done using the DB9 to RJ12 adapter as shown below.</div>
+            <div><br /></div>
+            <div class="tut_img">
+              <img src="assets/img/solar/solar1.jpeg">
+            </div>
+            <div><br /></div>
+            <div class="tut_img">
+              <img src="assets/img/solar/solar2.jpeg">
+            </div>
+            <div><br /></div>
+            <div>&nbsp;Once the cable is made, I recommend connecting it to the Renogy charge controller, then using a multimeter to test the pin voltages before connecting it to the serial dongle. TX to GND and TX to RX should both be about 5V. Make sure you didn't accidentally connect the 12V pins or you could fry the serial dongle and possibly even the raspberry pi.</div>
+            <div><br /></div>
+            <div class="tut_img">
+              <img src="assets/img/solar/solar5.jpg">
+            </div>
+            <div><br /></div>
+            <div>&nbsp;With the cable now connected between the raspberry pi and the charge controller, we now need some
+              software to read registers from the charge controller. First find the name of the USB serial dongle on your
+              raspberry pi with:</div>
+            <div class="terminal">
+                pi@raspberrypi:~ $ ls /dev/*USB*<br>
+                /dev/ttyUSB0
+            </div>
+            <div>&nbsp;Now we can start writing a python program. Luckily, someone has already written a library called
+              Solarshed that handles reading data from the charge controller. More info on this library here:
+            </div>
+            <div class="tut_link"><a
+                href="https://github.com/corbinbs/solarshed" target="_blank">https://github.com/corbinbs/solarshed</a>
+            </div>
+            <div><br /></div>
+            <div>&nbsp;You can install Solarshed with:</div>
+            <div class="terminal">
+                pip install solarshed
+            </div>
+            <div>&nbsp; I have a basic program posted here that reads the current solar power from the charge controller every
+                second using Solarshed and publishes the data to the MQTT server running on the Raspberry Pi:
+            </div>
+            <div class="tut_link">
+              <a href="https://github.com/CF209/vanomation/blob/main/python/solar/solar_mqtt.py" target="_blank">solar_mqtt.py</a>
+            </div>
+            <div><br /></div>
+            <div>&nbsp;If your serial dongle is at a different address, you can change it on this line:</div>
+            <div class="terminal">
+              controller = RenogyRover(<b>'/dev/ttyUSB0'</b>, 1)
+            </div>
+            <div>&nbsp;You can also edit the script to add monitoring of more than just power or other features.</div>
+            <div><br /></div>
+            <div>&nbsp;In order to have this script always running, we will turn it into a systemd service. Create a new file
+              with:</div>
+            <div class="terminal">
+              sudo nano /lib/systemd/system/solar_mqqt.service
+            </div>
+            <div>And add the following to the file changing the ExecStart path to the path of your python script:</div>
+            <div class="terminal">
+                [Unit]<br>
+                Description=Solar MQTT<br>
+                After=multi-user.target<br>
+                <br>
+                [Service]<br>
+                Type=idle<br>
+                ExecStart=/usr/bin/python3 <b>/home/pi/python/solar/solar_mqtt.py</b><br>
+                WorkingDirectory=/home/pi<br>
+                User=pi<br>
+                Restart=on-failure<br>
+                RestartSec=5s<br>
+                <br>
+                [Install]<br>
+                WantedBy=multi-user.target
+            </div>
+            <div>&nbsp;Save the file, then you can enable the service with:</div>
+            <div class="terminal">
+                sudo systemctl daemon-reload<br>
+                sudo systemctl enable solar_mqqt.service
+            </div>
+            <div>To check that the service is running:</div>
+            <div class="terminal">
+                sudo systemctl status solar_mqtt.service
+            </div>
+            <div>&nbsp;The final step is to add this new sensor to Home Assistant. In Home Assistant, go to Configuration -&gt; Integrations and add the MQTT integration if you don't have it already. Now go to your configuration.yaml file in your homeassistant directory and add the following sensor:</div>
+            <div class="terminal">
+                sensor:<br>
+                &emsp; - platform: mqtt<br>
+                &emsp;&emsp;&emsp; state_topic: "van/solar/power"<br>
+                &emsp;&emsp;&emsp; name: 'Solar Power'<br>
+                &emsp;&emsp;&emsp; unit_of_measurement: 'W'<br>
+                &emsp;&emsp;&emsp; value_template: '{{ value_json.power }}'
+            </div>
+            <div>&nbsp;Restart Home Assistant and you should now be able to add the sensor to your dashboard!</div>
+            <div><br /></div>
+            <div class="tut_img">
+              <img src="assets/img/solar/solar3.png">
+            </div>
+            <div><br /></div>
+            <div><br /></div>
+
+  - title: "Monitoring Water Level"
+    slug: monitor_water_level
+    images:
+      - assets/img/water/water1.jpeg
+      - assets/img/water/water2.png
+      - assets/img/water/water3.png
+      - assets/img/water/water4.jpg
+      - assets/img/water/water5.jpeg
+      - assets/img/water/water6.png
+      - assets/img/water/water7.png
+      - assets/img/water/water8.png
+    content: |
+      <div>&nbsp; The next thing in my van that I wanted to monitor was the amount of water in my freshwater tank.
+                Previously I would have to peek through a little door on the side of my cabinet and make a rough estimate, so
+                being able to quickly pull out my phone and check was a huge improvement.</div>
+            <div><br /></div>
+            <div>Items needed to set this up:</div>
+            <div class="amazon">
+              <ul>
+                <li><b><a href="https://www.amazon.com/ICON-12460-Filler-WT2460-20-Gallon/dp/B01MR55AEA" target="_blank">
+                  Water Tank</a>:</b>&nbsp;I have this 20 gallon tank in my
+                    van. Any water tank with a flat top should work, but tanks that are too short could have less accurate
+                    results</li>
+                <li><b><a href="https://www.amazon.com/gp/product/B00Y831XA6" target="_blank">
+                  KUS Water Level Sensor</a>:</b>&nbsp;I used this 15" sensor
+                    for this project. For plastic tanks they recommend using a sensor 1" shorter than the height of your
+                    tank</li>
+                <li><b><a href="https://kus-usa.com/product/fls-u/" target="_blank">
+                  Water Sensor Flange</a>:</b>&nbsp;This is needed to mount the water sensor to the tank</li>
+                <li><b><a href="https://www.amazon.com/gp/product/B07R5S27GC" target="_blank">
+                  40mm Hole Saw</a>:</b>&nbsp;To cut a hole in the top of the water tank</li>
+                <li><b>ADC Electronics: </b>I designed a custom PCB
+                      using an ESP8266, but other options can be used. See below for details</li>
+              </ul>
+            </div>
+            <div><br /></div>
+            <div>&nbsp;For this project we will be cutting a hole in the top of the water tank, so be very careful or you could
+            ruin your tank.</div>
+            <div><br /></div>
+            <div>&nbsp;Start by draining the water tank. Drilling the holes in the tank tends to leave plastic residue inside,
+              so it'll be easier to clean up if the tank is empty.</div>
+            <div><br /></div>
+            <div>&nbsp;Choose the location on the water tank where you will drill your hole in the top of the tank. The closer
+              to the center of the tank, the less your readings will be affected by parking on a hill.</div>
+            <div><br /></div>
+            <div>&nbsp;Start by drilling the 40mm hole in the tank. Once this hole is complete, we then need to drill the 5
+              screw holes around it. You can use the flange or the sensor as a template to mark the location of the holes. Make
+              sure it is completely centered. Drill out these 5 holes just big enough for the screws to fit through (I forget
+              the exact drill size I used here, but I started small and gradually increased the size until the screws fit). Take
+              note of the orientation you use here since the drill pattern is not symmetrical. With the holes drilled, you'll
+              now want to vacuum out any of the plastic debris from inside the tank.</div>
+            <div><br /></div>
+            <div>&nbsp;Next we will install the sensor using the flange. The flange goes inside the tank and the gasket and
+              sensor go on top with the screws clamping it together. The flange is c-shaped which allows it to fit through the
+              40mm hole. Be very careful not to drop it inside the tank. I bought longer 3" screws with the same thread as the
+              flange to make this process easier. By threading these longer screws, I could hold the flange in place while
+              lining up the sensor and starting some of the shorter screws. Once two screws are in place, it should stay lined
+              up and the remaining 3 should be easier. Tighten everything down to create a good seal with the gasket and
+              you're good to go!</div>
+            <div><br /></div>
+            <div class="tut_img">
+              <img src="assets/img/water/water1.jpeg">
+            </div>
+            <div><br /></div>
+            <div>&nbsp;Next we need to connect this sensor into Home Assistant. This water level sensor essentially acts as a
+              variable resistor that varies from 33&#937; at full and 240&#937; at empty. In order to read this resistance we will use a
+              voltage divider to convert the resistance to a voltage which can be read by an ADC (analog to digital
+              converter). Here is the circuit I used:</div>
+            <div><br /></div>
+            <div class="tut_img">
+              <img src="assets/img/water/water2.png">
+            </div>
+            <div><br /></div>
+            <div>&nbsp;Connector J4 connects to the water level sensor, and the water_voltage signal goes to the ADC. The
+              water level sensor should be able to be connected in either direction since it's just a resistor, but one of the
+              wires was black so I connected that one to GND. The capacitor was added to help reduce any noise. The ADC I'm
+              using has a max voltage of 1V. By choosing a resistor value of 1k, this should in theory create a voltage range
+              from 0.105V to 0.639V.</div>
+            <div><br /></div>
+            <div>&nbsp;Unfortunately the Raspberry Pi doesn't have an ADC built in, so an external one is required. I
+              originally used an ADS1115 which connected to the Raspberry Pi with i2c, but because my water tank was so far
+              away from the Raspberry Pi, I was having a lot of issues with noise. I instead decided to use an ESP8266 which
+              has an ADC built in and can communicate with the Raspberry Pi over Wifi.&nbsp;</div>
+            <div><br /></div>
+            <div class="tut_img">
+              <img src="assets/img/water/water3.png">
+            </div>
+            <div><br /></div>
+            <div>&nbsp;For the ESP8266 I designed
+              a custom PCB. This PCB runs on the 12V which I already have wired all over my van, uses a 3.3V step down
+              buck converter to power the ESP8266, has a connector for the water level sensor wires, and has the voltage
+              divider circuit described above. The board also has a few other features that I plan to use for future
+              projects, but can be ignored for now. All chosen components are also easily hand-solderable. The KICAD files
+              can be found here:</div>
+            <div class="tut_link">
+              <a href="https://github.com/CF209/kicad/tree/main/ESP8266_Water_Sensor" target="_blank">Water Sensor KICAD files</a>
+            </div>
+            <div><br /></div>
+            <div class="tut_img">
+              <img src="assets/img/water/water4.jpg">
+            </div>
+            <div><br /></div>
+            <div>&nbsp;The easiest way to configure an ESP8266 or ESP32 device to work with Home Assistant is by using
+              ESPHome. ESPHome allows you to quickly and easily configure an ESP8266 or ESP32 for different functions and
+              allows you to apply future updates wirelessly. You can install ESPHome in docker using:&nbsp;</div>
+            <div class="terminal">
+              sudo docker pull esphome/esphome<br>
+              sudo docker run -d --name="esphome" --net=host -p 6052:6052 -p 6123:6123 --privileged --restart always -v /home/pi/esphome:/config esphome/esphome
+            </div>
+            <div>&nbsp;I ran it in privileged mode so ESPHome would have access to the USB ports for initially programming
+              any ESP32 or ESP8266 devices. After it's running, you should be able to access it by going to&nbsp;<a
+                href="http://192.168.0.101:6052/" target="_blank">http://192.168.0.101:6052/</a>&nbsp;in your web browser.
+            </div>
+            <div><br /></div>
+            <div>&nbsp;To create a new device, click the "plus" button in the bottom right corner. Enter a name, choose a
+              device type (Generic ESP8266 for my custom board), and enter your wifi details. I then added the following
+              code to the file:</div>
+            <div class="terminal">
+                sensor:<br>
+                &emsp; - platform: adc<br>
+                &emsp;&emsp;&emsp; pin: A0<br>
+                &emsp;&emsp;&emsp; name: "Water Level Voltage"<br>
+                &emsp;&emsp;&emsp; id: water_voltage<br>
+                &emsp;&emsp;&emsp; update_interval: 1s<br>
+                &emsp;&emsp;&emsp; accuracy_decimals: 3
+            </div>
+            <div>&nbsp;This code tells the ESP8266 to read the voltage on the ADC pin every 1 second. To initially program
+              the device, select the correct device in the upper right hand corner, then click "Upload". For my custom board
+              I use this USB dongle to initially program it. I designed the board so the serial adapter fits perfectly in the holes for J5.
+              To initally program the board I make sure the serial adapter is set to 3.3V, I hold down button S1 on the board, then I insert
+              the serial adapter into J5:</div>
+            <div class="tut_link">
+              <a href="https://www.amazon.com/gp/product/B07BBPX8B8" target="_blank">FT232 USB to TTL Serial Adapter</a>
+            </div>
+            <div><br /></div>
+            <div class="tut_img">
+              <img src="assets/img/water/water9.jpg">
+            </div>
+            <div><br /></div>
+            <div>&nbsp;With it programmed, I could now install it with the water sensor</div>
+            <div><br /></div>
+            <div class="tut_img">
+              <img src="assets/img/water/water5.jpeg">
+            </div>
+            <div><br /></div>
+            <div>&nbsp;To connect it to Home Assistant, open the webpage and go to Configurations -&gt; Integrations and add
+              the ESPHome integration. Once added, the ESPHome integration should automatically detect any ESPHome devices
+              on your network. Add your water level sensor and you should now have access to the voltage readings.</div>
+            <div><br /></div>
+            <div class="tut_img">
+              <img src="assets/img/water/water6.png">
+            </div>
+            <div><br /></div>
+            <div>&nbsp;Because I wasn't sure what voltages I'd see at different water levels, I kept logs of the voltage as my
+              water tank was emptied and then fully refilled. I then had a complete set of data and could assign percentage
+              values to different voltages.</div>
+            <div><br /></div>
+            <div class="tut_img">
+              <img src="assets/img/water/water7.png">
+            </div>
+            <div><br /></div>
+            <div>&nbsp;I then added the following code to my ESPHome file and updated it to now send percent values in
+              addition to voltages:</div>
+            <div class="terminal">
+              &emsp; - platform: template<br>
+              &emsp;&emsp;&emsp; name: "Water Level Percent"<br>
+              &emsp;&emsp;&emsp; unit_of_measurement: "%"<br>
+              &emsp;&emsp;&emsp; accuracy_decimals: 0<br>
+              &emsp;&emsp;&emsp; update_interval: 1s<br>
+              &emsp;&emsp;&emsp; lambda: |-<br>
+              &emsp;&emsp;&emsp;  if (id(water_voltage).state &lt; 0.162) {<br>
+              &emsp;&emsp;&emsp;&emsp;    return 100;<br>
+              &emsp;&emsp;&emsp;  } else if (id(water_voltage).state &lt; 0.194) {<br>
+              &emsp;&emsp;&emsp;&emsp;    return 93;<br>
+              &emsp;&emsp;&emsp;  } else if (id(water_voltage).state &lt; 0.2255) {<br>
+              &emsp;&emsp;&emsp;&emsp;    return 87;<br>
+              &emsp;&emsp;&emsp;  } else if (id(water_voltage).state &lt; 0.2505) {<br>
+              &emsp;&emsp;&emsp;&emsp;    return 80;<br>
+              &emsp;&emsp;&emsp;  } else if (id(water_voltage).state &lt; 0.2705) {<br>
+              &emsp;&emsp;&emsp;&emsp;    return 73;<br>
+              &emsp;&emsp;&emsp;  } else if (id(water_voltage).state &lt; 0.29) {<br>
+              &emsp;&emsp;&emsp;&emsp;    return 67;<br>
+              &emsp;&emsp;&emsp;  } else if (id(water_voltage).state &lt; 0.308) {<br>
+              &emsp;&emsp;&emsp;&emsp;    return 60;<br>
+              &emsp;&emsp;&emsp;  } else if (id(water_voltage).state &lt; 0.326) {<br>
+              &emsp;&emsp;&emsp;&emsp;    return 53;<br>
+              &emsp;&emsp;&emsp;  } else if (id(water_voltage).state &lt; 0.3445) {<br>
+              &emsp;&emsp;&emsp;&emsp;    return 47;<br>
+              &emsp;&emsp;&emsp;  } else if (id(water_voltage).state &lt; 0.362) {<br>
+              &emsp;&emsp;&emsp;&emsp;    return 40;<br>
+              &emsp;&emsp;&emsp;  } else if (id(water_voltage).state &lt; 0.398) {<br>
+              &emsp;&emsp;&emsp;&emsp;    return 33;<br>
+              &emsp;&emsp;&emsp;  } else if (id(water_voltage).state &lt; 0.452) {<br>
+              &emsp;&emsp;&emsp;&emsp;    return 27;<br>
+              &emsp;&emsp;&emsp;  } else if (id(water_voltage).state &lt; 0.5045) {<br>
+              &emsp;&emsp;&emsp;&emsp;    return 20;<br>
+              &emsp;&emsp;&emsp;  } else if (id(water_voltage).state &lt; 0.562) {<br>
+              &emsp;&emsp;&emsp;&emsp;    return 13;<br>
+              &emsp;&emsp;&emsp;  } else if (id(water_voltage).state &lt; 0.6215) {<br>
+              &emsp;&emsp;&emsp;&emsp;    return 7;<br>
+              &emsp;&emsp;&emsp;  } else {<br>
+              &emsp;&emsp;&emsp;&emsp;    return 0;<br>
+              &emsp;&emsp;&emsp;  }
+            </div>
+            <div>&nbsp;Success! I now have a fully functional water level sensor integrated with Home Assistant.</div>
+            <div><br /></div>
+            <div class="tut_img">
+              <img src="assets/img/water/water8.png">
+            </div>
+            <div><br /></div>
+            <div><br /></div>
+
+  - title: "Monitoring Propane Level"
+    slug: monitor_propane_level
+    images:
+      - assets/img/propane/propane6.jpg
+      - assets/img/propane/propane7.jpg
+      - assets/img/propane/propane1.png
+      - assets/img/propane/propane4.png
+      - assets/img/propane/propane5.png
+    content: |
+      <div>&nbsp;Next up was a monitoring system for the level of my propane tank. I have a standard 20lb propane
+                tank in my van. It's stored in a sealed box with a vent to the outside, so the traditional method of lifting the
+                tank to see how heavy it is and guess how much is left is out of the question. To avoid running out of propane at an inconvenient time, I needed a way to monitor its current level wirelessly.</div>
+            <div><br /></div>
+            <div>Items needed to set this up:</div>
+            <div class="amazon">
+              <ul>
+                <li><b><a href="https://www.homedepot.com/p/Worthington-20-lbs-Empty-Propane-Tank-309791/202034840"
+                      target="_blank">Propane Tank</a>:</b>&nbsp;Any standard 20lb propane tank
+                    should work. Other size tanks could work as well, but would need some modifications to my script</li>
+                <li><b><a href="https://www.amazon.com/gp/product/B01C5RQJHS" target="_blank">Bluetooth
+                      Propane Sensor</a>:</b>&nbsp;This is the only wireless propane sensor I've
+                    been able to find</li>
+              </ul>
+            </div>
+            <div>&nbsp;The propane sensor has its own app which works decently well on its own. I would always forget to check it
+              though.&nbsp;I wanted to integrate it into my Home Assistant setup so I could look at one location for all the
+              systems in the van.</div>
+            <div><br /></div>
+            <div class="tut_img">
+              <img src="assets/img/propane/propane1.png">
+            </div>
+            <div><br /></div>
+            <div>&nbsp;I reached out to Mopeka to see if they had an API for the sensors, but never received a
+            response. Looks like my only option would be to reverse engineer the app.</div>
+            <div><br /></div>
+            <div>&nbsp;I knew that the sensor communicated using bluetooth, so the first step was to see if I could connect to
+              the device with the Raspberry Pi and read any sort of data from it. With some more research, I figured out that
+              the device acts as a BLE beacon and sends out its advertisement data every 10 seconds (this interval can be
+              changed by holding the SYNC button for 5 seconds). I was able to read this using hcitool and hcidump. I ran these
+              three commands in separate terminal sessions:</div>
+            <div>
+            <div class="terminal">
+              sudo hcidump<br><br>
+              sudo hcidump --raw<br><br>
+              sudo hcitool lescan
+            </div>
+            <div>&nbsp;"sudo hcitool lescan" scans for bluetooth low energy devices while "hcidump" and "hcidump --raw" dump
+              information from scanned devices. Here are the outputs that I got from the propane sensor:</div>
+            <div class="terminal">
+                &gt; HCI Event: LE Meta Event (0x3e) plen 43<br>
+                &nbsp;&nbsp;&nbsp; LE Advertising Report<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ADV_NONCONN_IND - Non connectable undirected advertising (3)<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bdaddr 90:9A:77:1E:8F:DB (Public)<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Unknown type 0xff with 25 bytes data<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Shortened service classes: 0xada0<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; RSSI: -75<br>
+                <br>
+                &gt; 04 3E 2B 02 01 03 00 DB 8F 1E 77 9A 90 1F 1A FF 0D 00 00 02 <br>
+                &nbsp; 7A 61 08 89 73 BE FD F4 17 C1 3E 05 17 5C F0 40 03 3B 1E 8F <br>
+                &nbsp; DB 03 02 A0 AD B6
+            </div>
+            <div>&nbsp;The advertisement data included 25 extra bytes of data. I knew the propane level must be encoded in
+              this data somewhere.&nbsp;</div>
+            <div><br /></div>
+            <div>&nbsp;My first attempt at decoding the data was to concurrently capture that data from hcidump and from the
+              tank check app and see if I could find any correlation between the two. After many attempts though, I couldn't
+              find any sort of obvious correlation. Because of this I concluded that the app must be performing some post
+              processing on the data.</div>
+            <div><br /></div>
+            <div>&nbsp;My only other path was to reverse engineer the app to figure out what sort of post processing was being done. With some research I learned of a tool called
+              Apktool which allows you to unpack a .apk file (an android app file) and view the resources used to build it. It
+              also allows you to make changes and rebuild it into a new .apk.</div>
+            <div><br /></div>
+            <div>&nbsp;I used apktool to unpack V2.5.1 (the latest version when I started working on this) of that tank check
+              app that I downloaded here:</div>
+            <div class="tut_link">
+              <a href="https://apkpure.com/tank-check/com.mopeka.tankcheck" target="_blank">Tank Check App</a>
+            </div>
+            <div><br /></div>
+            <div>&nbsp;Browsing through the files, I found that most of the code was written in javascript and contained in a
+              file located here: "assets/www/js/dist.bundle.js". Unfortunately, the code from apktool was not formatted very
+              well and almost impossible to read.</div>
+            <div><br /></div>
+            <div>I was able to make it more readable using&nbsp;<a href="https://beautifier.io/"
+                target="_blank">https://beautifier.io/</a>.</div>
+            <div><br /></div>
+            <div>&nbsp;Reading through the code, it appeared that apktool preserved the variable and function names that were
+              parts of classes, but not any other variable names. Luckily this was enough to help me follow the code. The
+              first thing I looked for was the piece of code that printed the percentage reading to the app. I knew if I could
+              find this piece of code, I could trace it back to see where the data came from. After finding it, I was also
+              able to edit this code and recompile the apk to print other info to help me decode what was going on.</div>
+            <div><br /></div>
+            <div>&nbsp;I won't go into too many details on reverse engineering the app from here, but I basically followed the
+              data through the app from when it's first read in the bluetooth advertisement data to it being converted to a
+              percentage. I converted the javascript to python for my own script. I was also able to decode the battery
+              percentage, temperature, and quality of the reading from the data.&nbsp;</div>
+            <div><br /></div>
+            <div>&nbsp;For reading the bluetooth data in the script, I found another python script online that would read BLE
+              data and converted it for my needs, filtering by the bluetooth address of my propane sensor. The final script
+              which sends this data via MQTT to Home Assistant can be found here. For the script to have access to bluetooth,
+              it must be run with "sudo -E"</div>
+            <div class="tut_link">
+              <a href="https://github.com/CF209/vanomation/blob/main/python/propane/propane_mqtt.py" target="_blank">Propane Level Python Script</a>
+            </div>
+            <div><br /></div>
+            <div>&nbsp;I then created a systemd service for the script:</div>
+            <div class="terminal">
+              sudo nano /lib/systemd/system/propane_mqqt.service
+            </div>
+            <div class="terminal">
+                [Unit]<br>
+                Description=Propane MQTT<br>
+                After=multi-user.target<br>
+                <br>
+                [Service]<br>
+                Type=idle<br>
+                ExecStart=/usr/bin/sudo -E /usr/bin/python3 /home/pi/python/propane/propane_mqtt.py<br>
+                WorkingDirectory=/home/pi<br>
+                User=pi<br>
+                Restart=on-failure<br>
+                RestartSec=5s<br>
+                <br>
+                [Install]<br>
+                WantedBy=multi-user.target
+            </div>
+            <div class="terminal">
+              sudo systemctl daemon-reload<br>
+              sudo systemctl enable propane_mqqt.service
+            </div>
+            <div>And added the sensors to Home Assistant:</div>
+            <div class="terminal">
+                sensor:<br>
+                &nbsp; - platform: mqtt<br>
+                &nbsp;&nbsp;&nbsp; state_topic: "van/propane"<br>
+                &nbsp;&nbsp;&nbsp; name: 'Propane Level'<br>
+                &nbsp;&nbsp;&nbsp; unit_of_measurement: '%'<br>
+                &nbsp;&nbsp;&nbsp; value_template: '{{ value_json.propane_pct }}'<br>
+                &nbsp; - platform: mqtt<br>
+                &nbsp;&nbsp;&nbsp; state_topic: "van/propane"<br>
+                &nbsp;&nbsp;&nbsp; name: 'Propane Sensor Quality'<br>
+                &nbsp;&nbsp;&nbsp; value_template: '{{ value_json.propane_qual }}'<br>
+                &nbsp; - platform: mqtt<br>
+                &nbsp;&nbsp;&nbsp; state_topic: "van/propane"<br>
+                &nbsp;&nbsp;&nbsp; name: 'Propane Sensor Battery'<br>
+                &nbsp;&nbsp;&nbsp; unit_of_measurement: '%'<br>
+                &nbsp;&nbsp;&nbsp; icon: mdi:battery-50<br>
+                &nbsp;&nbsp;&nbsp; value_template: '{{ value_json.propane_bat }}'<br>
+                &nbsp; - platform: mqtt<br>
+                &nbsp;&nbsp;&nbsp; state_topic: "van/propane"<br>
+                &nbsp;&nbsp;&nbsp; name: 'Propane Sensor Temperature'<br>
+                &nbsp;&nbsp;&nbsp; unit_of_measurement: '°C'<br>
+                &nbsp;&nbsp;&nbsp; value_template: '{{ value_json.propane_temp }}'
+            </div>
+            <div><br /></div>
+            <div>The propane sensor can now be added to your Home Assistant dashboard:</div>
+            <div><br /></div>
+            <div class="tut_img">
+              <img src="assets/img/propane/propane4.png">
+            </div>
+            <div><br /></div>
+            <div class="tut_img">
+              <img src="assets/img/propane/propane5.png">
+            </div>
+            <div><br /></div>
+            <div><br /></div>
+
+  - title: "Adding a Van Tilt Sensor"
+    slug: adding_van_tilt_sensor
+    images:
+      - assets/img/tilt/tilt5.png
+      - assets/img/tilt/tilt1.jpeg
+      - assets/img/tilt/tilt2.png
+      - assets/img/tilt/tilt3.jpeg
+      - assets/img/tilt/tilt4.png
+    content: |
+      <div>&nbsp;The next sensor that I thought would be useful in the van was a level sensor to see how flat
+                the van currently is. When parking for the night, it's always more comfortable to sleep if the van is level. I
+                would always find myself using rocks or inching forward and backward and ask myself "is it better now?". The easy
+                solution would be to just stick a bubble level somewhere, but I thought it would be much more interesting to
+                incorporate it into my Home Assistant setup.</div>
+            <div><br /></div>
+            <div>Items needed to set this up:</div>
+            <div class="amazon">
+              <ul>
+                <li><b><a href="https://www.adafruit.com/product/3886" target="_blank">MPU6050
+                    Accelerometer</a>:</b>&nbsp;This device essentially measures gravity on 3
+                    axes and can tell you which way is down. It also has a gyroscope which is not needed for this project
+                </li>
+                <li><b>Other electronics: </b>Either an ESP32/ESP8266 to send the data to your Raspberry
+                  Pi, or interface it with the Raspberry Pi directly</li>
+              </ul>
+            </div>
+            <div><br /></div>
+            <div>&nbsp;Any 2 or 3-axis accelerometer can be used for this project, but I chose to use the MPU6050 because
+              it's widely available and many breakout boards exist for it.</div>
+            <div><br /></div>
+            <div class="tut_img">
+              <img src="assets/img/tilt/tilt1.jpeg">
+            </div>
+            <div><br /></div>
+            <div>&nbsp;The MPU6050 communicates through I2C, so it needs to be connected to the Raspberry Pi or another
+              microcontroller. I wanted to mount it on the bottom of my bed platform which was a little too far from the
+              Raspberry Pi, so I decided to use an ESP8266 to communicate with the MPU6050 and send the data back to the
+              Raspberry Pi over wifi.</div>
+            <div><br /></div>
+            <div>&nbsp;If you remember the PCB that I designed for the water level sensor, there were a few extra features on
+              that board that I hadn't used. One was this 6-pin header with i2c that I added specifically to accomodate an
+              MPU6050 module. In its default state, this header works with the Adafruit MPU6050 module I linked above. By
+              connecting the JP1 solder jumper, it also accommodates cheaper MPU6050 modules that can be found on Amazon.</div>
+            <div><br /></div>
+            <div class="tut_img">
+              <img src="assets/img/tilt/tilt2.png">
+            </div>
+            <div><br /></div>
+            <div>&nbsp; The full KICAD files can be found here:</div>
+            <div class="tut_link">
+              <a href="https://github.com/CF209/kicad/tree/main/ESP8266_Water_Sensor" target="_blank">ESP8266 PCB KICAD Files</a>
+            </div>
+            <div><br /></div>
+            <div class="tut_img">
+              <img src="assets/img/tilt/tilt3.jpeg">
+            </div>
+            <div><br /></div>
+            <div>&nbsp;I forgot to take a picture of the assembled board, but you can see J1 in the picture above where the
+              module is mounted.</div>
+            <div><br /></div>
+            <div>&nbsp;Next is the software for the ESP8266. Luckily there's functionality in ESPHome for the MPU6050, so the
+              software part is very easy. Details on this can be found here:</div>
+            <div class="tut_link">
+              <a href="https://esphome.io/components/sensor/mpu6050.html" target="_blank">ESPHome MPU6050</a>
+            </div>
+            <div><br /></div>
+            <div>&nbsp;To create the new ESPHome file, open up the ESPHome dashboard (<a
+                href="http://192.168.0.101:6052/">http://192.168.0.101:6052/</a>&nbsp;in my case) and click the plus button in
+              the bottom right. Choose "Generic ESP8266" and enter your wifi information. In the config file you'll then want
+              to add:</div>
+            <div class="terminal">
+              i2c:<br>
+              &emsp; sda: 2<br>
+              &emsp; scl: 14<br>
+              <br>
+              sensor:<br>
+              &emsp; - platform: mpu6050<br>
+              &emsp;&emsp;&emsp; address: 0x68<br>
+              &emsp;&emsp;&emsp; update_interval: 200ms<br>
+              &emsp;&emsp;&emsp; accel_x:<br>
+              &emsp;&emsp;&emsp;&emsp;&emsp; name: "MPU6050 Accel X"<br>
+              &emsp;&emsp;&emsp; accel_y:<br>
+              &emsp;&emsp;&emsp;&emsp;&emsp; name: "MPU6050 Accel Y"
+            </div>
+            <div><br /></div>
+            <div>&nbsp;This sets up the i2c pins (change these pin numbers if your configuration is different), then sets up the MPU6050
+              sensor. The default i2c address for the MPU6050 is 0x68. I set an update interval of 200ms. The only two
+              readings we then need from it are acceleration on the X and Y axes which can then be used to calculate the left
+              to right tilt and the front to back tilt of the van. I then programmed the ESP8266 and mounted it underneath my
+              bed.</div>
+            <div><br /></div>
+            <div>&nbsp;With the ESPHome integration in Home Assistant, the new sensor was automatically detected and added. I
+              could now view the X and Y acceleration values from the device, but to make it more readable I wanted to convert
+              these values to degrees. With some digging around I found this equation:&nbsp;</div>
+            <div class="terminal">tilt in degrees = arcsin(acceleration / gravity) * 180 / pi</div>
+            <div><br /></div>
+            <div>&nbsp;Adding this equation into Home Assistant, I was now getting tilt readings on two axes in degrees. The
+              readings seemed a bit off though, so the sensor most likely needed to be calibrated. To calibrate, I used an app
+              on my phone to measure the tilt and set my phone on top of my bed platform. I took measurements with the van
+              parked at different inclines and averaged the differences to come up with an offset value. I also noticed that
+              the degrees readings were inverted from what I wanted, so I added a -1 multiplyer. The final equation was:</div>
+            <div class="terminal">tilt in degrees = ((arcsin(acceleration / gravity) * 180 / pi) - offset) * -1</div>
+            <div><br /></div>
+            <div>Here is the code I added to the Home Assistant configuration file to add this:</div>
+            <div class="terminal">
+              &emsp; - platform: template<br>
+              &emsp;&emsp;&emsp; sensors:<br>
+              &emsp;&emsp;&emsp;&emsp;&emsp; x_angle:<br>
+              &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; friendly_name: "X Angle"<br>
+              &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; unit_of_measurement: "°"<br>
+              &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; value_template: '{{ ((asin((states("sensor.mpu6050_accel_x") | float) / 9.81) * 180 / pi) - 2.8) * -1 }}'<br>
+              &emsp;&emsp;&emsp;&emsp;&emsp; y_angle:<br>
+              &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; friendly_name: "Y Angle"<br>
+              &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; unit_of_measurement: "°"<br>
+              &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; value_template: '{{ ((asin((states("sensor.mpu6050_accel_y") | float) / 9.81) * 180 / pi) + 0.3) * -1 }}'
+            </div>
+            <div>&nbsp;There also seemed to be quite a bit of noise on the sensor, so I added a low pass filter as well. It's not perfect, but it helps a bit:</div>
+            <div class="terminal">
+              &emsp; - platform: filter<br>
+              &emsp;&emsp;&emsp; name: "Filtered X Angle"<br>
+              &emsp;&emsp;&emsp; entity_id: sensor.x_angle<br>
+              &emsp;&emsp;&emsp; filters:<br>
+              &emsp;&emsp;&emsp;&emsp;&emsp; - filter: lowpass<br>
+              &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; time_constant: 5<br>
+              &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; precision: 1<br>
+              &emsp; - platform: filter<br>
+              &emsp;&emsp;&emsp; name: "Filtered Y Angle"<br>
+              &emsp;&emsp;&emsp; entity_id: sensor.y_angle<br>
+              &emsp;&emsp;&emsp; filters:<br>
+              &emsp;&emsp;&emsp;&emsp;&emsp; - filter: lowpass<br>
+              &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; time_constant: 5<br>
+              &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; precision: 1
+            </div>
+            <div>&nbsp;The end result is a Home Assistant sensor showing the tilt of the van which makes finding a level parking spot quite a bit easier.</div>
+            <div><br /></div>
+            <div class="tut_img">
+              <img src="assets/img/tilt/tilt4.png">
+            </div>
+            <div><br /></div>
+            <div>&nbsp;Update: I wasn't very happy with how these sensors displayed in the Home Assistant interface, so I decided to make
+              my own lovelace card to better show this sensor output. Here is what it now looks like:
+            </div>
+            <div><br /></div>
+            <div class="tut_img">
+              <img src="assets/img/tilt/tilt5.png">
+            </div>
+            <div><br /></div>
+            <div>&nbsp;The code for this new card can be found here:</div>
+            <div class="tut_link">
+              <a href="https://github.com/CF209/van-tilt-sensor-custom-card" target="_blank">Van Tilt Sensor Custom Card</a>
+            </div>
+            <div><br /></div>
+            <div>&nbsp;To install the card, create a new folder in your "homeassistant/www/" directory called "van-tilt-card" and
+              download the files to this directory. Then in Home Assistant go to Configuration - Lovelace Dashboards - Resources and click
+              "Add Resource". Enter "/local/van-tilt-card/van-tilt-card.js" for the URL and "JavaScript Module" for the type and click create.
+              Back in your main dashboard, you can now manually add the new card with the following code:
+            </div>
+            <div class="terminal">
+                type: 'custom:van-tilt-card'<br>
+                entity_x: sensor.filtered_x_angle<br>
+                entity_y: sensor.filtered_y_angle
+            </div>
+            <div><br /></div>
+            <div><br /></div>
+
+  - title: "Auto-Locking Drawers"
+    slug: autolocking_drawers
+    images:
+      - assets/img/drawer/drawer1.jpg
+      - assets/img/drawer/drawer2.png
+      - assets/img/drawer/drawer3.jpeg
+      - assets/img/drawer/drawer4.png
+      - assets/img/drawer/drawer5.png
+      - assets/img/drawer/drawer6.png
+    content: |
+      <div>&nbsp;One of the biggest issues I've had with my van build has been with the drawers. They seem to
+                always want to fly open while driving. I started off using a mix of magnetic and physical door catches, but they
+                were either too weak for the heavier drawers, or wouldn't always latch properly. Next I added physical latches to
+                the heavier drawers, but they would either vibrate open on bumpy roads, or I'd simply forget to latch them before
+                driving. Then one day I came across a solenoid door latch. It seemed like the perfect solution! I could integrate
+                it into my Home Assistant set up and program it to automatically lock closed.</div>
+            <div><br /></div>
+            <div>Items needed to set this up:</div>
+            <div class="amazon">
+              <ul>
+                <li><b><a href="https://www.amazon.com/gp/product/B07TJN2XNN/" target="_blank">Solenoid
+                      Door Latch</a>:</b>&nbsp;This is the only one I found that fit my needs. It
+                    needed to run on 12V, be unlocked when not powered, have a door style latch (not just a cylinder), and be
+                    relatively low power</li>
+                <li><b>Other electronics:&nbsp;</b>Either an ESP32/ESP8266 or use the Raspberry Pi to
+                  control the solenoid, plus a MOSFET, diode, and resistor (see below for details on the circuit)</li>
+              </ul>
+            </div>
+            <div>&nbsp;A solenoid is a device that converts an electrical current into linear motion. The device generally
+              consists of wire coil with a plunger in the middle of it. When current is passed through the coil, it generates a
+              magnetic field which pushes the plunger in one direction. When the current is removed, a mechanical spring pulls
+              the plunger back to its starting position.</div>
+            <div><br /></div>
+            <div class="tut_img">
+              <img src="assets/img/drawer/drawer1.jpg">
+            </div>
+            <div><br /></div>
+            <div>&nbsp;In the above solenoid that I selected, the plunger has a door style latch on its end. The solenoid also
+              runs on 12V which fits into the van electrical system well. It's relatively low power 0.3A when powered, although
+              power isn't a big deal since I plan to only power it when the engine is running and the alternator is charging my
+              batteries. The above solenoid is also unlocked when it's not powered which is very important for my application.
+              Most of the devices I found were actually the opposite.</div>
+            <div><br /></div>
+            <div>&nbsp;With the solenoid selected, we now need a way to switch it on and off. The circuit used for this is very
+              similar to the circuit used to control the lights:</div>
+            <div><br /></div>
+            <div class="tut_img">
+              <img src="assets/img/drawer/drawer2.png">
+            </div>
+            <div>&nbsp;A GPIO pin from an ESP32 is used to power on and off an N-Channel
+              MOSFET. This shuts on and off the current flowing through the solenoid which is connected to J5. A 10k pull-down
+              resistor is added to the GPIO pin so that when the GPIO pin is not configured, the solenoid will be powered off. A
+              diode is also connected in reverse across the solenoid. This is done because the solenoid is essentially an
+              inductor. Inductors cannot change current instantaneously, so when the MOSFET is switched off, current will
+              continue flowing through the solenoid for a short period. With nowhere for the current to go, a voltage spike can
+              occur. The added diode gives the current a return path once the voltage increases past the diodes forward voltage
+              value and prevents it from spiking any higher.</div>
+            <div><br /></div>
+            <div>&nbsp;With the circuit built on a breadboard and using an ESP32 development board (I plan to design another PCB
+              for this eventually), I rigged up a latch on one of my most problematic drawers:</div>
+            <div><br /></div>
+            <div>
+            <div class="tut_img">
+              <img src="assets/img/drawer/drawer3.jpeg">
+            </div>
+            <div><br /></div>
+            <div>The ESPHome code was pretty straightforward for this one. Just a simple output switch:</div>
+            <div class="terminal">
+                switch:<br>
+                &emsp; - platform: gpio<br>
+                &emsp;&emsp;&emsp; pin: 26<br>
+                &emsp;&emsp;&emsp; name: "Solenoid"<br>
+            </div>
+            <div>With the ESP32 programmed, I could now control the solenoid from Home Assistant!</div>
+            <div><br /></div>
+            <div class="tut_img">
+              <img src="assets/img/drawer/drawer4.png">
+            </div>
+            <div><br /></div>
+            <div>&nbsp;This solved the first part of the problem, but I still wanted to have the drawer automatically lock
+              when I'm driving. Some different solutions I was thinking of for this included using the accelerometer from the
+              van tilt sensor to detect motion, or connecting to a bluetooth OBD2 adapter and reading the speed of the van.
+              Then I remembered that I had tapped into one of the ignition wires in the van for the DC-DC charger to charge my
+              batteries from the alternator when the engine is running. If I could also detect this signal on the Raspberry
+              Pi, I could lock the drawer when the engine is running.</div>
+            <div><br /></div>
+            <div>&nbsp;I wasn't sure how the ignition wire worked, so I used a multimeter to read the voltage. The wire read 0V
+              when the ignition was off, and about 14.3V when it was on. A simple discrete signal like this is exactly what I
+              was hoping for! The 14.3V is way too high for the Raspberry Pi GPIO pins, so I used a MOSFET to step down the voltage:</div>
+            <div><br /></div>
+            <div class="tut_img">
+              <img src="assets/img/drawer/drawer5.png">
+            </div>
+            <div>&nbsp;This circuit steps down the voltage so the Raspberry Pi GPIO pin won't see more than 3.3V. It also
+              inverts the signal so it should read '1' when the van is off and '0' when it is on. Note that if you don't have
+              a common ground between your house batteries and the van battery this circuit could perform in unexpected ways.
+            </div>
+            <div><br /></div>
+            <div>&nbsp;Next I had to add this signal into Home Assistant. This is done by adding a binary sensor to the
+              configurations.yaml file:</div>
+            <div class="terminal">
+                binary_sensor:<br>
+                &emsp; - platform: rpi_gpio<br>
+                &emsp;&emsp;&emsp; ports:<br>
+                &emsp;&emsp;&emsp;&emsp;&emsp; 26: Van Ignition<br>
+                &emsp;&emsp;&emsp; invert_logic: true
+            </div>
+            <div>&nbsp;This sets up the sensor on GPIO pin 26 on the Raspberry Pi and re-inverts it. After restarting Home
+              Assistant you should now have this sensor in your setup.</div>
+            <div><br /></div>
+            <div class="tut_img">
+              <img src="assets/img/drawer/drawer6.png">
+            </div>
+            <div><br /></div>
+            <div>&nbsp;The last step is to create automations for locking and unlocking the drawer. You can create the
+              automations in GUI by going to Configuration -&gt; Automations. The trigger should look like this:</div>
+            <div><br /></div>
+            <div class="tut_img">
+              <img src="assets/img/drawer/drawer7.png">
+            </div>
+            <div><br /></div>
+            <div>&nbsp;And the action should look like this:</div>
+            <div><br /></div>
+            <div class="tut_img">
+              <img src="assets/img/drawer/drawer8.png">
+            </div>
+            <div><br /></div>
+            <div>&nbsp;With the automations set up, Home Assistant should now automatically lock the drawer when the van is
+              started and unlock it when it's turned off. I can hear the satisfying click of the solenoid every time I turn on
+              the van letting me know the drawer is locked!</div>
+            <div><br /></div>
+            <div><br /></div>
+
+  - title: "Future Projects"
+    slug: future_projects
+    images: []
+    content: |
+      <p>&nbsp; That is all I have done at the moment in my van, but I'm always dreaming up future projects. Here are some
+                possibilities I've thought of for the future:</p>
+            <p></p>
+            <div><br /></div>
+            <div class="fut_img">
+              <img src="assets/img/future/future2.jpeg">
+            </div>
+            <div><br /></div>
+            <ul style="text-align: left;">
+              <li><b>Tapping into the van's door locks</b></li>
+              <ul>
+                <li>I always thought it would be cool to tap into the door locking mechanism on the van so I could lock and
+                  unlock the doors with my phone. I'm slightly afraid to start tampering with this though since breaking
+                  something could be expensive</li>
+              </ul>
+            </ul>
+            <div><br /></div>
+            <div class="fut_img">
+              <img src="assets/img/future/future3.png">
+            </div>
+            <div><br /></div>
+            <div>
+              <ul style="text-align: left;">
+                <li><b>Adding monitoring of the battery charge</b></li>
+                <ul>
+                  <li>I currently have a <a
+                      href="https://www.amazon.com/Renogy-500A-Battery-Monitor-Programmable/dp/B07RP5B5P7/"
+                      target="_blank">Renogy Battery Monitor</a>&nbsp;installed to monitor the charge of my house batteries.
+                    Unfortunately this monitor doesn't have any smart capabilities and I wasn't able to figure out any way to
+                    hack into it. The easiest solution would be to replace this battery monitor with the <a
+                      href="https://www.amazon.com/Victron-SmartShunt-500AMP-Bluetooth-Battery/dp/B0856PHNLX/?th=1">Victron
+                      SmartShunt</a>&nbsp;which I should be able to read through bluetooth using the Raspberry Pi</li>
+                </ul>
+              </ul>
+              <div><br /></div>
+            </div>
+            <div class="fut_img">
+              <img src="assets/img/future/future4.jpeg">
+            </div>
+            <div><br /></div>
+            <div>
+              <ul style="text-align: left;">
+                <li><b>Accessing Home Assistant Remotely</b></li>
+                <ul>
+                  <li>It would be nice to be able to access Home Assistant remotely to check on things when I'm not near the
+                    van. This however requires an internet connection which I'm currently just using my phone's hotspot for. It
+                    would be nice to get a dedicated hotspot so I could set this up, or maybe Starlink when it becomes available
+                    for vans/RVs</li>
+                </ul>
+              </ul>
+              <div><br /></div>
+            </div>
+            <div class="fut_img">
+              <img src="assets/img/future/future6.jpeg">
+            </div>
+            <div><br /></div>
+            <div>
+              <ul style="text-align: left;">
+                <li><b>Google Home Integration</b></li>
+                <ul>
+                  <li>With a dedicated internet connection for the van, I would then have the possibility to integrate with
+                    a Google Home device and control Home Assistant with my voice
+                  </li>
+                </ul>
+              </ul>
+              <div><br /></div>
+            </div>
+            <div class="fut_img">
+              <img src="assets/img/future/future5.png">
+            </div>
+            <div><br /></div>
+            <div>
+              <ul style="text-align: left;">
+                <li><b>Adding better screens to the van</b></li>
+                <ul>
+                  <li>I recently replaced the old phone I was using with a Kindle Fire tablet, but it would also be nice to have a
+                    screen in the center console for monitoring systems while driving</li>
+                </ul>
+              </ul>
+              <div><br /></div>
+            </div>
+            <div class="fut_img">
+              <img src="assets/img/future/future5.png">
+            </div>
+            <div><br /></div>
+            <div>
+              <ul style="text-align: left;">
+                <li><b>Improving the lovelace interface</b></li>
+                <ul>
+                  <li>I haven't spent much time playing around with the lovelace interface in Home Assistant, but I've seen some
+                    very nice looking setups that some people have created. It would be nice to create a more aesthetically
+                    pleasing interface for my setup. So far the only custom element I've done is created a van tilt card
+                    which shows the tilt of the van in degrees and has a picture of the van that automatically tilts</li>
+                </ul>
+              </ul>
+            </div>
+            <p></p>

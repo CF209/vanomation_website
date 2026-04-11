@@ -6,16 +6,13 @@ baseurl: ""
 # Keep .html extensions in URLs to preserve existing links
 permalink: /:path:output_ext
 
-collections:
-  tutorials:
-    output: true
-    permalink: /:name.html
-
 # Don't include these in the Jekyll build
+# (_tutorials/ is kept as a backup; pages are now generated from _data/tutorials.yml)
 exclude:
   - Gemfile
   - Gemfile.lock
   - Readme.txt
   - _template.html
+  - _tutorials
   - node_modules
   - vendor/bundle

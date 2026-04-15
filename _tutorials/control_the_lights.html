@@ -1,9 +1,9 @@
 ---
 layout: tutorial
-order: 3
-permalink: /control_the_lights.html
-title: "Controlling the Lights"
 render_with_liquid: false
+order: 3
+title: Controlling the Lights
+permalink: /control_the_lights.html
 images:
   - assets/img/lights/lights4.jpeg
   - assets/img/lights/lights1.png
@@ -18,20 +18,20 @@ images:
           need a few items for this to work:
         <div class="amazon">
           <ul>
-            <li><b><a href="https://www.amazon.com/gp/product/B06WP7169Y" target="_blank">
+            <li><b><a href="https://amzn.to/3OfQY4d" target="_blank">
               Raspberry Pi Starter Kit</a>:</b>&nbsp;If you're new to electronics, I recommend picking up a starter kit for the
               raspberry pi similar to this one. It comes with some basic electrical components, wires, a breadboard, and a GPIO
               extension board which will be very useful for prototyping circuits</li>
-            <li><b><a href="https://www.amazon.com/ANBES-Soldering-Iron-Kit-Electronics/dp/B06XZ31W3M" target="_blank">
+            <li><b><a href="https://amzn.to/428lQa0" target="_blank">
               Soldering Iron</a>:</b> A basic kit like this one will do the trick if you don't have a
               soldering iron already</li>
-            <li><b><a href="https://www.amazon.com/Fluke-101-Multimeter-Resistance-Capacitance/dp/B00HE6MIJY" target="_blank">
+            <li><b><a href="https://amzn.to/3QlkplV" target="_blank">
               Multimeter</a>:</b> It's always a good idea to check for shorts with a multimeter before powering up 
               any circuits. It's also a great debugging tool. I had a cheaper one, but it was unreliable and it 
               eventually broke, so I upgraded to a more reputable brand like Fluke</li>
-            <li><b><a href="https://www.amazon.com/gp/product/B07CTF1JVD"target="_blank">
+            <li><b><a href="https://amzn.to/4sAcrTo"target="_blank">
               N-Channel MOSFETs</a>: </b>These will be used to switch on and off the lights</li>
-            <li><b><a href="https://www.amazon.com/gp/product/B012ZOI3ZW" target="_blank">
+            <li><b><a href="https://amzn.to/4sTrnfP" target="_blank">
               Lights</a>: </b>I use these 12V LED lights in my van</li>
           </ul>
         </div>
@@ -88,12 +88,12 @@ images:
             &emsp; leds:<br>
             &emsp; - name: Bed Lights<br>
             &emsp;&emsp;&emsp; driver: gpio<br>
-            &emsp;&emsp;&emsp; pins: [12]<br>
+            &emsp;&emsp;&emsp; pins: \[12]<br>
             &emsp;&emsp;&emsp; type: simple<br>
             &emsp;&emsp;&emsp; frequency: 50000<br>
             &emsp; - name: Main Lights<br>
             &emsp;&emsp;&emsp; driver: gpio<br>
-            &emsp;&emsp;&emsp; pins: [13]<br>
+            &emsp;&emsp;&emsp; pins: \[13]<br>
             &emsp;&emsp;&emsp; type: simple<br>
             &emsp;&emsp;&emsp; frequency: 50000
         </div>

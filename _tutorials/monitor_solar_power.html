@@ -1,9 +1,9 @@
 ---
 layout: tutorial
-order: 5
-permalink: /monitor_solar_power.html
-title: "Monitoring Solar Power"
 render_with_liquid: false
+order: 5
+title: Monitoring Solar Power
+permalink: /monitor_solar_power.html
 images:
   - assets/img/solar/solar4.jpg
   - assets/img/solar/solar1.jpeg
@@ -16,14 +16,14 @@ images:
         <div>Items needed to set this up:</div>
         <div class="amazon">
           <ul>
-            <li><b><a href="https://www.amazon.com/gp/product/B07DNVW37B" target="_blank">
+            <li><b><a href="https://amzn.to/4vAuCeE" target="_blank">
               Renogy Rover Charge Controller</a>:</b>
               &nbsp;I have the 30Aversion shown here, but this setup should work with any of charge controllers in this series</li>
-            <li><b><a href="https://www.amazon.com/gp/product/B00IDSM6BW" target="_blank">
+            <li><b><a href="https://amzn.to/4vvL7IE" target="_blank">
               USB Serial Dongle</a>:</b>&nbsp;For serial communication from the Raspberry Pi to the Charge Controller</li>
-            <li><b><a href="https://www.amazon.com/gp/product/B0054RRCHI" target="_blank">
+            <li><b><a href="https://amzn.to/4dTBgpX" target="_blank">
               DB9 to RJ12 adapter</a>:</b>&nbsp;The charge controller uses a non-standard serial pinout, so this adapter is needed to connect to it</li>
-            <li><b><a href="https://www.amazon.com/gp/product/B08BHVF6XS" target="_blank">
+            <li><b><a href="https://amzn.to/3Q9Ok0p" target="_blank">
               RJ12 Cable</a>:</b>&nbsp;To connect from the adapter to the Charge Controller</li>
           </ul>
         </div>
@@ -60,7 +60,7 @@ images:
           software to read registers from the charge controller. First find the name of the USB serial dongle on your
           raspberry pi with:</div>
         <div class="terminal">
-            pi@raspberrypi:~ $ ls /dev/*USB*<br>
+            pi@raspberrypi:~ $ ls /dev/\*USB\*<br>
             /dev/ttyUSB0
         </div>
         <div>&nbsp;Now we can start writing a python program. Luckily, someone has already written a library called
@@ -94,11 +94,11 @@ images:
         </div>
         <div>And add the following to the file changing the ExecStart path to the path of your python script:</div>
         <div class="terminal">
-            [Unit]<br>
+            \[Unit]<br>
             Description=Solar MQTT<br>
             After=multi-user.target<br>
             <br>
-            [Service]<br>
+            \[Service]<br>
             Type=idle<br>
             ExecStart=/usr/bin/python3 <b>/home/pi/python/solar/solar_mqtt.py</b><br>
             WorkingDirectory=/home/pi<br>
@@ -106,7 +106,7 @@ images:
             Restart=on-failure<br>
             RestartSec=5s<br>
             <br>
-            [Install]<br>
+            \[Install]<br>
             WantedBy=multi-user.target
         </div>
         <div>&nbsp;Save the file, then you can enable the service with:</div>

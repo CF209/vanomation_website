@@ -1,9 +1,9 @@
 ---
 layout: tutorial
-order: 7
-permalink: /monitor_propane_level.html
-title: "Monitoring Propane Level"
 render_with_liquid: false
+order: 7
+title: Monitoring Propane Level
+permalink: /monitor_propane_level.html
 images:
   - assets/img/propane/propane6.jpg
   - assets/img/propane/propane7.jpg
@@ -21,7 +21,7 @@ images:
             <li><b><a href="https://www.homedepot.com/p/Worthington-20-lbs-Empty-Propane-Tank-309791/202034840"
                   target="_blank">Propane Tank</a>:</b>&nbsp;Any standard 20lb propane tank
                 should work. Other size tanks could work as well, but would need some modifications to my script</li>
-            <li><b><a href="https://www.amazon.com/gp/product/B01C5RQJHS" target="_blank">Bluetooth
+            <li><b><a href="https://amzn.to/4eiogKw" target="_blank">Bluetooth
                   Propane Sensor</a>:</b>&nbsp;This is the only wireless propane sensor I've
                 been able to find</li>
           </ul>
@@ -118,11 +118,11 @@ images:
           sudo nano /lib/systemd/system/propane_mqqt.service
         </div>
         <div class="terminal">
-            [Unit]<br>
+            \[Unit]<br>
             Description=Propane MQTT<br>
             After=multi-user.target<br>
             <br>
-            [Service]<br>
+            \[Service]<br>
             Type=idle<br>
             ExecStart=/usr/bin/sudo -E /usr/bin/python3 /home/pi/python/propane/propane_mqtt.py<br>
             WorkingDirectory=/home/pi<br>
@@ -130,7 +130,7 @@ images:
             Restart=on-failure<br>
             RestartSec=5s<br>
             <br>
-            [Install]<br>
+            \[Install]<br>
             WantedBy=multi-user.target
         </div>
         <div class="terminal">
